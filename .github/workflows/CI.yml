@@ -4,10 +4,8 @@
 name: CI
 
 on:
-  push:
-    branches: [ master ]
+  workflow_dispatch:
   pull_request:
-    branches: [ master ]
 
 jobs:
   HW0:
@@ -16,9 +14,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-
+    
     - name: 👀 Выгружаем мастер-ветку
-      run: git fetch origin master:master --update-head-ok
+      run: git fetch origin master:master
 
     - name: 🛠 Конфигурируем систему
       if: '!cancelled()'
@@ -36,7 +34,7 @@ jobs:
       
     - name: ⛔️ Проверяем, изменены ли исходные файлы
       run: |
-          if git diff origin/master | grep -e 'max.js' -e 'CI.yml' -e '.eslintrc.json' -e 'karma.conf.js'; then
+          if git diff origin/master... | grep -e 'max.js' -e 'CI.yml' -e '.eslintrc.json' -e 'karma.conf.js'; then
             echo "Изменения в max.js, CI.yml, .eslintrc.json и karma.conf.js не разрешаются."
             exit 1
           fi
