@@ -5,7 +5,7 @@
   * а значения — массивы объектов, соответствующих этим ключам.
   * 
   * @param {Array<Object>} arr - массив объектов для группировки
-  * @param {string} groupKey - имя свойства объектов, по которому производится группировка 
+  * @param {string} groupKey - имя свойства объектов, по которому производится их группировка 
   * 
   * @example
   * const data = [
@@ -31,9 +31,11 @@
 function groupBy(arr, groupKey) {
     const result = {};
     arr.forEach((object) => {
-        const key = object[groupKey];
-        result[key] ??= [];
-        result[key].push(object);
+        if (object.hasOwnProperty(groupKey)) {
+            const key = object[groupKey];
+            result[key] ??= [];
+            result[key].push(object);
+        }
     });
     return result;
 }
