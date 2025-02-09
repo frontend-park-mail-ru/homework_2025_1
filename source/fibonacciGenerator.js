@@ -22,4 +22,16 @@
  * 
  * @returns {number[]} - Массив чисел Фибоначчи.
  */
-const fibonacciGenerator = (n) => n <= 0 ? [] : [...Array(n)].reduce((arr, _, i) => [...arr, i < 2 ? i : arr[i - 1] + arr[i - 2]], []);
+function fibonacciGenerator(n) {
+    if (n <= 0) {
+        return [];
+    }
+
+    const sequence = [0, 1];
+
+    for (let i = 2; i < n; i++) {
+        sequence.push(sequence[i - 1] + sequence[i - 2]);
+    }
+
+    return sequence.slice(0, n); // Ограничиваем до `n` элементов
+}
