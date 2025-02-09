@@ -74,5 +74,13 @@ QUnit.module("Тестируем функцию templateEngine", function() {
         assert.equal(result, "Город: Москва, Улица: {{address.street}, Город: Москва, Дом: 7/2");
     });
 
+    QUnit.test("Работает правильно с неправильными типами вводимых данных", function(assert) {
+        const template = { address: { city: "Москва", street: "2-я Бауманская" } };
+        const data = "Город: {{{address.city}}}, Улица: {{{{{address.street}}}}}";
+        const result = templateEngine(template, data);
+
+        assert.equal(result, "Неверный тип вводимых данных!");
+    });
+
 });
 

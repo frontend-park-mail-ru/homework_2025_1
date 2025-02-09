@@ -11,6 +11,8 @@
  * @returns {String}
  */
 const templateEngine = (template, data) => {
+    if (typeof template != "string" || typeof data != "object")
+        return "Неверный тип вводимых данных!"
     /**
      * Функция для получения объекта, где ключ - выражение для замены из исходного шаблона, а значение - то же выражение без фигурных скобок, и валидации скобок внутри строки.
      * @param {String} str - строка с фигурными скобками 
@@ -20,15 +22,16 @@ const templateEngine = (template, data) => {
      * @returns {Object}
      */
     const bracketsValidation = (str) => {
-        let chars = str.split(''),
-            stack = [],
-            open = '{',
+        const open = '{',
             close = '}',
+            chars = str.split(''),
+            res = {};
+        let stack = [],
             start,
             end,
             afterClose = false,
-            resWord,
-            res = {};
+            resWord;
+            
     
         // Проходимся по строке
         for (let i = 0; i < chars.length; i++) {
