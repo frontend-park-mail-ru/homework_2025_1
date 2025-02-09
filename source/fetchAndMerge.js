@@ -19,33 +19,26 @@
 const fetchAndMergeData = async (urls) => {
     const data = {};
 
-    const fetchUrl = async (url) => {
+    for (const url of urls) {
         try {
             const response = await fetch(url);
             if (!response.ok) {
                 throw new Error('Network error');
             }
 
-            return await response.json();
+            const newData = await response.json();
+
+            Object.entries(newData).forEach(([key, value]) => {
+                if (!data[key]) {
+                    data[key] = [];
+                }
+                if (!data[key].includes(value)) {
+                    data[key].push(value);
+                }
+            });
         } catch (e) {
             return {};
         }
-    }
-
-    const mergeData = (data, newData) => {
-        Object.entries(newData).forEach(([key, value]) => {
-            if (!data[key]) {
-                data[key] = [];
-            }
-            if (!data[key].includes(value)) {
-                data[key].push(value);
-            }
-        });
-    }
-
-    for (const url of urls) {
-        const newData = await fetchUrl(url);
-        mergeData(data, newData);
     }
 
     return data;
