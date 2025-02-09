@@ -10,4 +10,5 @@
  * 
  * @returns {Number}
  */
+
 const max = numbers => Math.max(...numbers);
