@@ -34,7 +34,7 @@ jobs:
       
     - name: ⛔️ Проверяем, изменены ли исходные файлы
       run: |
-          if git diff origin/master | grep -e 'max.js' -e 'CI.yml' -e '.eslintrc.json' -e 'karma.conf.js'; then
+          if git diff origin/master -- ':.eslintrc.json' ':karma.conf.js' ':.github/*' ':source/max.js' ':test/max.js'; then
             echo "Изменения в max.js, CI.yml, .eslintrc.json и karma.conf.js не разрешаются."
             exit 1
           fi
