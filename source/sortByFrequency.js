@@ -9,7 +9,6 @@
  * 
  * @returns {Array<Number>} новый массив, отсортированный по частоте и значению
  */
-
 function sortByFrequency(arr) {
     const frequencyMap = {};
     arr.forEach(num => {
