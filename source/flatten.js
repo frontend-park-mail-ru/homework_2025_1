@@ -7,7 +7,7 @@
  * flatten([1, 2, 3]);
  * @returns {Array} 
  */
-function flatten(arr) {
+const flatten = (arr) => {
     if (!Array.isArray(arr)) {
         throw new TypeError("Аргумент должен быть массивом");
     }
@@ -19,4 +19,4 @@ function flatten(arr) {
             return acc.concat(item); 
         }
     }, []);
-}
+};
