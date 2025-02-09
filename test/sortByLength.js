@@ -18,4 +18,28 @@ QUnit.module("Тестируем функцию sortByLength", function() {
 
         assert.deepEqual(result, ["hello"], "Массив с одной строкой должен вернуть ту же строку.");
     });
+
+    QUnit.test("Правильно сортирует пустой массив", function(assert) {
+        const result = sortByLength([]);
+
+        assert.deepEqual(result, [], "Пустой массив должен вернуть пустой массив");
+    });
+
+    QUnit.test("Правильно сортирует строки с одинаковой длиной со спец символами, числами и буквами", function(assert) {
+        const result = sortByLength(["abacaba", "!@#", "test", "^", "%$*", "aba", "123"]);
+
+        assert.deepEqual(result, ["^", "!@#", "%$*", "123", "aba", "test", "abacaba"], "Строки с одинаковой длиной со спец символам/буквами/числами должны быть отсортированы в алфавитном порядке");
+    });
+
+    QUnit.test("Правильно сортирует строки с одинаковой длиной, учитывая регистр", function(assert) {
+        const result = sortByLength(["aba", "abA", "aBa", "Aba"]);
+
+        assert.deepEqual(result, ["Aba", "aBa", "abA", "aba"], "Строки с одинаковой длиной но с буквами разных регистров должны сортироваться в алфавитном порядке");
+    });
+
+    QUnit.test("Правильно сортирует строки с одинаковой длиной, учитывая регистр", function(assert) {
+        const result = sortByLength(["aba", "aba", "abb", "aba"]);
+
+        assert.deepEqual(result, ["aba", "aba", "aba", "abb"], "Строки с одинаковой длиной но с буквами разных регистров должны сортироваться в алфавитном порядке");
+    });
 });
