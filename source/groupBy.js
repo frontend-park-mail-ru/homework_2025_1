@@ -31,7 +31,7 @@
 function groupBy(arr, groupKey) {
     const result = {};
     arr.forEach((object) => {
-        if (object.hasOwnProperty(groupKey)) {
+        if (Object.hasOwn(object, groupKey)) {
             const key = object[groupKey];
             result[key] ??= [];
             result[key].push(object);
