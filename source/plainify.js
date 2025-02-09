@@ -38,8 +38,16 @@ function plainify(obj, prefix = '') {
 
         const value = obj[key];
 
+        if (typeof value === 'function') {
+            res[prefix + key] = '[Function]'; 
+        }
+
         if (typeof value == 'object' && value !== null) {
-            res = { ...res, ...plainify(value, prefix + key + '.') };
+            if (Object.keys(value).length === 0) {
+                res[prefix + key] = {};
+            } else {
+                Object.assign(res, plainify(value, prefix + key + '.'));
+            }
         } else {
             res[prefix + key] = value;
         }
@@ -47,3 +55,14 @@ function plainify(obj, prefix = '') {
     return res;
 }
 
+const originalObject = {
+    num: 1,
+    hello: function() { return 'hello'; },
+    russia: {
+        omsk: function() { return 'omsk'; }
+    }
+};
+  
+  const result = plainify(originalObject);
+  
+  console.log(result);

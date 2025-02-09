@@ -93,7 +93,7 @@ QUnit.module('Тестируем функцию plainify', () => {
         };
         const result = plainify(originalObject);
     
-        assert.deepEqual(result, { num: 1, b: originalObject.hello, 'russia.omsk': originalObject.c.d }, 'Функции должны быть сохранены, но не вызваны');
+        assert.deepEqual(result, { num: 1, hello: originalObject.hello, 'russia.omsk': originalObject.russia.omsk }, 'Функции должны быть сохранены, но не вызваны');
     });
 
 });
