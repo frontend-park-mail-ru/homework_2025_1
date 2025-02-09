@@ -9,6 +9,25 @@
  * flatten([1, [['hello'], 'world', 4]]);
  * 
  * @returns {Array<Object>}
+ * 
+ * @throws {TypeError} Выбросит ошибку, если аргумент не массив.
  */
-// аргумент Infinity - обработка неограниченного числа уровней вложенности
-const flatten = array => array.flat(Infinity);
+const flatten = function (array) {
+    // проверка, что аргумент - массив
+    if (!Array.isArray(array)) {
+        throw new TypeError('Argument must be an array');
+    }
+
+    let flattenedArray = [];
+    array.forEach(val => {
+        if (Array.isArray(val)) {
+            // добавляем все элементы одномерной версии val, если он массив
+            flattenedArray.push(...flatten(val));
+        } else {
+            // добавляем val, если он не массив
+            flattenedArray.push(val);
+        }
+    });
+
+    return flattenedArray;
+};

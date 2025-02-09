@@ -26,4 +26,11 @@ QUnit.module("Тестируем функцию flatten", function() {
         const result = flatten([1, [['hello'], 'world', 4], [5, 6.54], {'foo': 'bar'}]);
         assert.deepEqual(result, [1, 'hello', 'world', 4, 5, 6.54, {'foo': 'bar'}]);
     });
+
+    QUnit.test("Выбрасывает ошибку, если аргумент не массив", function(assert) {
+        const errorCallback = () => {
+            flatten('[1, 2, 3]');
+        };
+        assert.throws(errorCallback, TypeError);
+    });
 });
