@@ -80,4 +80,29 @@ QUnit.module("Тестируем функцию deepMerge", function() {
         const result = deepMerge(source, target);
         assert.deepEqual(result, expected, "Должно возвращать исходный объект при отсутствии второго");
     });
+
+    QUnit.test("Работает с null и undefined значениями", function(assert) {
+        const source = {
+            name: "Алиса",
+            age: 25,
+            occupation: null,
+            hobbies: undefined
+        };
+    
+        const target = {
+            age: 30,
+            occupation: "Developer",
+            hobbies: ["reading", "gaming"]
+        };
+    
+        const expected = {
+            name: "Алиса",
+            age: 30,
+            occupation: "Developer",
+            hobbies: ["reading", "gaming"]
+        };
+    
+        const result = deepMerge(source, target);
+        assert.deepEqual(result, expected, "Должно заменять null и undefined значения");
+    });
 });
