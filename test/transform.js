@@ -62,4 +62,11 @@ QUnit.module('Тестируем функцию transform', () => {
             } 
         }, 'Все значения в глубоко вложенных объектах должны быть умножены на 10');
     });
+
+    QUnit.test('Выбрасывает ошибку, если transformFn не функция', function (assert) {
+        assert.throws(() => transform({ a: 1 }, null), TypeError, 'Должна быть ошибка, если передан null');
+        assert.throws(() => transform({ a: 1 }, 7), TypeError, 'Должна быть ошибка, если передано число');
+        assert.throws(() => transform({ a: 1 }, 'str'), TypeError, 'Должна быть ошибка, если передана строка');
+        assert.throws(() => transform({ a: 1 }, []), TypeError, 'Должна быть ошибка, если передан объект');
+    });
 });
