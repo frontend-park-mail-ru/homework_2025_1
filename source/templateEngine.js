@@ -10,7 +10,7 @@
  * { age: "42"}
  * @returns {String}
  */
-function templateEngine(template, data) {
+const templateEngine = (template, data) => {
     /**
      * Функция для получения объекта, где ключ - выражение для замены из исходного шаблона, а значение - то же выражение без фигурных скобок, и валидации скобок внутри строки.
      * @param {String} str - строка с фигурными скобками 
@@ -19,8 +19,8 @@ function templateEngine(template, data) {
      * "Мне {{age}} года"
      * @returns {Object}
      */
-    let bracketsValidation = (str) => {
-        var chars = str.split(''),
+    const bracketsValidation = (str) => {
+        let chars = str.split(''),
             stack = [],
             open = '{',
             close = '}',
@@ -31,12 +31,12 @@ function templateEngine(template, data) {
             res = {};
     
         // Проходимся по строке
-        for (var i = 0; i < chars.length; i++) {
+        for (let i = 0; i < chars.length; i++) {
             if (open === chars[i]) {
-                if (stack.length !== 0 && afterClose === true) {
-                    return false;
-                } else if (afterClose === true) {
+                if (stack.length === 0 && afterClose) {
                     res[str.slice(start, end + 1)] = resWord;
+                } else if (stack.length !== 0 && afterClose) {
+                    stack = []
                 }
                 // Нашли открывающую скобку
                 stack.push(i);
@@ -45,36 +45,26 @@ function templateEngine(template, data) {
                 // Нашли закрывающую скобку
                 start = stack.pop();
                 end = i;
-                if (start === undefined) {
-                    return false;
-                }
-                
-                if (afterClose === false) {
+                if (!afterClose) {
                     resWord = str.slice(start + 1, end);
                     afterClose = true;
                 }
             }
         }
     
-        if (stack.length !== 0 && afterClose === true) {
-            return false;
-        } else if (afterClose === true) {
+        if (stack.length === 0 && afterClose) {
             res[str.slice(start, end + 1)] = resWord;
         }
     
         return res;
     };
 
-    var resObj = bracketsValidation(template);
-    if (resObj === false)
-        return "Ошибка в вводе шаблона!";
-    
-    for (var key in resObj) {
-        var tmp = data;
+    let resObj = bracketsValidation(template);
+    for (let key in resObj) {
+        let tmp = data;
         resObj[key].split(".").forEach(item => (tmp = tmp[item])); // с помощью цикла проваливаюсь по уровням объекта до нужной переменной
-        template = template.replace(key, typeof tmp === "undefined" ? "" : tmp); // произвожу соответствующую замену в строке с проверкой 
+        template = template.replaceAll(key, typeof tmp === "undefined" ? "" : tmp); // произвожу соответствующую замену в строке с проверкой 
     }
     return template;
-}
-
+};
 
