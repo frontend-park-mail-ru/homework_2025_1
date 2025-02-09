@@ -11,6 +11,14 @@
  * @returns {String}
  */
 function templateEngine(template, data) {
+    /**
+     * Функция для получения объекта, где ключ - выражение для замены из исходного шаблона, а значение - то же выражение без фигурных скобок, и валидации скобок внутри строки.
+     * @param {String} str - строка с фигурными скобками 
+     * @example
+     * // returns {"{{age}}": "age"}
+     * "Мне {{age}} года"
+     * @returns {Object}
+     */
     let bracketsValidation = (str) => {
         var chars = str.split(''),
             stack = [],
