@@ -81,4 +81,69 @@ QUnit.module('Тестируем функцию groupBy', () => {
             ]
         }, 'Должны быть сгруппированы только объекты со свойством цвета');
     });
+
+    QUnit.test('Работает правильно при наличии вложенных объектов', (assert) => {
+        const data = [
+            { id: 1, type: 'container', contents: {id: 1, category: 'fruit', name: 'apple'} },
+            { id: 2, type: 'container', contents: {id: 2, name: 'cucumber'} },
+            { id: 3, type: 'object', name: 'box' },
+        ];
+        const result = groupBy(data, 'type');
+
+        assert.deepEqual(result, {
+            container: [
+                { id: 1, type: 'container', contents: {id: 1, category: 'fruit', name: 'apple'} },
+                { id: 2, type: 'container', contents: {id: 2, name: 'cucumber'} },
+            ],
+            object: [ 
+                { id: 3, type: 'object', name: 'box' }
+            ]
+        }, 'Должны быть верно сгруппированы вложенные объекты');
+    });
+
+    QUnit.test('Работает правильно при цепочке ключей группировки', (assert) => {
+        const data = [
+            { id: 1, type: 'container', contents: {id: 1, category: 'fruit', name: 'apple'} },
+            { id: 2, type: 'container', contents: {id: 2, name: 'cucumber'} },
+            { id: 3, type: 'object', name: 'box' },
+            { id: 4, type: 'container', contents: {id: 4, category: 'fruit', name: 'banana'} },
+            { id: 5, type: 'container', contents: {id: 5, category: 'vegetable', name: 'carrot'} },
+        ];
+        const result = groupBy(data, 'contents.category');
+
+        assert.deepEqual(result, {
+            fruit: [
+                { id: 1, type: 'container', contents: {id: 1, category: 'fruit', name: 'apple'} },
+                { id: 4, type: 'container', contents: {id: 4, category: 'fruit', name: 'banana'} },
+            ],
+            vegetable: [ 
+                { id: 5, type: 'container', contents: {id: 5, category: 'vegetable', name: 'carrot'} }
+            ]
+        }, 'Объекты должны быть сгруппированы по вложенному свойству category');
+    });
+
+    QUnit.test('Работает правильно при большей цепочке ключей группировки', (assert) => {
+        const data = [
+            { id: 1, type: 'container', contents: {id: 1, name: 'apple', properties: {color: 'green'} } },
+            { id: 2, type: 'container', contents: {id: 2, name: 'cucumber', properties: {color: 'green'} } },
+            { id: 3, type: 'object', name: 'box' },
+            { id: 4, type: 'container', contents: {id: 4, name: 'banana'} },
+            { id: 5, type: 'container', contents: {id: 5, name: 'carrot', properties: {color: 'orange'} } },
+            { id: 6, type: 'container', contents: {id: 6, name: 'strawberry', properties: {amount: 100} } },
+        ];
+        const result = groupBy(data, 'contents.properties.color');
+
+        assert.deepEqual(result, {
+            green: [
+                { id: 1, type: 'container', contents: {id: 1, name: 'apple', properties: {color: 'green'} } },
+                { id: 2, type: 'container', contents: {id: 2, name: 'cucumber', properties: {color: 'green'} } }
+            ],
+            orange: [ 
+                { id: 5, type: 'container', contents: {id: 5, name: 'carrot', properties: {color: 'orange'} } }
+            ]
+        }, 'Объекты должны быть сгруппированы по вложенному свойству color');
+    });
 });
+
+
+
