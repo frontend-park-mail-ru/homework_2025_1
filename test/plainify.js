@@ -56,4 +56,23 @@ QUnit.module('Тестируем функцию plainify', () => {
 
         assert.deepEqual(result, { 1: true, 2: false, 'z.3': true, 'z.4': false }, 'Примитивы и вложенные объекты должны быть правильно преобразованы');
     });
+
+    QUnit.test('Работает правильно с объектом, содержащим массив в значениях свойств объекта', (assert) => {
+        const originalObject = {
+            a: [1, 2, 3],
+            b: {
+                z: [4, 5, 6],
+                e: [0, 4, 5]
+            }
+        };
+        const result = plainify(originalObject);
+
+        assert.deepEqual(result, { a: [1, 2, 3], 'b.z': [4, 5, 6], 'b.e': [0, 4, 5] }, 'Примитивы и вложенные объекты должны быть правильно преобразованы');
+    });
+
+    QUnit.test('Вызывает ошибку, если передается не объект', (assert) => {
+        const originalObject = "Error Error Show";
+
+        assert.throws(() => plainify(originalObject), TypeError, 'Вызывает ошибку, если передать не объект');
+    });
 });
