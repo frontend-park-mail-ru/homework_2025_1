@@ -139,5 +139,26 @@ QUnit.module("Тестируем функцию fetchAndMerge", function() {
         const result = await fetchAndMergeData(urls);
         assert.deepEqual(result, expected, "Должно пропускать недоступные URL");
     });
+
+    QUnit.test("Работает правильно при передаче не массива в качестве аргумента", async function(assert) {
+        const urls = 'https://vk.example.com/vkid';
+        
+        window.fetch = (url) => {
+            const data = {
+                'https://vk.example.com/vkid': { "id": 1, "name": "Олег", "surname": "Петров", "age": 25, "status": "Дуров, верни стену!" },
+            };
+
+            return Promise.resolve({
+                ok: true,
+                json: () => Promise.resolve(data[url]),
+            });
+        };
+
+        await assert.rejects(
+            fetchAndMergeData(urls),
+            new TypeError('Invalid argument: "urls" should be an array'),
+            "Должно выбрасывать исключение при передаче не массива в качестве аргумента"
+        )
+    });
 });
 
