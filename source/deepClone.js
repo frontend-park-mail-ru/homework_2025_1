@@ -2,7 +2,7 @@
 
 /**
  * Функция deepClone выполняет глубокое копирование объекта
- * @param {Object} object Копируемый объект
+ * @param {Object} obj Копируемый объект
  * 
  * @example 
  * // returns [1, 2, 3, [1, 2]]
