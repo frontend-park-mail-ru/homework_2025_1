@@ -12,12 +12,12 @@
  * @returns {Object} Новый объект, содержащий только указанные ключи из исходного объекта.
  */
 
-function filterObjectByKeys(obj, keys) {
-  if (obj === null || obj === undefined || typeof obj !== "object") {
+const filterObjectByKeys = (obj, keys) => {
+  if (obj === null || typeof obj !== "object") {
     return {};
   }
 
-  if (keys === null || keys === undefined || !Array.isArray(keys)) {
+  if (!Array.isArray(keys)) {
     return structuredClone(obj);
   }
 
@@ -27,4 +27,4 @@ function filterObjectByKeys(obj, keys) {
     }
     return acc;
   }, {});
-}
+};
