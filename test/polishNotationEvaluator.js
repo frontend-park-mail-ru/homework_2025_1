@@ -63,7 +63,7 @@ QUnit.module("Тестируем функцию polishNotationEvaluator", functi
     });
 
     QUnit.test("Выбрасывает исключение, если входная строка содержит недопустимые символы", function(assert) {
-        assert.throws(() => polishNotationEvaluator("1 a b"), Error, 'Invalid input.');
+        assert.throws(() => polishNotationEvaluator("a 1 2"), Error, 'Invalid symbol a in input.');
     });
 
     QUnit.test("Выбрасывает исключение, если входная строка содержит неверное количество операндов", function(assert) {
