@@ -50,4 +50,38 @@ QUnit.module('Тестируем функцию deepClone', () => {
         assert.deepEqual(cloned, original, 'Копия массива должна быть равна оригиналу');
         assert.notStrictEqual(cloned[2], original[2], 'Вложенный массив в массиве должен быть независимым');
     });
+
+    QUnit.test('Работает правильно для числа', (assert) => {
+        const original = 1234;
+        const cloned = deepClone(original);
+
+        assert.deepEqual(cloned, original, 'Копия не равна оригиналу');
+    });
+    
+    QUnit.test('Работает правильно для строки', (assert) => {
+        const original = 'hello, there!';
+        const cloned = deepClone(original);
+
+        assert.deepEqual(cloned, original, 'Копия не равна оригиналу');
+    });
+
+    QUnit.test('Работает правильно для дат', (assert) => {
+        const original = new Date();
+        const cloned = deepClone(original);
+        console.log(original);
+
+        assert.deepEqual(cloned, original, 'Копия не равна оригиналу');
+        assert.notStrictEqual(cloned, original, 'Копии должны быть независимы');
+
+    });
+
+    QUnit.test('Работает правильно для множеств', (assert) => {
+        const original = new Set([1, 2, 3]);
+        const cloned = deepClone(original);
+        console.log(original);
+
+        assert.deepEqual(cloned, original, 'Копия не равна оригиналу');
+        assert.notStrictEqual(cloned, original, 'Копии должны быть независимы');
+
+    });
 });
