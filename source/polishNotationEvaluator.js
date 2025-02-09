@@ -13,16 +13,18 @@
  * @throws {Error} - если входная строка содержит недопустимые символы или неверное количество операндов
  */
 const polishNotationEvaluator = (input) => {
-    if (typeof input !== 'string')
+    if (typeof input !== 'string' && !(input instanceof String)) {
         throw new TypeError('Input must be a string.');
+    }
     
     const stack = [];
     const symbols = input.split(' ').filter(Boolean).reverse();
 
     for (const symbol of symbols) {
         if (['+', '-', '*', '/'].includes(symbol)) {
-            if (stack.length < 2)
+            if (stack.length < 2) {
                 throw new Error('Invalid input.');
+            }
             const a = stack.pop();
             const b = stack.pop();
 
@@ -43,12 +45,14 @@ const polishNotationEvaluator = (input) => {
         }
         else {
             const number = parseFloat(symbol);
-            if (isNaN(number))
+            if (isNaN(number)) {
                 throw new Error(`Invalid symbol ${symbol} in input.`);
+            }
             stack.push(number);
         }
     }
-    if (stack.length > 1)
+    if (stack.length > 1) {
         throw new Error('Invalid input.');
+    }
     return stack.pop();
 }
