@@ -47,7 +47,6 @@ const deepCopy = (value) => {
 const findUniqueProperties = (obj1, obj2) => {
     if (
         obj1 === null || obj2 === null ||
-        obj1 === undefined || obj2 === undefined ||
         typeof obj1 !== 'object' || typeof obj2 !== 'object') {
         throw new TypeError("Передан неверный тип данных.");
     }
