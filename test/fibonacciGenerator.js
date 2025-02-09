@@ -18,4 +18,9 @@ QUnit.module("Тестируем функцию fibonacciGenerator", function() 
 
         assert.deepEqual([...fibGen], [], "Генерация отрицательного числа должна вернуть пустой массив.");
     });
+    QUnit.test("Работает правильно с нулем чисел", function(assert) {
+        const fibGen = fibonacciGenerator(0);
+
+        assert.deepEqual([...fibGen], [], "Генерация нуля должна вернуть пустой массив.");
+    });
 });
