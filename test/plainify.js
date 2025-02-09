@@ -34,4 +34,66 @@ QUnit.module('Тестируем функцию plainify', () => {
 
         assert.deepEqual(result, { x: 'hello', y: 42, 'z.a': 1, 'z.b': 2 }, 'Примитивы и вложенные объекты должны быть правильно преобразованы');
     });
+
+    QUnit.test('Работает правильно с объектом, содержащим null', (assert) => {
+        const originalObject = {
+            x: 'hello',
+            y: 42,
+            z: { a: 1, b: 2 },
+            null: null,
+            undefined: undefined,
+        };
+        const result = plainify(originalObject);
+
+        assert.deepEqual(result, { x: 'hello', y: 42, 'z.a': 1, 'z.b': 2, null: null, undefined: undefined }, 'Значения null и undefined должны быть правильно сохранены');
+    });
+
+
+    QUnit.test('Работает правильно с глубинной вложенностью', (assert) => {
+        const originalObject = {
+            hello: {
+                I: {
+                    am: {
+                        a:
+                        {
+                            tree: true
+                        }
+                    }
+                }
+
+            }
+        };
+        const result = plainify(originalObject);
+
+        assert.deepEqual(result, { 'hello.I.am.a.tree': true}, 'Глубокая вложенность должна быть корректно обработана');
+    });
+
+
+    QUnit.test('Работает правильно с объектом, содержащим вложенные пустые объекты', (assert) => {
+        const originalObject = {
+            number: 1,
+            nothing: {},
+            object: {
+                deeper_nothing: {}
+            },
+            bool: false
+        };
+        const result = plainify(originalObject);
+    
+        assert.deepEqual(result, { number: 1, nothing: {}, 'object.deeper_nothing': {}, bool: false }, 'Пустые объекты должны быть сохранены, а вложенные пустые объекты плоскими');
+    });
+    
+    QUnit.test('Работает правильно с объектом, содержащим функции', (assert) => {
+        const originalObject = {
+            num: 1,
+            hello: function() { return 'hello'; },
+            russia: {
+                omsk: function() { return 'omsk'; }
+            }
+        };
+        const result = plainify(originalObject);
+    
+        assert.deepEqual(result, { num: 1, b: originalObject.hello, 'russia.omsk': originalObject.c.d }, 'Функции должны быть сохранены, но не вызваны');
+    });
+
 });
