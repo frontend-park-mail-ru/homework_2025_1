@@ -11,15 +11,63 @@
  * @returns {String}
  */
 function templateEngine(template, data) {
+    let bracketsValidation = (str) => {
+        var chars = str.split(''),
+            stack = [],
+            open = '{',
+            close = '}',
+            start,
+            end,
+            afterClose = false,
+            resWord,
+            res = {};
+    
+        // Проходимся по строке
+        for (var i = 0; i < chars.length; i++) {
+            if (open === chars[i]) {
+                if (stack.length !== 0 && afterClose === true) {
+                    return false;
+                } else if (afterClose === true) {
+                    res[str.slice(start, end + 1)] = resWord;
+                }
+                // Нашли открывающую скобку
+                stack.push(i);
+                afterClose = false;
+            } else if (close === chars[i]) {
+                // Нашли закрывающую скобку
+                start = stack.pop();
+                end = i;
+                if (start === undefined) {
+                    return false;
+                }
+                
+                if (afterClose === false) {
+                    resWord = str.slice(start + 1, end);
+                    afterClose = true;
+                }
+            }
+        }
+    
+        if (stack.length !== 0 && afterClose === true) {
+            return false;
+        } else if (afterClose === true) {
+            res[str.slice(start, end + 1)] = resWord;
+        }
+    
+        return res;
+    };
 
-    const regex = /{{([^}]+)}}/g; // регулярка для получения содержимого внутри фигурных скобок
-    const matchesIterator = template.matchAll(regex); // итератор, хранящий все совпадения по регулярке
-
-    for (const match of matchesIterator) {
+    var resObj = bracketsValidation(template);
+    if (resObj === false)
+        return "Ошибка в вводе шаблона!";
+    
+    console.log(resObj)
+    for (var key in resObj) {
         var tmp = data;
-        match[1].split(".").forEach(item => (tmp = tmp[item])); // с помощью цикла проваливаюсь по уровням объекта до нужной переменной
-        template = template.replace(match[0], typeof tmp === "undefined" ? "" : tmp); // произвожу соответствующую замену в строке с проверкой 
+        resObj[key].split(".").forEach(item => (tmp = tmp[item])); // с помощью цикла проваливаюсь по уровням объекта до нужной переменной
+        template = template.replace(key, typeof tmp === "undefined" ? "" : tmp); // произвожу соответствующую замену в строке с проверкой 
     }
     return template;
 }
+
 
