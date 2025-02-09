@@ -29,13 +29,13 @@ QUnit.module("Тестируем функцию compressObject", function() {
         assert.deepEqual(result, {}, "Пустой объект должен вернуть пустой объект.");
     });
 
-    QUnit.test("Работает с массивом", function(assert) {
+    QUnit.test("Работает с массивом внутри объекта", function(assert) {
         const result = compressObject({
             array: [1, 2, 3, null, undefined, '', 42],
         });
 
-        assert.deepEqual(result, { array: [1, 2, 3, 42] },
-            "Массив должен остаться и не включать пустые элементы.");
+        assert.deepEqual(result, { array: [1, 2, 3, null, undefined, '', 42] },
+            "Массив должен остаться неизменным.");
     });
 
     QUnit.test("Работает с вложенным объектом", function(assert) {
@@ -50,7 +50,7 @@ QUnit.module("Тестируем функцию compressObject", function() {
         });
 
         assert.deepEqual(result, {
-            innerObject: { a: 1, e: [1, 2, 3] },
+            innerObject: { a: 1, e: [1, null, 2, '', 3] },
         }, "Объект должен остаться и не содержать пустые поля.");
     });
 
@@ -72,6 +72,12 @@ QUnit.module("Тестируем функцию compressObject", function() {
         assert.deepEqual(result, {}, "Должен вернуться пустой объект.");
     });
 
+    QUnit.test(`Работает с Boolean`, function(assert) {
+        const result = compressObject(new Boolean(true));
+
+        assert.deepEqual(result, {}, "Должен вернуться пустой объект.");
+    });
+
     QUnit.test(`Работает с undefined`, function(assert) {
         const result = compressObject(undefined);
 
@@ -80,6 +86,24 @@ QUnit.module("Тестируем функцию compressObject", function() {
 
     QUnit.test(`Работает с null`, function(assert) {
         const result = compressObject(null);
+
+        assert.deepEqual(result, {}, "Должен вернуться пустой объект.");
+    });
+
+    QUnit.test(`Работает с Date`, function(assert) {
+        const result = compressObject(new Date());
+
+        assert.deepEqual(result, {}, "Должен вернуться пустой объект.");
+    });
+
+    QUnit.test(`Работает с массивом`, function(assert) {
+        const result = compressObject([1, 2, 3]);
+
+        assert.deepEqual(result, {}, "Должен вернуться пустой объект.");
+    });
+    
+    QUnit.test(`Работает со строкой`, function(assert) {
+        const result = compressObject('string');
 
         assert.deepEqual(result, {}, "Должен вернуться пустой объект.");
     });

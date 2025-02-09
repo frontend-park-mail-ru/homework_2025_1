@@ -1,6 +1,23 @@
 'use strict';
 
 /**
+ * Функция, которая проверяет, является ли переданное значение plain object.
+ * @param {*} value - переданное значение
+ * 
+ * @example
+ * // returns true 
+ * isPlainObject({ a: 42 });
+ * 
+ * @example
+ * // returns false 
+ * isPlainObject(new Boolean(true));
+ * 
+ * @returns {boolean}
+ */
+const isPlainObject = (value) =>
+    Object.prototype.toString.call(value) === '[object Object]';
+
+/**
  * Функция, которая принимает объект и возвращает новый объект, содержащий
  * только те ключи, которые имеют значения, отличные от null, undefined или
  * пустой строки.
@@ -13,23 +30,17 @@
  * @returns {Object}
  */
 const compressObject = (sourceObj) => {
-    if (typeof sourceObj !== 'object' || sourceObj === null) {
+    if (!isPlainObject(sourceObj)) {
         return {};
     }
 
-    return Array.isArray(sourceObj)
-        ? sourceObj
-            .filter((value) => value !== '' && value !== null &&
-                value !== undefined)
-            .map((value) => (typeof value === 'object' ? compressObject(value)
-                : value))
-        : Object
-            .entries(sourceObj)
-            .reduce((compressedObj, [key, value]) => {
-                if (value !== '' && value !== null && value !== undefined) {
-                    compressedObj[key] = (typeof value === 'object') ?
-                        compressObject(value) : value;
-                }
-                return compressedObj;
-            }, {});
+    return Object
+        .entries(sourceObj)
+        .reduce((compressedObj, [key, value]) => {
+            if (value !== '' && value !== null && value !== undefined) {
+                compressedObj[key] = isPlainObject(value) ?
+                    compressObject(value) : structuredClone(value);
+            }
+            return compressedObj;
+        }, {});
 }
