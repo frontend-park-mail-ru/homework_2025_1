@@ -52,8 +52,11 @@ function groupBy(arr, groupKey) {
     const keys = groupKey.split('.');
 
     arr.forEach((object) => {
-        const key = keys.reduce((current, curKey) => current?.[curKey], object);
+        let key = keys.reduce((current, curKey) => current?.[curKey], object);
         if (key !== undefined) {
+            if (typeof key === 'object') {
+                key = JSON.stringify(key);
+            }
             result[key] ??= [];
             result[key].push(object); 
         }

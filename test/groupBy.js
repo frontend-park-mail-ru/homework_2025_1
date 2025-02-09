@@ -143,6 +143,77 @@ QUnit.module('Тестируем функцию groupBy', () => {
             ]
         }, 'Объекты должны быть сгруппированы по вложенному свойству color');
     });
+
+    QUnit.test('Работает правильно при наличии объекта-ключа', (assert) => {
+        const data = [
+            { id: 1, type: 'container', contents: {id: 1, name: 'apple', properties: {color: 'green'} } },
+            { id: 2, type: 'container', contents: {id: 2, name: 'cucumber', properties: {color: 'green'} } },
+            { id: 3, type: 'object', name: 'box' },
+            { id: 4, type: 'container', contents: {id: 1, name: 'apple', properties: {color: 'green'} } },
+            { id: 5, type: 'container', contents: {id: 5, name: 'carrot', properties: {color: 'orange'} } },
+        ];
+        const result = groupBy(data, 'contents');
+
+        assert.deepEqual(result, {
+            '{"id":1,"name":"apple","properties":{"color":"green"}}': [
+                { id: 1, type: 'container', contents: {id: 1, name: 'apple', properties: {color: 'green'} } },
+                { id: 4, type: 'container', contents: {id: 1, name: 'apple', properties: {color: 'green'} } }
+            ],
+            '{"id":2,"name":"cucumber","properties":{"color":"green"}}': [ 
+                { id: 2, type: 'container', contents: {id: 2, name: 'cucumber', properties: {color: 'green'} } }
+            ],
+            '{"id":5,"name":"carrot","properties":{"color":"orange"}}': [
+                { id: 5, type: 'container', contents: {id: 5, name: 'carrot', properties: {color: 'orange'} } }
+            ]
+        }, 'Объекты должны быть сгруппированы по объектам внутри свойства contents');
+    });
+
+    QUnit.test('Работает правильно при наличии массива-ключа', (assert) => {
+        const data = [
+            { id: 1, type: 'container', contents: [{name: 'banana'}, {name: 'apple'}, {name: 'cucumber'}] },
+            { id: 2, type: 'container', contents: [{name: 'banana'}, {name: 'apple'}, {name: 'cucumber'}] },
+            { id: 3, type: 'object', name: 'box' },
+            { id: 4, type: 'container', contents: [{name: 'tomato'}, {name: 'apple'}, {name: 'cucumber'}] },
+            { id: 5, type: 'container', contents: {id: 5, name: 'carrot', properties: {color: 'orange'} } },
+        ];
+        const result = groupBy(data, 'contents');
+
+        assert.deepEqual(result, {
+            '[{"name":"banana"},{"name":"apple"},{"name":"cucumber"}]': [
+                { id: 1, type: 'container', contents: [{name: 'banana'}, {name: 'apple'}, {name: 'cucumber'}] },
+                { id: 2, type: 'container', contents: [{name: 'banana'}, {name: 'apple'}, {name: 'cucumber'}] }
+            ],
+            '[{"name":"tomato"},{"name":"apple"},{"name":"cucumber"}]': [
+                { id: 4, type: 'container', contents: [{name: 'tomato'}, {name: 'apple'}, {name: 'cucumber'}] }
+            ],
+            '{"id":5,"name":"carrot","properties":{"color":"orange"}}': [
+                { id: 5, type: 'container', contents: {id: 5, name: 'carrot', properties: {color: 'orange'} } }
+            ]
+        }, 'Объекты должны быть сгруппированы по массивам (или объектам) внутри свойства contents');
+    });
+
+    QUnit.test('Работает правильно при наличии ключа типа number и BigInt', (assert) => {
+        const data = [
+            {name: 'apple', amount: 123},
+            {name: 'banana', amount: 777},
+            {name: 'tomato', amount: 123n},
+            {name: 'carrot', amount: 1234567890123456789012345678901234567890n},
+        ];
+        const result = groupBy(data, 'amount');
+
+        assert.deepEqual(result, {
+            '123': [
+                { name: 'apple', amount: 123 }, 
+                { name: 'tomato', amount: 123n }
+            ],
+            '777': [
+                { name: 'banana', amount: 777 }
+            ],
+            '1234567890123456789012345678901234567890': [
+                { name: 'carrot', amount: 1234567890123456789012345678901234567890n }
+            ]
+          }, 'Объекты должны быть сгруппированы по соответственным числам');
+    });
 });
 
 
