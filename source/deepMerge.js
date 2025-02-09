@@ -14,7 +14,6 @@
  * // returns { a: 1, b: { x: 10, y: 50, z: 30 }, c: 3, d: 4 }
  * deepMerge({ a: 1, b: { x: 10, y: 20 }, c: 3 }, { b: { y: 50, z: 30 }, d: 4 });
  */
-
 function deepMerge(source, target) {
     if (!source || typeof source !== 'object') return target;
     if (!target || typeof target !== 'object') return source;
