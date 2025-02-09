@@ -16,7 +16,7 @@
  */
 const factorial = (n) => {
     if (typeof n !== 'number') {
-        throw new Error("Факториал должен быть вызван с числом");
+        throw new TypeError("Факториал должен быть вызван с числом");
     }
     if (!Number.isInteger(n)) {
         throw new Error("Факториал должен быть вызван с целым числом");
