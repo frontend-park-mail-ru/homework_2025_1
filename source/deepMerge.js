@@ -1,44 +1,26 @@
-'use strict';
-
 /**
  * Объединяет два объекта в один.
  * Если оба объекта содержат одинаковые ключи, и значения по этим ключам являются объектами,
  * то они должны быть объединены рекурсивно. Если значения не являются объектами,
  * то значение из второго объекта должно перезаписывать значение из первого.
- * @param {Object} obj1 - первый объект
- * @param {Object} obj2 - второй объект
- * 
- * @example
- * // returns { a: 1, b: 2, c: 3 }
- * deepMerge({ a: 1 }, { b: 2, c: 3 });
- * 
+ * @param {Object} obj1 - первый
+ * @param {Object} obj2 - второй
  * @returns {Object} - объединенный объект
  */
 const deepMerge = (obj1, obj2) => {
-  if (typeof obj1!== 'object' || obj1 === null) {
-    throw new TypeError('Первый параметр должен быть объектом');
-  }
-
-  if (typeof obj2!== 'object' || obj2 === null) {
-    return {...obj1 };
-  }
-
-  const result = {...obj1 };
-
-  for (const key in obj2) {
-    if (Object.prototype.hasOwnProperty.call(obj2, key)) {
-      const firstValue = result[key];
-      const secondValue = obj2[key];
-      
-      if (Array.isArray(secondValue)) {
-        result[key] = secondValue;
-      } else if (typeof firstValue === 'object' && firstValue!== null && typeof secondValue === 'object' && secondValue!== null) {
-        result[key] = deepMerge(firstValue, secondValue);
+    const result = {...obj1 };
+  
+    Object.keys(obj2).forEach(key => {
+      if (typeof obj2[key] === 'object' && obj2[key]!== null) {
+        if (typeof obj1[key] === 'object' && obj1[key]!== null) {
+          result[key] = deepMerge(obj1[key], obj2[key]);
+        } else {
+          result[key] = obj2[key];
+        }
       } else {
-        result[key] = secondValue; 
+        result[key] = obj2[key];
       }
-    }
-  }
-
-  return result;
-};
+    });
+  
+    return result;
+  };
