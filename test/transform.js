@@ -25,3 +25,29 @@ QUnit.module('Тестируем функцию transform', () => {
         assert.deepEqual(result, { a: [3, 6, 9], b: 12 }, 'Элементы массива должны быть умножены на 3');
     });
 });
+
+QUnit.module('Тестируем функцию transform на дополнительные свои тесты', () => {
+    QUnit.test('Работает правильно с объектами большой вложенности', (assert) => {
+        const originalObject = { a: 1, b: { c: { d: { e: 4 } } } };
+        const transformFunction = (value) => value * value;
+        const result = transform(originalObject, transformFunction);
+
+        assert.deepEqual(result, { a: 1, b: { c: { d: { e: 16 } } } }, 'Элементы массива должны быть возведены в квадрат');
+    });
+
+    QUnit.test('Работает правильно с объектами, у которых есть значение null в значении ключа массива', (assert) => {
+        const originalObject = { a: 1, b: null, c: 3 };
+        const transformFunction = (value) => value * value;
+        const result = transform(originalObject, transformFunction);
+
+        assert.deepEqual(result, { a: 1, b: null, c: 9 }, 'Элементы массива должны быть возведены в квадрат, элемент null правильно обработан');
+    });
+
+    QUnit.test('Работает правильно с объектами, у которых есть значение null как ключ массива', (assert) => {
+        const originalObject = { a: -1, b: 3, null: null };
+        const transformFunction = (value) => value * value;
+        const result = transform(originalObject, transformFunction);
+
+        assert.deepEqual(result, { a: 1, b: 9, null: null }, 'Элементы массива должны быть возведены в квадрат, элемент null правильно обработан');
+    });
+});
