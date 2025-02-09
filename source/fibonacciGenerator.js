@@ -15,7 +15,7 @@ const fibonacciGenerator = (n) => {
         return [];
     }
 
-    let result = [];
+    const result = [];
     for (let i = 0; i < n; i += 1) {
         result.push((result[i - 1] ?? 0) + (result[i - 2] ?? i));
     }
