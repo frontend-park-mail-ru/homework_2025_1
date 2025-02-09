@@ -21,7 +21,7 @@ function deepMerge(source, target) {
     let merged = { ...source };
 
     for (let key in target) {
-        if (target.hasOwnProperty(key)) {
+        if (Object.prototype.hasOwnProperty.call(target, key)) {
             if (
                 typeof target[key] === 'object' &&
                 target[key] !== null &&
