@@ -4,13 +4,14 @@
  * @param {string} key Ключ, по которому нужно объединить объекты.
  * @returns {Array<object>} Новый массив объединенных объектов.
  */
+
 function mergeBy(arr1, arr2, key) {
     const merged = {};
   
     const mergeObjects = (target, source) => {
       for (const prop in source) {
-        if (source.hasOwnProperty(prop)) {
-          if (target.hasOwnProperty(prop)) {
+        if (Object.prototype.hasOwnProperty.call(source, prop)) {
+          if (Object.prototype.hasOwnProperty.call(target, prop)) {
             if (Array.isArray(target[prop]) && Array.isArray(source[prop])) {
               target[prop] = [...new Set([...target[prop], ...source[prop]])];
             }
@@ -22,7 +23,7 @@ function mergeBy(arr1, arr2, key) {
     };
   
     for (const obj1 of arr1) {
-      if (!obj1.hasOwnProperty(key)) { 
+      if (!Object.prototype.hasOwnProperty.call(obj1, key)) { 
         continue; 
       }
       const keyValue = obj1[key];
@@ -33,7 +34,7 @@ function mergeBy(arr1, arr2, key) {
       }
     }
     for (const obj2 of arr2) {
-      if (!obj2.hasOwnProperty(key)) { 
+      if (!Object.prototype.hasOwnProperty.call(obj2, key)) { 
         continue; 
       }
       const keyValue = obj2[key];
