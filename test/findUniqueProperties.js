@@ -40,6 +40,33 @@ QUnit.module("Тестируем функцию findUniqueProperties", function(
             { a: 1, b: false, c: "string" }
         );
 
-        assert.deepEqual(result, {}, "Должны быть уникальные свойства b.d.");
+        assert.deepEqual(result, {}, "Объекты с одинаковыми свойствами должны вернуть пустой объект.");
+    });
+
+    QUnit.test("Работает правильно, если передан тип не объект", function(assert) {
+        const result = findUniqueProperties(
+            { a: 1, b: true, c: "string" },
+            "fafafa"
+        );
+
+        assert.deepEqual(result, null, "Если передан не объект, должен вернуть null.");
+    });
+
+    QUnit.test("Работает правильно, если передан тип null", function(assert) {
+        const result = findUniqueProperties(
+            { a: 1, b: true, c: "string" },
+            null
+        );
+
+        assert.deepEqual(result, null, "Если передан не объект, должен вернуть null.");
+    });
+
+    QUnit.test("Работает правильно, при передаче массива", function(assert) {
+        const result = findUniqueProperties(
+            { '1': 2, '3': 4, },
+            [5, 6, 7, 8]
+        );
+
+        assert.deepEqual(result, {"0": 5, "2": 7}, "Если передан массив, то он обрабатывается как объект.");
     });
 });
