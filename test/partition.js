@@ -3,6 +3,12 @@
 'use strict';
 
 QUnit.module("Тестируем функцию partition", function() {
+    QUnit.test("Работает правильно при пустом массиве", function(assert) {
+        const isPositive = num => num > 0;
+        const result = partition([], isPositive);
+        assert.deepEqual(result, [[], []]);
+    });
+
     QUnit.test("Работает правильно при разделении массива на основе предиката", function(assert) {
         const isEven = num => num % 2 === 0;
         const result = partition([1, 2, 3, 4, 5, 6], isEven);
@@ -13,6 +19,16 @@ QUnit.module("Тестируем функцию partition", function() {
         ]);
     });
 
+    QUnit.test("Работает правильно при разделении массива на основе предиката", function(assert) {
+        const isPositive = num => num > 0;
+        const result = partition([-1, 1, 2, 3], isPositive);
+
+        assert.deepEqual(result, [
+            [1, 2, 3],
+            [-1]
+        ]);
+    });
+
     QUnit.test("Работает правильно при разделении с предикатом, возвращающим true для всех элементов", function(assert) {
         const isPositive = num => num > 0;
         const result = partition([1, 2, 3, 4, 5], isPositive);
@@ -20,6 +36,16 @@ QUnit.module("Тестируем функцию partition", function() {
         assert.deepEqual(result, [
             [1, 2, 3, 4, 5],
             []
+        ]);
+    });
+
+    QUnit.test("Работает правильно при разделении с предикатом, возвращающим false для всех элементов", function(assert) {
+        const isPositive = num => num > 0;
+        const result = partition([-1, -2, -3, -4, -5], isPositive);
+
+        assert.deepEqual(result, [
+            [],
+            [-1, -2, -3, -4, -5]
         ]);
     });
 
