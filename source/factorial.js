@@ -27,7 +27,7 @@ const factorial = (n) => {
     let result = 1;
     for (let i = 1; i <= n; ++i) {
         result *= i;
-        if (result > Number.MAX_SAFE_INTEGER) {
+        if (n >= 170) {
             result = BigInt(result);
             for (let j = i + 1; j <= n; ++j) {
                 result *= BigInt(j);
