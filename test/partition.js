@@ -42,4 +42,41 @@ QUnit.module("Тестируем функцию partition", function() {
             ]
         ]);
     });
+
+    QUnit.test("Работает правильно с пустым массивом", function(assert) {
+        const nothing = () => true;
+        const result = partition([], nothing);
+    
+        assert.deepEqual(result, [[], []]);
+    });
+
+    QUnit.test("Работает правильно при разделении с предикатом, возвращающим false для всех элементов", function(assert) {
+        const isNegative = num => num < 0;
+        const result = partition([1, 2, 3, 4, 5], isNegative);
+    
+        assert.deepEqual(result, [
+            [], 
+            [1, 2, 3, 4, 5]
+        ]);
+    });
+    
+    QUnit.test("Работает правильно для массива с повторяющимися значениями", function(assert) {
+        const isEven = num => num % 2 === 0;
+        const result = partition([2, 2, 3, 3, 4, 4], isEven);
+    
+        assert.deepEqual(result, [
+            [2, 2, 4, 4], 
+            [3, 3]
+        ]);
+    });
+
+    QUnit.test("Работает правильно с массивом строк", function(assert) {
+        const startsWithA = str => str.startsWith("A");
+        const result = partition(["Alice", "Bob", "Anna", "Mike"], startsWithA);
+    
+        assert.deepEqual(result, [
+            ["Alice", "Anna"], 
+            ["Bob", "Mike"]
+        ]);
+    });
 });
