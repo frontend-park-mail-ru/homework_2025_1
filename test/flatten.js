@@ -16,4 +16,14 @@ QUnit.module("Тестируем функцию flatten", function() {
         const result = flatten([]);
         assert.deepEqual(result, []);
     });
+
+    QUnit.test("Работает правильно с массивом пустых массивов", function(assert) {
+        const result = flatten([[[], []], [[], [[]]], []]);
+        assert.deepEqual(result, []);
+    });
+
+    QUnit.test("Работает правильно с разными типами объектов", function(assert) {
+        const result = flatten([1, [['hello'], 'world', 4], [5, 6.54], {'foo': 'bar'}]);
+        assert.deepEqual(result, [1, 'hello', 'world', 4, 5, 6.54, {'foo': 'bar'}]);
+    });
 });
