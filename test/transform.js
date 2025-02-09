@@ -1,3 +1,5 @@
+/* eslint-disable require-jsdoc */
+
 'use strict';
 
 QUnit.module('Тестируем функцию transform', () => {
