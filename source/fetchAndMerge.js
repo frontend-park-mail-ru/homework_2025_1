@@ -17,6 +17,10 @@
  * @returns {Object}
  */
 const fetchAndMergeData = async (urls) => {
+    if (!Array.isArray(urls)) {
+        throw new TypeError('Invalid argument: "urls" should be an array');
+    }
+
     const data = {};
 
     for (const url of urls) {
@@ -30,16 +34,19 @@ const fetchAndMergeData = async (urls) => {
 
             Object.entries(newData).forEach(([key, value]) => {
                 if (!data[key]) {
-                    data[key] = [];
+                    data[key] = new Set();
                 }
-                if (!data[key].includes(value)) {
-                    data[key].push(value);
-                }
+                data[key].add(value);
             });
         } catch (e) {
-            return {};
+            continue;
         }
     }
 
-    return data;
+    const result = {};
+    Object.entries(data).forEach(([key, value]) => {
+        result[key] = Array.from(value);
+    });
+
+    return result;
 }
