@@ -12,11 +12,14 @@
  * @returns {object}
  */
 const plainify = function (object, prefix = '') {
+    if (Object.getPrototypeOf(object) !== Object.prototype) {
+        throw new TypeError("Функция принимает только объект.");
+    }
     const plainObject = {};
     for (const key in object) {
         const value = object[key];
         const newKey = prefix === '' ? key : prefix + '.' + key;
-        if (typeof value === 'object') {
+        if (Object.getPrototypeOf(value) === Object.prototype) {
             const result = plainify(value, newKey);
             for (const key1 in result) {
                 plainObject[key1] = result[key1];
