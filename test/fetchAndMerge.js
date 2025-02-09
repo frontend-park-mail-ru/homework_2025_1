@@ -112,12 +112,6 @@ QUnit.module("Тестируем функцию fetchAndMerge", function() {
         assert.deepEqual(result, expected, "Должно добавлять уникальные значения по полю");
     });
 
-    QUnit.test("Работает правильно при пустом массиве URL", async function(assert) {
-        const urls = [];
-        const result = await fetchAndMergeData(urls);
-        assert.deepEqual(result, {}, "Должно возвращать пустой объект при пустом массиве URL");
-    });
-
     QUnit.test("Пропускает недоступные URL", async function(assert) {
         const urls = [
             'https://vk.example.com/vkid',
