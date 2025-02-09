@@ -1,0 +1,11 @@
+{
+  "name": "hw_2",
+  "version": "1.0.0",
+  "description": "",
+  "dependencies": {
+    "jsdoc": "^4.0.4"
+  },
+  "scripts": {
+    "docs": "jsdoc source/*.js -d docs"
+  }
+}

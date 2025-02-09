@@ -80,4 +80,43 @@ QUnit.module("Тестируем функцию deepMerge", function() {
         const result = deepMerge(source, target);
         assert.deepEqual(result, expected, "Должно возвращать исходный объект при отсутствии второго");
     });
+
+    /**
+     * Тест на случай, когда оба объекта пустые.
+     * @param {QUnit.Assert} assert - Утверждения QUnit.
+     */
+    QUnit.test("Слияние пустых объектов", function(assert) {
+        const source = {};
+        const target = {};
+        const expected = {};
+
+        const result = deepMerge(source, target);
+        assert.deepEqual(result, expected, "Слияние двух пустых объектов должно дать пустой объект");
+    });
+
+    /**
+     * Тест на случай, когда в одном объекте — примитив, а в другом — вложенный объект.
+     * @param {QUnit.Assert} assert - Утверждения QUnit.
+     */
+    QUnit.test("Слияние примитива и объекта", function(assert) {
+        const source = { user: 123 };
+        const target = { user: { name: "Bob" } };
+        const expected = { user: { name: "Bob" } };
+
+        const result = deepMerge(source, target);
+        assert.deepEqual(result, expected, "Примитив в source заменяется объектом из target");
+    });
+
+    /**
+     * Тест на случай, когда оба значения — это массивы (перезапись массива).
+     * @param {QUnit.Assert} assert - Утверждения QUnit.
+     */
+    QUnit.test("Слияние массивов (перезапись)", function(assert) {
+        const source = { hobbies: ["reading", "gaming"] };
+        const target = { hobbies: ["traveling", "photography"] };
+        const expected = { hobbies: ["traveling", "photography"] };
+
+        const result = deepMerge(source, target);
+        assert.deepEqual(result, expected, "Второй массив полностью заменяет первый");
+    });
 });
