@@ -11,12 +11,13 @@
  * @returns {Array<Number>}
  */
 const fibonacciGenerator = (n) => {
-    if (Number.isInteger(n)) {
-        let result = [];
-        for (let i = 0; i < n; i += 1) {
-            result.push((result[i - 1] ?? 0) + (result[i - 2] ?? i));
-        }
-        return result;
+    if (!Number.isInteger(n)) {
+        return [];
     }
-    return [];
+
+    let result = [];
+    for (let i = 0; i < n; i += 1) {
+        result.push((result[i - 1] ?? 0) + (result[i - 2] ?? i));
+    }
+    return result;
 };
