@@ -51,6 +51,13 @@ QUnit.module("Тестируем функцию polishNotationEvaluator", functi
         assert.equal(result, 7);
     });
 
+    QUnit.test("Правильно вычисляет выражение с десятичными числами", function(assert) {
+        const input = "+ 1.5 2.5"; // 1.5 + 2.5
+        const result = polishNotationEvaluator(input);
+
+        assert.equal(result, 4);
+    });
+
     QUnit.test("Выбрасывает исключение, если входной параметр не является строкой", function(assert) {
         assert.throws(() => polishNotationEvaluator(123), TypeError, 'Input must be a string.');
     });
