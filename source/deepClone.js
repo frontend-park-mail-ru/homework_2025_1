@@ -1,0 +1,33 @@
+'use strict';
+
+/**
+ * Функция для создания глубокой копии объекта.
+ * @param {Object} original - объект для клонирования.
+ *
+ * @example
+ * const obj = { a: 1, b: { c: 2 } };
+ * const clonedObj = deepClone(obj);
+ * console.log(clonedObj); // { a: 1, b: { c: 2 } }
+ *
+ * @returns {Object} - глубокая копия переданного объекта.
+ */
+const deepClone = original => {
+    if (original === null || typeof original !== 'object') {
+        return original;
+    }
+
+    if (Array.isArray(original)) {
+        return original.map(item => deepClone(item));
+    }
+
+    const clonedObject = {};
+    for (const key in original) {
+        if (Object.prototype.hasOwnProperty.call(original, key)) {
+            clonedObject[key] = deepClone(original[key]);
+        }
+    }
+
+    return clonedObject;
+};
+
+export default deepClone;
