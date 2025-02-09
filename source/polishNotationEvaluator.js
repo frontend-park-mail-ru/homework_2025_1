@@ -13,7 +13,7 @@
  * @throws {Error} - если входная строка содержит недопустимые символы или неверное количество операндов
  */
 const polishNotationEvaluator = (input) => {
-    if (typeof input != 'string')
+    if (typeof input !== 'string')
         throw new TypeError('Input must be a string.');
     
     const stack = [];
