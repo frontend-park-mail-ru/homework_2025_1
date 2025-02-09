@@ -1,5 +1,7 @@
 'use strict';
 
+/* eslint-disable require-jsdoc */
+
 QUnit.module("Тестируем функцию partition", function() {
     QUnit.test("Работает правильно при разделении массива на основе предиката", function(assert) {
         const isEven = num => num % 2 === 0;
