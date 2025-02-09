@@ -43,4 +43,27 @@ QUnit.module("Тестируем функцию polishNotationEvaluator", functi
 
         assert.equal(result, -11);
     });
+
+    QUnit.test("Правильно вычисляет выражение с несколькими пробелами", function(assert) {
+        const input = "+   3    4"; // 3 + 4
+        const result = polishNotationEvaluator(input);
+
+        assert.equal(result, 7);
+    });
+
+    QUnit.test("Выбрасывает исключение, если входной параметр не является строкой", function(assert) {
+        assert.throws(() => polishNotationEvaluator(123), TypeError, 'Input must be a string.');
+    });
+
+    QUnit.test("Выбрасывает исключение, если входная строка содержит недопустимые символы", function(assert) {
+        assert.throws(() => polishNotationEvaluator("1 a b"), Error, 'Invalid input.');
+    });
+
+    QUnit.test("Выбрасывает исключение, если входная строка содержит неверное количество операндов", function(assert) {
+        assert.throws(() => polishNotationEvaluator("+ 1"), Error, 'Invalid input.');
+    });
+
+    QUnit.test("Выбрасывает исключение, если входная строка содержит недопустимое количество операндов", function(assert) {
+        assert.throws(() => polishNotationEvaluator("+ 1 2 3"), Error, 'Invalid input.');
+    });
 });

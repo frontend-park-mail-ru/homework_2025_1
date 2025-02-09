@@ -9,13 +9,20 @@
  * polishNotationEvaluator("+ 3 4");
  * 
  * @returns {Number}
+ * @throws {TypeError} - если input не является строкой
+ * @throws {Error} - если входная строка содержит недопустимые символы или неверное количество операндов
  */
 const polishNotationEvaluator = (input) => {
+    if (typeof input != 'string')
+        throw new TypeError('Input must be a string.');
+    
     const stack = [];
-    const symbols = input.split(' ').reverse();
+    const symbols = input.split(' ').filter(Boolean).reverse();
 
     for (const symbol of symbols) {
         if (['+', '-', '*', '/'].includes(symbol)) {
+            if (stack.length < 2)
+                throw new Error('Invalid input.');
             const a = stack.pop();
             const b = stack.pop();
 
@@ -34,8 +41,14 @@ const polishNotationEvaluator = (input) => {
                     break;
             }
         }
-        else
-            stack.push(parseInt(symbol));
+        else {
+            const number = parseFloat(symbol);
+            if (isNaN(number))
+                throw new Error(`Invalid symbol ${symbol} in input.`);
+            stack.push(number);
+        }
     }
+    if (stack.length > 1)
+        throw new Error('Invalid input.');
     return stack.pop();
 }
