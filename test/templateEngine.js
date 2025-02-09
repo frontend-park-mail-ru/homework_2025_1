@@ -24,5 +24,29 @@ QUnit.module("Тестируем функцию templateEngine", function() {
 
         assert.equal(result, "Город: Москва, Улица: 2-я Бауманская");
     });
+
+    QUnit.test("Работает правильно с шаблоном с \"неправильной\" скобочной последовательностью", function(assert) {
+        const template = "Город: {{{address.city}, Улица: {{address.street}}";
+        const data = { address: { city: "Москва", street: "2-я Бауманская" } };
+        const result = templateEngine(template, data);
+
+        assert.equal(result, "Город: {{{address.city}, Улица: 2-я Бауманская");
+    });
+
+    QUnit.test("Работает правильно с шаблоном с \"неправильной\" скобочной последовательностью", function(assert) {
+        const template = "Город: {{address.city}}}, Улица: {{address.street}}";
+        const data = { address: { city: "Москва", street: "2-я Бауманская" } };
+        const result = templateEngine(template, data);
+
+        assert.equal(result, "Город: {{address.city}}}, Улица: 2-я Бауманская");
+    });
+
+    QUnit.test("Работает правильно с шаблоном с большим количеством скобок", function(assert) {
+        const template = "Город: {{{{{address.city}}}}}, Улица: {{address.street}}";
+        const data = { address: { city: "Москва", street: "2-я Бауманская" } };
+        const result = templateEngine(template, data);
+
+        assert.equal(result, "Город: Москва, Улица: 2-я Бауманская");
+    });
 });
 
