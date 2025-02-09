@@ -12,12 +12,24 @@
  * 
  * @returns {Object}
  */
-const compressObject = (sourceObj) =>
-    Object
-        .entries(sourceObj)
-        .reduce((compressedObj, [key, value]) => {
-            if (value !== '' && value !== null && value !== undefined) {
-                compressedObj[key] = structuredClone(value);
-            }
-            return compressedObj;
-        }, {});
+const compressObject = (sourceObj) => {
+    if (typeof sourceObj !== 'object' || sourceObj === null) {
+        return {};
+    }
+
+    return Array.isArray(sourceObj)
+        ? sourceObj
+            .filter((value) => value !== '' && value !== null &&
+                value !== undefined)
+            .map((value) => (typeof value === 'object' ? compressObject(value)
+                : value))
+        : Object
+            .entries(sourceObj)
+            .reduce((compressedObj, [key, value]) => {
+                if (value !== '' && value !== null && value !== undefined) {
+                    compressedObj[key] = (typeof value === 'object') ?
+                        compressObject(value) : value;
+                }
+                return compressedObj;
+            }, {});
+}
