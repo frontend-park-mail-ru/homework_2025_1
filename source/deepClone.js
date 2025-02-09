@@ -29,5 +29,3 @@ const deepClone = original => {
 
     return clonedObject;
 };
-
-export default deepClone;
