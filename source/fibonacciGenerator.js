@@ -33,5 +33,5 @@ function fibonacciGenerator(n) {
         sequence.push(sequence[i - 1] + sequence[i - 2]);
     }
 
-    return sequence.slice(0, n); // Ограничиваем до `n` элементов
+    return sequence.slice(0, n);
 }
