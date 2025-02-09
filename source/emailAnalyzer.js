@@ -75,4 +75,4 @@ function emailAnalyzer(str) {
         uniqueEmails,
         mostFrequentEmail,
     };
-};
+}
