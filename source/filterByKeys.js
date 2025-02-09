@@ -15,8 +15,8 @@ function filterByKeys(obj, keys) {
   for(let i of Object.keys(obj)) {
     if (keys.includes(i)) {
       NewObj[i] = obj[i];
-  };
-  };
+      }
+    }
   return NewObj;
-};
+}
 
