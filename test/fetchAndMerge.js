@@ -46,7 +46,7 @@ QUnit.module("Тестируем функцию fetchAndMerge", function() {
     QUnit.test("Выводит ошибку типа аргумента", async function(assert) {
         await assert.rejects(
             fetchAndMergeData(123),
-            new TypeError('bad argument'),
+            new TypeError('invalid function argument type, array expected'),
             "Должно выдавать ошибку в случае передачи аргумента, отличного от массива"
         )
     });
