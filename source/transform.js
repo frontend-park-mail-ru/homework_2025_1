@@ -16,18 +16,24 @@
 
 function transform (obj, transformFn) {
   if (obj === null) {
-  return null;
+    return null;
   }
 
   if (typeof obj !== 'object') {
     return transformFn(obj);
   }
 
+  if (obj instanceof Boolean) {
+    return transformFn(obj.valueOf());
+  }
+
   const bufferStack = [obj];
   while (bufferStack && bufferStack.length > 0) {
     const currentObj = bufferStack.pop();
     Object.keys(currentObj).forEach(currentObjKey => {
-      if (typeof currentObj[currentObjKey] === 'object' && currentObj[currentObjKey] !== null) {
+      if (currentObj[currentObjKey] instanceof Boolean) {
+        currentObj[currentObjKey] =  transformFn(currentObj[currentObjKey].valueOf());
+      } else if (typeof currentObj[currentObjKey] === 'object' && currentObj[currentObjKey] !== null) {
         bufferStack.push(currentObj[currentObjKey]);
       } else {
         currentObj[currentObjKey] = currentObj[currentObjKey] !== null ? transformFn(currentObj[currentObjKey]) : null;
