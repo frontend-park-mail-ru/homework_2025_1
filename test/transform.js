@@ -35,19 +35,70 @@ QUnit.module('Тестируем функцию transform на дополнит�
         assert.deepEqual(result, { a: 1, b: { c: { d: { e: 16 } } } }, 'Элементы массива должны быть возведены в квадрат');
     });
 
-    QUnit.test('Работает правильно с объектами, у которых есть значение null в значении ключа массива', (assert) => {
-        const originalObject = { a: 1, b: null, c: 3 };
+    QUnit.test('Работает правильно с объектами, у которых внутри есть null', (assert) => {
+        const originalObject = { a: 1, b: null, c: 3, null: null };
         const transformFunction = (value) => value * value;
         const result = transform(originalObject, transformFunction);
 
-        assert.deepEqual(result, { a: 1, b: null, c: 9 }, 'Элементы массива должны быть возведены в квадрат, элемент null правильно обработан');
+        assert.deepEqual(result, { a: 1, b: null, c: 9, null: null }, 'Элементы массива должны быть возведены в квадрат, элемент null правильно обработан');
+    });
+});
+
+
+QUnit.module('Тестируем функцию transform на работу с примитивами', () => {
+    QUnit.test('Работает правильно с null', (assert) => {
+        const originalObject = null;
+        const transformFunction = (value) => value * value;
+        const result = transform(originalObject, transformFunction);
+
+        assert.deepEqual(result, null, 'Элемент null правильно обработан');
     });
 
-    QUnit.test('Работает правильно с объектами, у которых есть значение null как ключ массива', (assert) => {
-        const originalObject = { a: -1, b: 3, null: null };
-        const transformFunction = (value) => value * value;
+    QUnit.test('Работает правильно с типом number', (assert) => {
+        const originalObject = 123;
+        const transformFunction = (value) => value + 1;
         const result = transform(originalObject, transformFunction);
 
-        assert.deepEqual(result, { a: 1, b: 9, null: null }, 'Элементы массива должны быть возведены в квадрат, элемент null правильно обработан');
+        assert.deepEqual(result, 124, 'Элемент типа number правильно обработан, прибавлена единица');
+    });
+
+    QUnit.test('Работает правильно с типом BigInt', (assert) => {
+        const originalObject = BigInt("1234567890123456789012345678901234567890");
+        const transformFunction = (value) => value + 1n;
+        const result = transform(originalObject, transformFunction);
+
+        assert.deepEqual(result, 1234567890123456789012345678901234567891n, 'Элемент типа BigInt правильно обработан, прибавлена единица');
+    });
+
+    QUnit.test('Работает правильно с типом string', (assert) => {
+        const originalObject = "123";
+        const transformFunction = (value) => value + 1;
+        const result = transform(originalObject, transformFunction);
+
+        assert.deepEqual(result, "1231", 'Элемент типа string правильно обработан, дописан символ единицы');
+    });
+
+    QUnit.test('Работает правильно с типом boolean false', (assert) => {
+        const originalObject = false;
+        const transformFunction = (value) => value + 1;
+        const result = transform(originalObject, transformFunction);
+
+        assert.deepEqual(result, 1, 'Элемент типа boolean, false, правильно обработан, прибавлена единица');
+    });
+
+    QUnit.test('Работает правильно с типом boolean true', (assert) => {
+        const originalObject = true;
+        const transformFunction = (value) => { return value == true ? false : true; };
+        const result = transform(originalObject, transformFunction);
+
+        assert.deepEqual(result, false, 'Элемент типа boolean, true, правильно обработан, получен false');
+    });
+
+    QUnit.test('Работает правильно с типом undefined', (assert) => {
+        let originalObject;
+        const transformFunction = (value) => (value);
+        const result = transform(originalObject, transformFunction);
+
+        assert.deepEqual(result, undefined, 'Элемент типа undefined правильно обработан, получен undefined');
     });
 });

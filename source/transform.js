@@ -15,16 +15,24 @@
  */
 
 function transform (obj, transformFn) {
-    const bufferStack = [obj];
-    while (bufferStack && bufferStack.length > 0) {
-      const currentObj = bufferStack.pop();
-      Object.keys(currentObj).forEach(currentObjKey => {
-        if (typeof currentObj[currentObjKey] === 'object' && currentObj[currentObjKey] !== null) {
-          bufferStack.push(currentObj[currentObjKey]);
-        } else {
-            currentObj[currentObjKey] = currentObj[currentObjKey] !== null ? transformFn(currentObj[currentObjKey]) : null;
-        }
-      });
-    }
-    return obj;
-  };
+  if (obj === null) {
+  return null;
+  }
+
+  if (typeof obj !== 'object') {
+    return transformFn(obj);
+  }
+
+  const bufferStack = [obj];
+  while (bufferStack && bufferStack.length > 0) {
+    const currentObj = bufferStack.pop();
+    Object.keys(currentObj).forEach(currentObjKey => {
+      if (typeof currentObj[currentObjKey] === 'object' && currentObj[currentObjKey] !== null) {
+        bufferStack.push(currentObj[currentObjKey]);
+      } else {
+        currentObj[currentObjKey] = currentObj[currentObjKey] !== null ? transformFn(currentObj[currentObjKey]) : null;
+      }
+    });
+  }
+  return obj;
+};
