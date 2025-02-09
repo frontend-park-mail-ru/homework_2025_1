@@ -10,7 +10,6 @@
  * 
  * @returns {Array<Number>}
  */
-
 const fibonacciGenerator = (n) => {
     if (Number.isInteger(n)) {
         let result = [];
