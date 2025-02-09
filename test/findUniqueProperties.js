@@ -27,4 +27,19 @@ QUnit.module("Тестируем функцию findUniqueProperties", function(
 
         assert.deepEqual(result, {}, "Идентичные объекты должны вернуть пустой объект.");
     });
+
+    QUnit.test("Работает правильно для пустых объектов", function(assert) {
+        const result = findUniqueProperties({}, {});
+
+        assert.deepEqual(result, {}, "Пустые объекты должны вернуть пустой объект.");
+    });
+
+    QUnit.test("Работает правильно для объектов с разными типами", function(assert) {
+        const result = findUniqueProperties(
+            { a: 1, b: true, c: "string" },
+            { a: 1, b: false, c: "string" }
+        );
+
+        assert.deepEqual(result, {}, "Должны быть уникальные свойства b.d.");
+    });
 });
