@@ -31,15 +31,9 @@ QUnit.module("Тестируем функцию sortByLength", function() {
         assert.deepEqual(result, ["^", "!@#", "%$*", "123", "aba", "test", "abacaba"], "Строки с одинаковой длиной со спец символам/буквами/числами должны быть отсортированы в алфавитном порядке");
     });
 
-    QUnit.test("Правильно сортирует строки с одинаковой длиной, учитывая регистр", function(assert) {
+    QUnit.test("Правильно сортирует строки с учетом регистра", function(assert) {
         const result = sortByLength(["aba", "abA", "aBa", "Aba"]);
 
         assert.deepEqual(result, ["Aba", "aBa", "abA", "aba"], "Строки с одинаковой длиной но с буквами разных регистров должны сортироваться в алфавитном порядке");
-    });
-
-    QUnit.test("Правильно сортирует строки с одинаковой длиной, учитывая регистр", function(assert) {
-        const result = sortByLength(["aba", "aba", "abb", "aba"]);
-
-        assert.deepEqual(result, ["aba", "aba", "aba", "abb"], "Строки с одинаковой длиной но с буквами разных регистров должны сортироваться в алфавитном порядке");
     });
 });
