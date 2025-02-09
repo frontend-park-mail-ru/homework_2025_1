@@ -10,5 +10,4 @@
  * 
  * @returns {Object} Возвращает глубокую копию object
  */
-
 const deepClone = object => structuredClone(object);
