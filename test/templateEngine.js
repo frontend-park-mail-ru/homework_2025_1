@@ -60,7 +60,7 @@ QUnit.module("Тестируем функцию templateEngine", function() {
         assert.equal(result, "Город: Москва, Улица: 2-я Бауманская");
     });
 
-    Unit.test("Работает правильно с учетом несовпадающего количества открытых и закрытых фигурных скобок", function(assert) {
+    QUnit.test("Работает правильно с учетом несовпадающего количества открытых и закрытых фигурных скобок", function(assert) {
         const template = "Город: {address.city}, Улица: {{address.street}";
         const data = { address: { city: "Москва", street: "2-я Бауманская" } };
         const result = templateEngine(template, data);
