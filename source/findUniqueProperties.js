@@ -49,7 +49,7 @@ const findUniqueProperties = (obj1, obj2) => {
         obj1 === null || obj2 === null ||
         obj1 === undefined || obj2 === undefined ||
         typeof obj1 !== 'object' || typeof obj2 !== 'object') {
-        return null;
+        throw new TypeError("Передан неверный тип данных.");
     }
 
     const resObj = {};
