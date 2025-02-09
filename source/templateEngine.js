@@ -61,7 +61,6 @@ function templateEngine(template, data) {
     if (resObj === false)
         return "Ошибка в вводе шаблона!";
     
-    console.log(resObj)
     for (var key in resObj) {
         var tmp = data;
         resObj[key].split(".").forEach(item => (tmp = tmp[item])); // с помощью цикла проваливаюсь по уровням объекта до нужной переменной
