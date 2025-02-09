@@ -22,18 +22,19 @@
  * // returns [0]
  * fibonacciGenerator(1);
  * 
- * @returns {number[]} - Массив чисел Фибоначчи.
+ * @returns {IterableIterator<number>} - Итератор последовательности Фибоначчи.
  */
-function fibonacciGenerator(n) {
-    if (n <= 0) {
-        return [];
+function* fibonacciGenerator(n) {
+    if (typeof n !== 'number' || !Number.isFinite(n) || n <= 0) {
+        return; // Генератор просто завершит работу
     }
 
-    const sequence = [0, 1];
-
-    for (let i = 2; i < n; i++) {
-        sequence.push(sequence[i - 1] + sequence[i - 2]);
+    let a = 0, b = 1;
+    for (let i = 0; i < n; i++) {
+        yield a;
+        [a, b] = [b, a + b];
     }
-
-    return sequence.slice(0, n);
 }
+
+
+console.log([...fibonacciGenerator(5)]);

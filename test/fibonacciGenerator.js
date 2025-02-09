@@ -23,4 +23,45 @@ QUnit.module("Тестируем функцию fibonacciGenerator", function() 
 
         assert.deepEqual([...fibGen], [], "Генерация нуля должна вернуть пустой массив.");
     });
+    QUnit.test("Работает правильно с NaN", function(assert) {
+        const fibGen = fibonacciGenerator(NaN);
+
+        assert.deepEqual([...fibGen], [], "NaN должен вернуть пустой массив.");
+    });
+
+    QUnit.test("Работает правильно с Infinity", function(assert) {
+        const fibGen = fibonacciGenerator(Infinity);
+
+        assert.deepEqual([...fibGen], [], "Infinity должен вернуть пустой массив.");
+    });
+
+    QUnit.test("Работает правильно с -Infinity", function(assert) {
+        const fibGen = fibonacciGenerator(-Infinity);
+
+        assert.deepEqual([...fibGen], [], "-Infinity должен вернуть пустой массив.");
+    });
+
+    QUnit.test("Работает правильно с null", function(assert) {
+        const fibGen = fibonacciGenerator(null);
+
+        assert.deepEqual([...fibGen], [], "null должен вернуть пустой массив.");
+    });
+
+    QUnit.test("Работает правильно с undefined", function(assert) {
+        const fibGen = fibonacciGenerator(undefined);
+
+        assert.deepEqual([...fibGen], [], "undefined должен вернуть пустой массив.");
+    });
+
+    QUnit.test("Работает правильно со строкой", function(assert) {
+        const fibGen = fibonacciGenerator("5");
+
+        assert.deepEqual([...fibGen], [], "Строка '5' должна вернуть пустой массив.");
+    });
+
+    QUnit.test("Работает правильно с объектом", function(assert) {
+        const fibGen = fibonacciGenerator({});
+
+        assert.deepEqual([...fibGen], [], "Объект {} должен вернуть пустой массив.");
+    });
 });
