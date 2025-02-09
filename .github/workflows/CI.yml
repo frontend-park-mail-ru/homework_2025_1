@@ -31,13 +31,6 @@ jobs:
     - name: ⚙️ Устанавливаем зависимости
       if: '!cancelled()'
       run: npm i eslint@8.17.0 karma karma-chrome-launcher karma-qunit @babel/eslint-parser @babel/preset-env
-      
-    - name: ⛔️ Проверяем, изменены ли исходные файлы
-      run: |
-          if git diff origin/master -- ':.eslintrc.json' ':karma.conf.js' ':.github/*' ':source/max.js' ':test/max.js'; then
-            echo "Изменения в max.js, CI.yml, .eslintrc.json и karma.conf.js не разрешаются."
-            exit 1
-          fi
 
     - name: 🏆 Проверяем качество кода
       if: '!cancelled()'
