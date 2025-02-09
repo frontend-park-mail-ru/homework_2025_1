@@ -14,7 +14,6 @@
  * 
  * @returns {Object} - объединенный объект
  */
-
 const deepMerge = (obj1, obj2) => {
   if (Array.isArray(obj2)) {
     return obj2;
