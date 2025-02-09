@@ -11,10 +11,19 @@
  *
  * @returns {Object} Новый объект, содержащий только указанные ключи из исходного объекта.
  */
+
 function filterObjectByKeys(obj, keys) {
+  if (obj === null || obj === undefined || typeof obj !== "object") {
+    return {};
+  }
+
+  if (keys === null || keys === undefined || !Array.isArray(keys)) {
+    return structuredClone(obj);
+  }
+
   return keys.reduce((acc, key) => {
     if (key in obj) {
-      acc[key] = obj[key];
+      acc[key] = structuredClone(obj[key]);
     }
     return acc;
   }, {});
