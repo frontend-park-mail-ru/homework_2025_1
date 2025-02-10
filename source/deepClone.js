@@ -38,7 +38,7 @@ const deepClone = original => {
 
     const clonedObject = {};
     for (const key in original) {
-        if (original.hasOwnProperty(key)) {
+        if (Object.hasOwn(original, key)) {
             clonedObject[key] = deepClone(original[key]);
         }
     }
