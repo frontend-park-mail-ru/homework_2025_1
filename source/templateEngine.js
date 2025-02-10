@@ -81,8 +81,8 @@ const templateEngine = (template, data) => {
 
         template = template.replaceAll(key, value ?? "")
     }
-
     return template
 }
+
 
 
