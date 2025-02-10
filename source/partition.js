@@ -14,7 +14,7 @@
 const partition = (array, predicate) => {
 
     if (!Array.isArray(array) || typeof predicate !== 'function') {
-        return undefined;
+        return null;
     }
     
     return array.reduce((acc, item) => {

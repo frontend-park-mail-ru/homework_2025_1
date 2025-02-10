@@ -57,7 +57,7 @@ QUnit.module("Тестируем функцию partition", function() {
     QUnit.test("Возвращает undefined для некорректного предиката", function(assert) {
         const result = partition([1, 2, 3], null);
 
-        assert.strictEqual(result, undefined);
+        assert.strictEqual(result, null);
     });
 
     QUnit.test("Правильно работает с массивом, содержащим только одно значение", function(assert) {
@@ -104,14 +104,14 @@ QUnit.module("Тестируем функцию partition", function() {
         const isNonEmptyString = str => str && str.trim() !== "";
         
         const result2 = partition(123, isNonEmptyString);
-        assert.strictEqual(result2, undefined, "Возвращает undefined, если на вход передано число");
+        assert.strictEqual(result2, null, "Возвращает undefined, если на вход передано число");
     
         const result3 = partition("not an array", isNonEmptyString);
-        assert.strictEqual(result3, undefined, "Возвращает undefined, если на вход передана строка");
+        assert.strictEqual(result3, null, "Возвращает undefined, если на вход передана строка");
     
 
         const result4 = partition(null, isNonEmptyString);
-        assert.strictEqual(result4, undefined, "Возвращает undefined, если на вход передано null");
+        assert.strictEqual(result4, null, "Возвращает undefined, если на вход передано null");
     });
     
 });
