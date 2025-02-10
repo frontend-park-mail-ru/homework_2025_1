@@ -11,7 +11,6 @@
  * 
  * @returns {object}
  */
-
 const transform = (obj, transformFn) => {
   if (obj === null || (typeof transformFn !== 'function')) {
     return obj;
