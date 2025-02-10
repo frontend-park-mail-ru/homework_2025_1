@@ -13,6 +13,9 @@
  */
 const partition = (items, predicate) => {
     const result = [[], []];
-    items.forEach(item => result[predicate(item) ? 0 : 1].push(item));
+    items.reduce((subarrays, item) => {
+        subarrays[predicate(item) ? 0 : 1].push(item);
+        return subarrays;
+    }, result);
     return result;
 };
