@@ -12,14 +12,17 @@
  * 
  * @returns {Array} - Массив из двух массивов: в первом элементы удовлетворяют предикату, а во втором нет
  */
-function partition(arr, predicate) {
+let partition = (arr, predicate) => {
     const result = [[], []];
-    for (let i = 0; i < arr.length; i++) {
-        if (predicate(arr[i])) {
-            result[0].push(arr[i]);
-        } else {
-            result[1].push(arr[i]);
-        }
+    if (!Array.isArray(arr)) {
+        throw new Error("Not array");
     }
+    arr.forEach(item => {
+        if (predicate(item)) {
+            result[0].push(item);
+        } else {
+            result[1].push(item);
+        }
+    });
     return result;
 }
