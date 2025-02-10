@@ -1,9 +1,7 @@
 'use strict'
 
 /**
- * Функция, использующая паттерн посетитель, рекурсивно применяет функцию,
- * данную как второй аргумент, ко всем элементам объекта
- * 
+ * Функция, использующая паттерн посетитель, рекурсивно применяет функцию, данную как второй аргумент, ко всем элементам объекта
  * @param {object} obj - объект, который нужно рекурсивно пройти и изменить
  * @param {function} transformFn - функция, которая применяется ко всем значениям в объекте
  * 
@@ -14,9 +12,9 @@
  * @returns {object}
  */
 
-function transform (obj, transformFn) {
-  if (obj === null) {
-    return null;
+const transform = (obj, transformFn) => {
+  if (obj === null || (typeof transformFn !== 'function')) {
+    return obj;
   }
 
   if (typeof obj !== 'object') {
@@ -41,4 +39,4 @@ function transform (obj, transformFn) {
     });
   }
   return obj;
-};
+}

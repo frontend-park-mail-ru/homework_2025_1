@@ -59,6 +59,15 @@ QUnit.module('Тестируем функцию transform на дополнит�
 
         assert.deepEqual(result, [ 2, 3, 1, 4 ], 'Элементы массива должны быть возведены в квадрат');
     });
+
+    QUnit.test('Работает правильно, если вместо функции передать в аргументы что-то другое', (assert) => {
+        const elem = new Boolean(false);
+        const originalObject = [ 1, 2, 3 ];
+        const transformFunction = 42;
+        const result = transform(originalObject, transformFunction);
+
+        assert.deepEqual(result, [ 1, 2, 3 ], 'Элементы массива должны быть не изменившимися');
+    });
 });
 
 
