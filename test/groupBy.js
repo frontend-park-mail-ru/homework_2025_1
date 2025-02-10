@@ -47,4 +47,44 @@ QUnit.module('Тестируем функцию groupBy', () => {
             ]
         }, 'Все объекты должны быть сгруппированы под одним значением');
     });
+
+    QUnit.test('Работает правильно с не-объектами', assert => {
+        const input = [
+            { id: 1, category: "fruit", name: "apple" },
+            "invalid", 
+            { id: 2, category: "vegetable", name: "carrot" }
+        ];
+        const expected = {
+            fruit: [
+              { id: 1, category: "fruit", name: "apple" }
+            ],
+            undefined: ["invalid"],
+            vegetable: [
+              { id: 2, category: "vegetable", name: "carrot" }
+            ]
+        };
+        const result = groupBy(input);
+        assert.deepEqual(result, expected, 'Не-объекты были записаны в категорию "undefined"');
+    });
+
+QUnit.test('Работает правильно с объектами без категории', assert => {
+        const input = [
+            { id: 1, category: "fruit", name: "apple" },
+            { id: 2, name: "unknown" }, 
+            { id: 3, category: "vegetable", name: "carrot" }
+        ];
+        const expected = {
+            fruit: [
+                { id: 1, category: "fruit", name: "apple" }
+            ],
+            undefined: [
+              { id: 2, name: "unknown" }
+            ],
+            vegetable: [
+              { id: 3, category: "vegetable", name: "carrot" }
+            ]
+          };
+        const result = groupBy(input);
+        assert.deepEqual(result, expected, 'Объекты без категории были записаны в группу undefined');
+    });
 });
