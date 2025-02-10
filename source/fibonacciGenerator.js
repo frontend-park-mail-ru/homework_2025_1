@@ -20,4 +20,4 @@ function* fibonacciGenerator(n) {
         b = a + b;
         a = b - a;
     }
-};
+}
