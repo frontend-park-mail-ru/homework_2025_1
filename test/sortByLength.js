@@ -41,7 +41,7 @@ QUnit.module("Тестируем функцию sortByLength", function () {
 	});
 
 	QUnit.test("Правильно сортирует строки с одинаковыми буквами в разном регистре", function (assert) {
-		const result = sortByLength(["a", "A", "b", "B", "aA", "bB"]);
+		const result = sortByLength(["b", "B", "a", "A", "aA", "bB"]);
 		assert.deepEqual(result, ["a", "A", "b", "B", "aA", "bB"], "Строки с одинаковыми буквами в разном регистре должны быть отсортированы согласно алфавиту и длине.");
 	});
 });
