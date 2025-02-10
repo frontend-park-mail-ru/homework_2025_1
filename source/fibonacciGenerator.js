@@ -10,14 +10,14 @@
  * 
  * @returns {Array<Number>}
  */
-const fibonacciGenerator = (n) => {
+function* fibonacciGenerator(n) {
     if (!Number.isInteger(n)) {
-        return [];
+        return;
     }
-
-    const result = [];
+    let a = 0, b = 1;
     for (let i = 0; i < n; i += 1) {
-        result.push((result[i - 1] ?? 0) + (result[i - 2] ?? i));
+        yield a;
+        b = a + b;
+        a = b - a;
     }
-    return result;
 };
