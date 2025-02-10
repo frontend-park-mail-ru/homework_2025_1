@@ -13,15 +13,15 @@
  * 
  * @returns {(number|NaN)}  Возвращает результат вычисления или NaN, если выражение некорректно.
  */
-function polishNotationEvaluator(input) {
+let polishNotationEvaluator = (input) =>  {
     if (!input.trim()) return NaN;  // Если строка пустая или из пробелов
     // Будем идти с конца строки и если встретился оператор, то применяем его к первым двум числам
     // Для хранения будем использовать стек
-    input = input.split(' ');
+    const splitted_input = input.split(' ');
     const stack = [];
 
-    while (input.length > 0) {
-        const current = input.pop();
+    while (splitted_input.length > 0) {
+        const current = splitted_input.pop();
         if (!isNaN(Number(current))) {  // Если число
             stack.push(Number(current));
         } else if (['+', '-', '*', '/'].includes(current)) {  // Если оператор
