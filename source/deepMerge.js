@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Объединяет два объекта в один.
  * Если оба объекта содержат одинаковые ключи, и значения по этим ключам являются объектами,
@@ -15,24 +13,30 @@
  * @returns {Object} - объединенный объект
  */
 const deepMerge = (obj1, obj2) => {
-  if (Array.isArray(obj2)) {
-    return obj2;
+  if (typeof obj1!== 'object' || obj1 === null) {
+    throw new Error('Первый параметр должен быть объектом');
   }
 
-  if (typeof obj2 === 'object' && obj2!== null) {
-    for (const key in obj2) {
-      if (Object.prototype.hasOwnProperty.call(obj2, key)) {
-        if (typeof obj2[key] === 'object' && obj2[key]!== null) {
-          if (!obj1[key]) {
-            obj1[key] = {};
-          }
-          obj1[key] = deepMerge(obj1[key], obj2[key]);
-        } else {
-          obj1[key] = obj2[key];
-        }
+  if (typeof obj2!== 'object' || obj2 === null) {
+    return {...obj1 };
+  }
+
+  const result = {...obj1 };
+
+  for (const key in obj2) {
+    if (Object.prototype.hasOwnProperty.call(obj2, key)) {
+      const value1 = result[key];
+      const value2 = obj2[key];
+      
+      if (Array.isArray(value2)) {
+        result[key] = value2;
+      } else if (typeof value1 === 'object' && value1!== null && typeof value2 === 'object' && value2!== null) {
+        result[key] = deepMerge(value1, value2);
+      } else {
+        result[key] = value2; 
       }
     }
   }
 
-  return obj1;
+  return result;
 };
