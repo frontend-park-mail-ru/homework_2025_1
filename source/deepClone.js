@@ -26,76 +26,25 @@
  *
  * @returns {any}
  */
-function deepClone(obj)
-{
-    if (undefined === obj)
-        return undefined;
+const deepClone = (obj) => {
+    if (null === obj || 'object' !== typeof obj)
+        return obj;
 
-    else if (null === obj)
-        return null;
+    if (obj instanceof Date)
+        return new Date(obj);
 
-    let copy;
-    switch (typeof obj)
-    {
-        case 'object':
-        {
-            if (obj instanceof Date)
-                return new Date (obj);
+    else if (obj instanceof RegExp)
+        return new RegExp(obj);
 
-            else if (obj instanceof RegExp)
-                return new RegExp (obj);
+    else if (obj instanceof Set)
+        return new Set(Array.from(obj, deepClone)); // new Set([...obj].map(deepClone));
 
-            if (obj instanceof Set)
-            {
-                copy = new Set ();
-                for (let val in obj)
-                    copy.add (deepClone (val));
+    else if (obj instanceof Map)
+        return new Map([...obj].map(([key, val]) => [deepClone(key), deepClone(val)]));
 
-            }
-            else if (obj instanceof Array)
-            {
-                copy = [];
-                obj.map (x => copy.push (deepClone(x)));
-            }
-            else if (obj instanceof Map)
-            {
-                copy = new Map ();
-                for (let [key, val] in obj)
-                    copy.set(deepClone (key), deepClone (val));
+    const copy = Array.isArray(obj) ? [] : {};
+    for (let key of Object.keys(obj))
+        copy[key] = deepClone(obj[key]);
 
-            }
-            else
-            {
-                copy = Object ();
-                for (let val in obj)
-                    copy[deepClone (val)] = deepClone (obj[val]);
-
-            }
-
-            return copy;
-        }
-        case 'boolean':
-            return obj ? true : false;
-
-        case 'bigint':
-            return BigInt (obj);
-
-        case 'symbol':
-            return Symbol (obj);
-
-        case 'number':
-        {
-            if (Number.isNaN (obj))
-                return NaN
-
-            return Number (obj);
-        }
-        case 'string':
-        {
-            copy = structuredClone (obj.split ('').join (''));
-            return copy; // У меня нет идей как это сделать лучше
-        }
-        default:
-            return obj;
-    }
+    return copy;
 }

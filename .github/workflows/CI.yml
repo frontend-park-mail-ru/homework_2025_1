@@ -13,29 +13,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    
-    - name: 👀 Выгружаем мастер-ветку
-      run: git fetch origin master:master --update-head-ok
+      - uses: actions/checkout@v4
 
-    - name: 🛠 Конфигурируем систему
-      if: '!cancelled()'
-      run: sudo sed -i 's/openssl_conf = openssl_init/#openssl_conf = openssl_init/g' /etc/ssl/openssl.cnf
+      - name: 👀 Выгружаем мастер-ветку
+        run: git fetch origin master:master --update-head-ok
 
-    - name: 🆙 Используем Node.js 18
-      if: '!cancelled()'
-      uses: actions/setup-node@v4
-      with:
-        node-version: 18.x
-        
-    - name: ⚙️ Устанавливаем зависимости
-      if: '!cancelled()'
-      run: npm i eslint@8.17.0 karma karma-chrome-launcher karma-qunit @babel/eslint-parser @babel/preset-env
+      - name: 🛠 Конфигурируем систему
+        if: '!cancelled()'
+        run: sudo sed -i 's/openssl_conf = openssl_init/#openssl_conf = openssl_init/g' /etc/ssl/openssl.cnf
 
-    - name: 🏆 Проверяем качество кода
-      if: '!cancelled()'
-      run: npx eslint --ext .js,.jsx --max-warnings 0 .
+      - name: 🆙 Используем Node.js 18
+        if: '!cancelled()'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.x
 
-    - name: 🔎 Проверяем тесты
-      if: '!cancelled()'
-      run: npx karma start
+      - name: ⚙️ Устанавливаем зависимости
+        if: '!cancelled()'
+        run: npm i eslint@8.17.0 karma karma-chrome-launcher karma-qunit @babel/eslint-parser @babel/preset-env
+
+      - name: 🏆 Проверяем качество кода
+        if: '!cancelled()'
+        run: npx eslint --ext .js,.jsx --max-warnings 0 .
+
+      - name: 🔎 Проверяем тесты
+        if: '!cancelled()'
+        run: npx karma start
