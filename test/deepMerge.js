@@ -1,7 +1,7 @@
 'use strict';
 
-QUnit.module("Тестируем функцию deepMerge", function () {
-    QUnit.test("Работает правильно с вложенными объектами", function (assert) {
+QUnit.module("Тестируем функцию deepMerge", () => {
+    QUnit.test("Работает правильно с вложенными объектами", (assert) => {
         const source = {
             user: {
                 name: "Alice",
@@ -43,7 +43,7 @@ QUnit.module("Тестируем функцию deepMerge", function () {
         assert.deepEqual(result, expected, "Должно работать правильно с вложенными объектами");
     });
 
-    QUnit.test("Работает правильно с невложенными объектами", function (assert) {
+    QUnit.test("Работает правильно с невложенными объектами", (assert) => {
         const source = {
             name: "Алиса",
             age: 25,
@@ -64,7 +64,7 @@ QUnit.module("Тестируем функцию deepMerge", function () {
         assert.deepEqual(result, expected, "Должно правильно перезаписывать ключи");
     });
 
-    QUnit.test("Работает с пустым исходным объектом", function (assert) {
+    QUnit.test("Работает с пустым вторым объектом", (assert) => {
         const source = {
             name: "Алиса",
             age: 25
@@ -81,43 +81,43 @@ QUnit.module("Тестируем функцию deepMerge", function () {
         assert.deepEqual(result, expected, "Должно возвращать исходный объект при отсутствии второго");
     });
 
-    QUnit.test("Перезапись вложенных значений", function (assert) {
+    QUnit.test("Работает с пустыми первым и вторым объектами", (assert) => {
+        const source = {};
+
+        const target = {};
+
+        const expected = {};
+
+        const result = deepMerge(source, target);
+        assert.deepEqual(result, expected, "Должно возвращать пустой объект");
+    });
+
+    QUnit.test("Перезапись вложенных значений", (assert) => {
         const source = {
-            a: { b: 1 }
+            a: {         
+                aa: [1, 2],
+                bb: [1, 2] 
+            }
         };
 
         const target = {
-            a: { b: 2 }
+            a: { 
+                bb: [3, 4]
+            }
         };
 
         const expected = {
-            a: { b: 2 }
+            a: { 
+                aa: [1, 2],
+                bb: [3, 4] 
+            }
         };
 
         const result = deepMerge(source, target);
         assert.deepEqual(result, expected, "Вложенные значения должны перезаписаться");
     });
 
-    QUnit.test("Объединение массивов как значений", function (assert) {
-        const source = {
-            a: [1, 2],
-            b: [1, 2]
-        };
-
-        const target = {
-            b: [3, 4]
-        };
-
-        const expected = {
-            a: [1, 2],
-            b: [3, 4]
-        };
-
-        const result = deepMerge(source, target);
-        assert.deepEqual(result, expected, "Массив должен перезаписывается целиком");
-    });
-
-    QUnit.test("Падает с ошибкой, если первый агумент - не объект", function (assert) {
+    QUnit.test("Падает с ошибкой, если первый агумент - не объект", (assert) => {
         const source = "Alice";
 
         const target = {
@@ -127,7 +127,7 @@ QUnit.module("Тестируем функцию deepMerge", function () {
         assert.throws(() => deepMerge(source, target), TypeError, "Должна выбрасывать TypeError");
     });
 
-    QUnit.test("Падает с ошибкой, если второй агумент - не объект", function (assert) {
+    QUnit.test("Падает с ошибкой, если второй агумент - не объект", (assert) => {
         const source = {
             a: [1, 2],
             b: [1, 2]
