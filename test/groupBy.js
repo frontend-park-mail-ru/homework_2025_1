@@ -222,7 +222,7 @@ QUnit.module('Тестируем функцию groupBy', () => {
             {name: 'tomato', amount: 123n},
             {name: 'carrot', amount: 1234567890123456789012345678901234567890n},
         ];
-        const result = groupBy(data, 'amount');
+        const result = groupBy(data, new String('amount'));
 
         assert.deepEqual(result, {
             '123': [

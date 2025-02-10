@@ -48,7 +48,7 @@
   * @returns {Object}
   */
 const groupBy = (arr, groupKey) => {
-    if (!Array.isArray(arr) || typeof groupKey !== 'string') {
+    if (!Array.isArray(arr) || Object.prototype.toString.call(groupKey) !== '[object String]') {
         throw new TypeError("Передаваемый аргумент arr должен быть массивом, а groupKey строкой.");
     }
 
@@ -75,6 +75,6 @@ const groupBy = (arr, groupKey) => {
             result[key].push(object); 
         }
     });
-    
+
     return result;
 }
