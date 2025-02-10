@@ -1,4 +1,5 @@
 'use strict';
+/* eslint-disable require-jsdoc */
 
 QUnit.module('Тестируем функцию plainify', () => {
     QUnit.test('Работает правильно с вложенным объектом', (assert) => {
