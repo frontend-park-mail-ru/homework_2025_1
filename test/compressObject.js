@@ -28,4 +28,27 @@ QUnit.module("Тестируем функцию compressObject", function() {
 
         assert.deepEqual(result, {}, "Пустой объект должен вернуть пустой объект.");
     });
+
+    QUnit.test("Работает с пустым вложенным объектом", function(assert) {
+        const result = compressObject({
+            a: {}
+        });
+
+        assert.deepEqual(result, { a: {} }, "Вложенный объект должен сохраниться.")
+    });
+
+    QUnit.test("Работает с вложенным объектом, который содержит нулевые ключи", function(assert) {
+        const result = compressObject({
+            a: {
+                A: null,
+                B: undefined,
+                C: "",
+                D: "Квас"
+            },
+            b: "Компот",
+        });
+
+        assert.deepEqual(result, { a: { A: null, B: undefined, C: "", D: "Квас" }, b: "Компот" }, "Вложенный объект не должен изменить своё содержимое.")
+    });
+
 });
