@@ -17,6 +17,3 @@ const partition = (array, predicate) => {
         return acc;
     }, [[], []]);
 };
-
-// Экспортируем функцию, если требуется
-// module.exports = partition;
