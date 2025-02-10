@@ -35,4 +35,50 @@ QUnit.module("Тестируем функцию mergeBy", function() {
             { id: 2, name: "Bob", age: 25 }
         ]);
     });
+
+    QUnit.test("Работает с пустыми массивами", function(assert) {
+        const result = mergeBy([], [], "id");
+        assert.deepEqual(result, []);
+    });
+
+    QUnit.test("Работает, если нет совпадающих ключей", function(assert) {
+        const array1 = [{ id: 1, name: "Alice" }];
+        const array2 = [{ key: 2, name: "Bob" }];
+        const result = mergeBy(array1, array2, "id");
+
+        assert.deepEqual(result, [
+            { id: 1, name: "Alice" }
+        ]);
+    });
+
+    QUnit.test("Работает, если массивы содержат одинаковые объекты", function(assert) {
+        const array1 = [{ id: 1, name: "Alice" }];
+        const array2 = [{ id: 1, name: "Alice" }];
+        const result = mergeBy(array1, array2, "id");
+
+        assert.deepEqual(result, [{ id: 1, name: "Alice" }]);
+    });
+
+    QUnit.test("Работает правильно, если хотя бы один из параметров не массив", function (assert) {
+        const array1 = [{id: 1, name: "Alice"}];
+        const array2 = "Not an array";
+
+        assert.throws(
+        () => mergeBy(array1, array2, "id"),
+        TypeError,
+        "Ожидается TypeError, если один из параметров не массив"
+        );
+    })
+
+    QUnit.test("Работает правильно, если ключ является текстом", function (assert) {
+        const array1 = [{id: 1, name: "Alice"}];
+        const array2 = [{id: 2, name: "Bob"}];
+        const key = 2;
+
+        assert.throws(
+        () => mergeBy(array1, array2, key),
+        TypeError,
+        "Ожидается TypeError, если ключ не текст"
+        );
+    })
 });
