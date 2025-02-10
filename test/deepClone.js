@@ -33,7 +33,7 @@ QUnit.module('Тестируем функцию deepClone', () => {
         assert.notStrictEqual(cloned[2], original[2], 'Вложенный объект в массиве должен быть независимым');
     });
 
-    QUnit.test('Првоерка глубокого копирования всех стандартных типов в js', (assert) => {
+    QUnit.test('Проверка глубокого копирования всех стандартных типов в js', (assert) => {
         const original = {
             number: 509,
             string: "test",
