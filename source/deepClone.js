@@ -16,13 +16,29 @@ const deepClone = original => {
         return original;
     }
 
+    if (original instanceof Date) {
+        return new Date(original);
+    }
+
+    if (original instanceof RegExp) {
+        return new RegExp(original);
+    }
+
+    if (original instanceof Map) {
+        return new Map(Array.from(original, ([key, value]) => [key, deepClone(value)]));
+    }
+
+    if (original instanceof Set) {
+        return new Set(Array.from(original, item => deepClone(item)));
+    }
+
     if (Array.isArray(original)) {
         return original.map(item => deepClone(item));
     }
 
     const clonedObject = {};
     for (const key in original) {
-        if (Object.prototype.hasOwnProperty.call(original, key)) {
+        if (original.hasOwnProperty(key)) {
             clonedObject[key] = deepClone(original[key]);
         }
     }
