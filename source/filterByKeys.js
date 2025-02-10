@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Функция, фильтрует объект по ключам который есть в массиве
  * @param {Object} obj - объект который нужно фильтровать
@@ -12,11 +14,11 @@
 function filterByKeys(obj, keys) {
   const NewObj = {};
 
-  for(let i of Object.keys(obj)) {
+  Object.keys(obj).forEach((i) => {
     if (keys.includes(i)) {
       NewObj[i] = obj[i];
       }
-    }
+    })
   return NewObj;
 }
 
