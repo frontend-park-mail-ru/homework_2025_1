@@ -1,7 +1,5 @@
 'use strict';
 
-const isPlainObject = (obj) => obj && typeof obj === 'object' && obj.constructor === Object;
-
 /**
  * Функция, объединяющая два объекта.
  * 
@@ -21,10 +19,10 @@ const isPlainObject = (obj) => obj && typeof obj === 'object' && obj.constructor
  * deepMerge({ a: 1, b: { x: 10, y: 20 }, c: 3 }, { b: { y: 50, z: 30 }, d: 4 });
  */
 const deepMerge = (source, target) => {
-    if (!isPlainObject(source)) {
+    if (!(Object.prototype.toString.call(source) === '[object Object]')) {
         throw new TypeError('Первый аргумент должен быть объектом');
     }
-    if (!isPlainObject(target)) {
+    if (!(Object.prototype.toString.call(target) === '[object Object]')) {
         throw new TypeError('Второй аргумент должен быть объектом');
     }
 
@@ -32,7 +30,8 @@ const deepMerge = (source, target) => {
 
     for (let key in target) {
         if (Object.prototype.hasOwnProperty.call(target, key)) {
-            if (isPlainObject(target[key]) && isPlainObject(source[key])) {
+            if (Object.prototype.toString.call(target[key]) === '[object Object]' && 
+                Object.prototype.toString.call(source[key]) === '[object Object]') {
                 merged[key] = deepMerge(source[key], target[key]);
             } else {
                 merged[key] = target[key];
@@ -42,3 +41,4 @@ const deepMerge = (source, target) => {
 
     return merged;
 };
+

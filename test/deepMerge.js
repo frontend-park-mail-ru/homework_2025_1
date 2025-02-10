@@ -138,3 +138,4 @@ QUnit.module("Тестируем функцию deepMerge", () => {
         assert.throws(() => deepMerge(source, target), TypeError, "Должна выбрасывать TypeError");
     });
 });
+
