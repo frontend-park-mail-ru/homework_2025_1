@@ -164,7 +164,35 @@ QUnit.module("Тестируем функцию mergeBy", function() {
         ]);
     });
 
-    QUnit.test("Правильная обработка null значений объектов", function(assert) {
+    QUnit.test("Правильная обработка null массивов", function(assert) {
+        const array1 = [
+            null
+        ];
+        const array2 = [
+            { id: 1, name: "Alice", tags: ["B", "C"], address: { country: "Russia" } }
+        ];
+        const result = mergeBy(array1, array2, "id");
+
+        assert.deepEqual(result, [
+            { id: 1, name: "Alice", tags: ["B", "C"], address: { country: "Russia" } }
+        ]);
+    });
+
+    QUnit.test("Правильная обработка undefined массивов", function(assert) {
+        const array1 = [
+            undefined
+        ];
+        const array2 = [
+            { id: 1, name: "Alice", tags: ["B", "C"], address: { country: "Russia" } }
+        ];
+        const result = mergeBy(array1, array2, "id");
+
+        assert.deepEqual(result, [
+            { id: 1, name: "Alice", tags: ["B", "C"], address: { country: "Russia" } }
+        ]);
+    });
+
+    QUnit.test("Правильная обработка null объектов", function(assert) {
         const array1 = [
             { id: 1, name: "Alice", tags: ["A", "B"], address: null }
         ];
@@ -178,21 +206,7 @@ QUnit.module("Тестируем функцию mergeBy", function() {
         ]);
     });
 
-    QUnit.test("Правильная обработка null значений массивов", function(assert) {
-        const array1 = [
-            { id: 1, name: "Alice", tags: null, address: { city: "Moscow" } }
-        ];
-        const array2 = [
-            { id: 1, name: "Alice", tags: ["B", "C"], address: { country: "Russia" } }
-        ];
-        const result = mergeBy(array1, array2, "id");
-
-        assert.deepEqual(result, [
-            { id: 1, name: "Alice", tags: ["B", "C"], address: { city: "Moscow", country: "Russia" } }
-        ]);
-    });
-
-    QUnit.test("Правильная обработка undefined значений объектов", function(assert) {
+    QUnit.test("Правильная обработка undefined объектов", function(assert) {
         const array1 = [
             { id: 1, name: "Alice", tags: ["A", "B"], address: undefined }
         ];
@@ -206,17 +220,4 @@ QUnit.module("Тестируем функцию mergeBy", function() {
         ]);
     });
 
-    QUnit.test("Правильная обработка undefined значений массивов", function(assert) {
-        const array1 = [
-            { id: 1, name: "Alice", tags: undefined, address: { city: "Moscow" } }
-        ];
-        const array2 = [
-            { id: 1, name: "Alice", tags: ["B", "C"], address: { country: "Russia" } }
-        ];
-        const result = mergeBy(array1, array2, "id");
-
-        assert.deepEqual(result, [
-            { id: 1, name: "Alice", tags: ["B", "C"], address: { city: "Moscow", country: "Russia" } }
-        ]);
-    });
 });
