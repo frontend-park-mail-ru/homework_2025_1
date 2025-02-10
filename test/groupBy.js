@@ -47,4 +47,47 @@ QUnit.module('Тестируем функцию groupBy', () => {
             ]
         }, 'Все объекты должны быть сгруппированы под одним значением');
     });
+
+    // Новые тесты
+    
+    QUnit.test('Обрабатывает объекты без указанного ключа корректно', (assert) => {
+        const data = [
+            { id: 1, category: 'fruit', name: 'apple' },
+            { id: 2, name: 'banana' }, 
+            { id: 3, category: 'vegetable', name: 'carrot' }
+        ];
+        const result = groupBy(data, 'category');
+    
+        assert.deepEqual(result, {
+            fruit: [
+                { id: 1, category: 'fruit', name: 'apple' }],
+            vegetable: [
+                { id: 3, category: 'vegetable', name: 'carrot' }],
+            undefined: [
+                { id: 2, name: 'banana' }]
+        }, 'Объекты без ключа должны группироваться под "undefined"');
+    });
+
+    QUnit.test('Работает правильно с группировкой по числовому ключу', (assert) => {
+        const data = [
+            { id: 1, category: 'fruit', name: 'apple', price: 10 },
+            { id: 2, category: 'fruit', name: 'banana', price: 50 },
+            { id: 3, category: 'vegetable', name: 'carrot', price: 20 },
+            { id: 4, category: 'vegetable', name: 'lettuce', price: 20 }
+        ];
+        const result = groupBy(data, 'price');
+    
+        assert.deepEqual(result, {
+            10: [
+                { id: 1, category: 'fruit', name: 'apple', price: 10 }
+            ],
+            50: [
+                { id: 2, category: 'fruit', name: 'banana', price: 50 }
+            ],
+            20: [
+                { id: 3, category: 'vegetable', name: 'carrot', price: 20 },
+                { id: 4, category: 'vegetable', name: 'lettuce', price: 20 }
+            ]
+        }, 'Объекты должны быть сгруппированы по числовому значению');
+    });
 });
