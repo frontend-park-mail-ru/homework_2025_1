@@ -86,7 +86,8 @@ QUnit.module("Тестируем функцию partition", function() {
             { name: "Alice", age: 25 },
             { name: "Bob" },
             { name: "Charlie", age: 30 },
-            { name: "David", heiht: 120 }
+            { name: "David", height: 120 }
+
         ], hasAge);
 
         assert.deepEqual(result, [
