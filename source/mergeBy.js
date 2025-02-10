@@ -12,11 +12,9 @@
  */
 const mergeBy = (array1, array2, key) => {
     if (!Array.isArray(array1)) {
-        console.warn(`Передан ${typeof array1}. Используем пустой массив.`);
         array1 = [];
     }
     if (!Array.isArray(array2)) {
-        console.warn(`Передан ${typeof array2}. Используем пустой массив.`);
         array2 = [];
     }
 
@@ -53,7 +51,6 @@ const mergeBy = (array1, array2, key) => {
 
     [...array1, ...array2].forEach(obj => {
         if (!obj || typeof obj !== 'object') {
-            console.warn(`Неправильно значение`);
             return;
         }
 
