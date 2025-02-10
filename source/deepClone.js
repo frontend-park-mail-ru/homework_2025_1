@@ -44,8 +44,8 @@ function deepClone(obj) {
     if (obj instanceof Array) {
         copy = [];
         // создаем массив из глубоких копий элементов
-        for (let i = 0, len = obj.length; i < len; i++) {
-            copy[i] = deepClone(obj[i]);
+        for (let elem of obj) {
+            copy.push(deepClone(elem));
         }
         return copy;
     }
