@@ -10,7 +10,7 @@ QUnit.module("Тестируем функцию findUniqueProperties", function(
         assert.deepEqual(result, { a: 1, d: 5 }, "Должны быть уникальные свойства из обоих объектов.");
     });
 
-    QUnit.test("Работает правильно для объекты с отсутствующими свойствами", function(assert) {
+    QUnit.test("Работает правильно для объектов с отсутствующими свойствами", function(assert) {
         const result = findUniqueProperties(
             { x: 10, y: 20 },
             { y: 20, z: 30 }
@@ -26,5 +26,30 @@ QUnit.module("Тестируем функцию findUniqueProperties", function(
         );
 
         assert.deepEqual(result, {}, "Идентичные объекты должны вернуть пустой объект.");
+    });
+    QUnit.test("Работает правильно для пустых объектов", function(assert) {
+        const result = findUniqueProperties(
+            {},
+            {}
+        );
+
+        assert.deepEqual(result, {}, "Пустые объекты должны вернуть пустой объект.");
+    });
+    QUnit.test("Работает правильно для объектов с разными ключами, но одинаковыми значениями ключей", function(assert) {
+        const result = findUniqueProperties(
+            { a: 1 },
+            { c: 1 }
+        );
+
+        assert.deepEqual(result, { a: 1, c: 1}, "Объекты с разными ключами, но одинаковыми" +
+            " значениями, должны вернуть объект с уникальными ключами, независимо от их значений");
+    });
+    QUnit.test("Работает правильно для одного непустого и одного пустого объектов", function(assert) {
+        const result = findUniqueProperties(
+            { a: 1, b: 2 },
+            {}
+        );
+
+        assert.deepEqual(result, { a: 1, b: 2 }, "При непустом и пустом объектах должен вернуться непустой объект.");
     });
 });
