@@ -14,4 +14,25 @@ QUnit.module('Тестируем функцию factorial', () => {
             factorial(-1);
         }, /Факториал не определен для отрицательных чисел/, 'Ошибка выбрасывается для -1');
     });
+
+    // Новые тесты
+    QUnit.test('Факториал 1 должен быть 1', (assert) => {
+        assert.strictEqual(factorial(1), 1, '1! = 1');
+    });
+
+    QUnit.test('Факториал 2 должен быть 2', (assert) => {
+        assert.strictEqual(factorial(2), 2, '2! = 2');
+    });
+
+    QUnit.test('Факториал 3 должен быть 6', (assert) => {
+        assert.strictEqual(factorial(3), 6, '3! = 6');
+    });
+
+    QUnit.test('Факториал 4 должен быть 24', (assert) => {
+        assert.strictEqual(factorial(4), 24, '4! = 24');
+    });
+
+    QUnit.test('Факториал 10 должен быть 3628800', (assert) => {
+        assert.strictEqual(factorial(10), 3628800, '10! = 3628800');
+    });
 });
