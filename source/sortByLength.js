@@ -13,16 +13,12 @@
  * @returns {Array.<string>} - новый массив строк, отсортированный по длине
  */
 const sortByLength = function (arr) {
-	return arr.sort((a, b) => {
-		if (a.length !== b.length)
-			return a.length - b.length;
+	const cmpStr = (a, b) => {
+		if (a.length === b.length)
+			return a.localeCompare(b);
 
-		if (a < b)
-			return -1;
+		return a.length - b.length;
+	};
 
-		if (a > b)
-			return 1;
-
-		return 0;
-	});
+	return arr.sort(cmpStr);
 };
