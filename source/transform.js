@@ -16,11 +16,11 @@
  *
  */
 const transform = (obj, transformFn) => {
-    if (typeof transformFn !== 'function' || typeof obj !== 'object') {
+    if (typeof transformFn !== 'function' || obj === undefined) {
         return {};
     }
 
-    if (obj === null || obj === undefined) {
+    if (typeof obj !== 'object' || obj === null ) {
         return transformFn(obj);
     }
 

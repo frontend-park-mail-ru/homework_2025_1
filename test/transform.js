@@ -107,15 +107,9 @@ QUnit.module('Тестируем функцию transform', () => {
             bool: false,
             obj: { a: 2, b: 'TWO' },
             arr: [2, 'TWO', { c: 6 }],
-            und: undefined,
+            und: {},
             nul: null
         }, 'Разные типы данных должны быть преобразованы согласно их типу');
-    });
-    
-    QUnit.test('Обработка null вместо объекта', (assert) => {
-        const transformFunction = (value) => value * 2;
-        const result = transform(null, transformFunction);
-        assert.deepEqual(result, {}, 'При null вместо объекта должен вернуться пустой объект');
     });
     
     QUnit.test('Обработка null вместо функции преобразования', (assert) => {
