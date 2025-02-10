@@ -19,7 +19,7 @@ function sortByFrequency(arr) {
         frequencyMap.set(num, (frequencyMap.get(num) || 0) + 1);
     }
 
-    return arr.sort((a, b) => {
+    return [...arr].sort((a, b) => {
         const freqA = frequencyMap.get(a);
         const freqB = frequencyMap.get(b);
         return freqA === freqB ? a - b : freqB - freqA;
