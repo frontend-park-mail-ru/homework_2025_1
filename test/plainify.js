@@ -96,4 +96,17 @@ QUnit.module('Тестируем функцию plainify', () => {
         assert.deepEqual(result, { num: 1, hello: originalObject.hello, 'russia.omsk': originalObject.russia.omsk }, 'Функции должны быть сохранены, но не вызваны');
     });
 
+    QUnit.test('Работает правильно с параметром prefix', (assert) => {
+        const originalObject = {
+            a: 1,
+            b: {
+                c: 2
+            }
+        };
+        const result = plainify(originalObject, 'prefix.');
+    
+        assert.deepEqual(result, { 'prefix.a': 1, 'prefix.b.c': 2 }, 'Префикс должен добавляться к каждому ключу на соответствующем уровне вложенности');
+    });
+    
+
 });
