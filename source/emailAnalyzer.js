@@ -1,3 +1,5 @@
+"use strict";
+
 /**
  * Анализатор почтовых адресов
  * @param {string} str - строка, содержащая почтовые адреса
@@ -15,8 +17,8 @@
  */
 const emailAnalyzer = (str) => {
 	let result = {
-		emailCount: 0,
-        uniqueEmails: [],
+		emailCount:        0,
+        uniqueEmails:      [],
         mostFrequentEmail: ""
 	};
 
@@ -28,18 +30,20 @@ const emailAnalyzer = (str) => {
 	result.uniqueEmails = [...new Set(lowerCaseEmails)];
 
 	let max_amount = 0;
-	for(let i = 0; i < lowerCaseEmails.length; i++){
-		let current = 0;
-		for(let j = 0; j < lowerCaseEmails.length; j++){
-			if(lowerCaseEmails[i] == lowerCaseEmails[j]){
-				current++;
-			}
-		}
-		if(max_amount<current){
-			max_amount = current;
-			result.mostFrequentEmail = lowerCaseEmails[i];
-		}
-	}
+	let emailCounts = {};
+	lowerCaseEmails.forEach(email => {
+		if (emailCounts[email]) {
+	    	emailCounts[email]++;
+	  	} else {
+	    	emailCounts[email] = 1;
+	  	}
 
+	  	if (emailCounts[email] > max_amount) {
+	    	max_amount = emailCounts[email];
+	    	result.mostFrequentEmail = email;
+	  	}
+	});
+	
 	return result;
 };
+
