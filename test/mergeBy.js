@@ -220,4 +220,46 @@ QUnit.module("Тестируем функцию mergeBy", function() {
         ]);
     });
 
+    QUnit.test("Правильная обработка с неверными входными данными(строка вместо массива)", function(assert) {
+        const array1 = "id: 1";
+        const array2 = [
+            { id: 1, name: "Alice", tags: ["B", "C"], address: { country: "Russia" } }
+        ];
+        const result = mergeBy(array1, array2, "id");
+
+        assert.deepEqual(result, [
+            { id: 1, name: "Alice", tags: ["B", "C"], address: { country: "Russia" } }
+        ]);
+    });
+
+    QUnit.test("Правильная обработка с неверными входными данными(две строки вместо массивов)", function(assert) {
+        const array1 = "id: 1";
+        const array2 = "{ id: 1, name: Alice }"
+        const result = mergeBy(array1, array2, "id");
+
+        assert.deepEqual(result, [
+        ]);
+    });
+
+    QUnit.test("Правильная обработка с несуществующим ключом", function(assert) {
+        const array1 = "id: 1";
+        const array2 = [
+            { id: 1, name: "Alice", tags: ["B", "C"], address: { country: "Russia" } }
+        ];
+        const result = mergeBy(array1, array2, "sasha");
+
+        assert.deepEqual(result, [
+        ]);
+    });
+
+    QUnit.test("Правильная обработка неверного типа входных данных(один из массивов null, ключ является массивом", function(assert) {
+        const array1 = null;
+        const array2 = [
+            { id: 1, name: "Alice", tags: ["B", "C"], address: { country: "Russia" } }
+        ];
+        const result = mergeBy(array1, array2, ["B", "C"]);
+
+        assert.deepEqual(result, []);
+    });
+
 });
