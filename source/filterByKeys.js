@@ -10,15 +10,17 @@
  * filterObjectByKeys({ a: 1, b: 2, c: 3 }, ['a', 'c']);
  *
  * @returns {Object} Новый объект, содержащий только указанные ключи из исходного объекта.
+ * @throws {TypeError} Если входные параметры не соответствуют ожидаемым типам.
  */
-
 const filterObjectByKeys = (obj, keys) => {
   if (obj === null || typeof obj !== "object") {
-    return {};
+    throw new TypeError("Функция принимает только объект первым аргументом.");
   }
 
   if (!Array.isArray(keys)) {
-    return structuredClone(obj);
+    throw new TypeError(
+      "Функция принимает только массив ключей вторым аргументом."
+    );
   }
 
   return keys.reduce((acc, key) => {

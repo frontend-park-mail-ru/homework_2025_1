@@ -80,77 +80,71 @@ QUnit.module("Тестируем функцию filterObjectByKeys", () => {
   QUnit.test("Работает, если keysToFilter = null", (assert) => {
     const originalObject = { x: 10, y: 20 };
     const keysToFilter = null;
-    const result = filterObjectByKeys(originalObject, keysToFilter);
-    assert.deepEqual(
-      result,
-      { x: 10, y: 20 },
-      "Если все ключи отсутствуют, результат должен быть пустым объектом"
+
+    assert.throws(
+      () => filterObjectByKeys(originalObject, keysToFilter),
+      TypeError,
+      "Вызывает ошибку, если передать не массив ключей"
     );
   });
 
   QUnit.test("Работает, если originalObject = null", (assert) => {
     const originalObject = null;
     const keysToFilter = ["a", "b", "c"];
-    const result = filterObjectByKeys(originalObject, keysToFilter);
-    assert.deepEqual(
-      result,
-      {},
-      "Если все ключи отсутствуют, результат должен быть пустым объектом"
+    assert.throws(
+      () => filterObjectByKeys(originalObject, keysToFilter),
+      TypeError,
+      "Вызывает ошибку, если передать не объект"
     );
   });
 
   QUnit.test("Работает, если originalObject = undefined", (assert) => {
     let originalObject;
     const keysToFilter = ["a", "b", "c"];
-    const result = filterObjectByKeys(originalObject, keysToFilter);
-    assert.deepEqual(
-      result,
-      {},
-      "Если все ключи отсутствуют, результат должен быть пустым объектом"
+    assert.throws(
+      () => filterObjectByKeys(originalObject, keysToFilter),
+      TypeError,
+      "Вызывает ошибку, если передать не объект"
     );
   });
 
   QUnit.test("Работает, если keysToFilter = undefined", (assert) => {
     const originalObject = { x: 10, y: 20 };
     let keysToFilter;
-    const result = filterObjectByKeys(originalObject, keysToFilter);
-    assert.deepEqual(
-      result,
-      { x: 10, y: 20 },
-      "Если все ключи отсутствуют, результат должен быть пустым объектом"
+    assert.throws(
+      () => filterObjectByKeys(originalObject, keysToFilter),
+      TypeError,
+      "Вызывает ошибку, если передать не массив ключей"
     );
   });
 
   QUnit.test("Работает, если originalObject не объект", (assert) => {
     const originalObject = 123;
     const keysToFilter = ["a", "b", "c"];
-    const result = filterObjectByKeys(originalObject, keysToFilter);
-    assert.deepEqual(
-      result,
-      {},
-      "Если все ключи отсутствуют, результат должен быть пустым объектом"
+    assert.throws(
+      () => filterObjectByKeys(originalObject, keysToFilter),
+      TypeError,
+      "Вызывает ошибку, если передать не объект"
     );
   });
 
   QUnit.test("Работает, если originalObject не объект (part 2)", (assert) => {
     const originalObject = "Hello world!";
     const keysToFilter = ["a", "b", "c"];
-    const result = filterObjectByKeys(originalObject, keysToFilter);
-    assert.deepEqual(
-      result,
-      {},
-      "Если все ключи отсутствуют, результат должен быть пустым объектом"
+    assert.throws(
+      () => filterObjectByKeys(originalObject, keysToFilter),
+      TypeError,
+      "Вызывает ошибку, если передать не объект"
     );
   });
 
   QUnit.test("Работает, если keysToFilter не массив", (assert) => {
     const originalObject = { x: 10, y: 20 };
     const keysToFilter = 123;
-    const result = filterObjectByKeys(originalObject, keysToFilter);
-    assert.deepEqual(
-      result,
-      { x: 10, y: 20 },
-      "Если все ключи отсутствуют, результат должен быть пустым объектом"
+    assert.throws(
+      () => filterObjectByKeys(originalObject, keysToFilter),
+      TypeError,
+      "Вызывает ошибку, если передать не массив ключей"
     );
   });
 });
