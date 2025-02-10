@@ -20,14 +20,24 @@ const mergeBy = (array1, array2, key) => {
      * @returns {Object} - Объединенный объект.
      */
     const mergeObjects = (obj1, obj2) => {
-        const result = { ...obj1, ...obj2 };
-        for (const prop in obj1) {
-            if (Array.isArray(obj1[prop]) && Array.isArray(obj2?.[prop])) {
-                result[prop] = [...new Set([...obj1[prop], ...obj2[prop]])];
+        const result = { ...obj1 };
+
+        for (const prop in obj2) {
+            if (prop in obj2) {
+                if (Array.isArray(obj1[prop]) && Array.isArray(obj2[prop])) {
+                    result[prop] = [...new Set([...obj1[prop], ...obj2[prop]])];
+                }
+                else if (typeof obj1[prop] === 'object' && obj1[prop] !== null && typeof obj2[prop] === 'object' && obj2[prop] !== null) {
+                    result[prop] = mergeObjects(obj1[prop], obj2[prop]);
+                }
+                else {
+                    result[prop] = obj2[prop];
+                }
             }
         }
+
         return result;
-    }
+    };
 
     [...array1, ...array2].forEach(obj => {
         if (key in obj) {
