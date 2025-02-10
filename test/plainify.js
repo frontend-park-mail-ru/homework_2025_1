@@ -34,4 +34,92 @@ QUnit.module('Тестируем функцию plainify', () => {
 
         assert.deepEqual(result, { x: 'hello', y: 42, 'z.a': 1, 'z.b': 2 }, 'Примитивы и вложенные объекты должны быть правильно преобразованы');
     });
+
+
+
+
+    QUnit.test('Работает правильно с не вложенным объектом', (assert) => {
+        const originalObject = {
+            x: 14,
+            y: 1,
+            z: 2
+        };
+        const result = plainify(originalObject);
+
+        assert.deepEqual(result, { x: 14, y: 1, z: 2 }, 'Объект не должен измениться');
+    });
+
+    QUnit.test('Работает правильно с объектом, содержащим массив', (assert) => {
+        const originalObject = {
+            x: [1, 2, 3],
+            y: {
+                z: [4, 5]
+            }
+        };
+        const result = plainify(originalObject);
+
+        assert.deepEqual(result, { x: [1, 2, 3], 'y.z': [4, 5] }, 'Массивы должны оставаться неизменными');
+    });
+
+
+
+
+    QUnit.test('Работает правильно с объектом, содержащим null', (assert) => {
+        const originalObject = {
+            x: 'hello',
+            y: 42,
+            z: { a: 1, b: 2 },
+            null: null,
+            undefined: undefined,
+        };
+        const result = plainify(originalObject);
+
+        assert.deepEqual(result, { x: 'hello', y: 42, 'z.a': 1, 'z.b': 2, null: null, undefined: undefined }, 'Значения null и undefined должны быть правильно сохранены');
+    });
+
+    QUnit.test('Работает правильно с глубинной вложенностью', (assert) => {
+        const originalObject = {
+            hello: {
+                I: {
+                    am: {
+                        a:
+                        {
+                            tree: true
+                        }
+                    }
+                }
+
+            }
+        };
+        const result = plainify(originalObject);
+
+        assert.deepEqual(result, { 'hello.I.am.a.tree': true}, 'Глубокая вложенность должна быть корректно обработана');
+    });
+
+    QUnit.test('Работает правильно с объектом, содержащим вложенные пустые объекты', (assert) => {
+        const originalObject = {
+            number: 1,
+            nothing: {},
+            object: {
+                deeper_nothing: {}
+            },
+            bool: false
+        };
+        const result = plainify(originalObject);
+    
+        assert.deepEqual(result, { number: 1, nothing: {}, 'object.deeper_nothing': {}, bool: false }, 'Пустые объекты должны быть сохранены, а вложенные пустые объекты плоскими');
+    });
+    
+    QUnit.test('Работает правильно с объектом, содержащим функции', (assert) => {
+        const originalObject = {
+            num: 1,
+            hello: function() { return 'hello'; },
+            russia: {
+                omsk: function() { return 'omsk'; }
+            }
+        };
+        const result = plainify(originalObject);
+    
+        assert.deepEqual(result, { num: 1, hello: originalObject.hello, 'russia.omsk': originalObject.russia.omsk }, 'Функции должны быть сохранены, но не вызваны');
+    });
 });
