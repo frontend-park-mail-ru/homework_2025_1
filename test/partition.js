@@ -96,7 +96,8 @@ QUnit.module("Тестируем функцию partition", function() {
             ],
             [
                 { name: "Bob" },
-                { name: "David", heiht: 120 }
+                { name: "David", height: 120 }
+
             ]
         ]);
     });
