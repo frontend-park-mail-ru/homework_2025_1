@@ -10,7 +10,7 @@
  * @param {string} key - Ключ, по которому объединяем объекты.
  * @returns {Array<Object>} - Массив объединенных объектов.
  */
-function mergeBy(array1, array2, key) {
+const mergeBy = (array1, array2, key) => {
     const mergedMap = new Map();
 
     /**
@@ -19,7 +19,7 @@ function mergeBy(array1, array2, key) {
      * @param {Object} obj2 - Второй объект.
      * @returns {Object} - Объединенный объект.
      */
-    function mergeObjects(obj1, obj2) {
+    const mergeObjects = (obj1, obj2) => {
         const result = { ...obj1, ...obj2 };
         for (const prop in obj1) {
             if (Array.isArray(obj1[prop]) && Array.isArray(obj2?.[prop])) {
@@ -29,21 +29,15 @@ function mergeBy(array1, array2, key) {
         return result;
     }
 
-    for (const obj of array1) {
-        if (obj.hasOwnProperty(key)) {
-            mergedMap.set(obj[key], obj);
-        }
-    }
-
-    for (const obj of array2) {
-        if (obj.hasOwnProperty(key)) {
+    [...array1, ...array2].forEach(obj => {
+        if (key in obj) {
             if (mergedMap.has(obj[key])) {
                 mergedMap.set(obj[key], mergeObjects(mergedMap.get(obj[key]), obj));
             } else {
                 mergedMap.set(obj[key], obj);
             }
         }
-    }
+    });
 
     return Array.from(mergedMap.values());
 }
