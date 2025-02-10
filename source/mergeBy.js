@@ -11,6 +11,15 @@
  * @returns {Array<Object>} - Массив объединенных объектов.
  */
 const mergeBy = (array1, array2, key) => {
+    if (!Array.isArray(array1)) {
+        console.warn(`Передан ${typeof array1}. Используем пустой массив.`);
+        array1 = [];
+    }
+    if (!Array.isArray(array2)) {
+        console.warn(`Передан ${typeof array2}. Используем пустой массив.`);
+        array2 = [];
+    }
+
     const mergedMap = new Map();
 
     /**
@@ -20,6 +29,9 @@ const mergeBy = (array1, array2, key) => {
      * @returns {Object} - Объединенный объект.
      */
     const mergeObjects = (obj1, obj2) => {
+        if (obj1 === null || obj1 === undefined) return obj2;
+        if (obj2 === null || obj2 === undefined) return obj1;
+
         const result = { ...obj1 };
 
         for (const prop in obj2) {
@@ -40,6 +52,11 @@ const mergeBy = (array1, array2, key) => {
     };
 
     [...array1, ...array2].forEach(obj => {
+        if (!obj || typeof obj !== 'object') {
+            console.warn(`Неправильно значение`);
+            return;
+        }
+
         if (key in obj) {
             if (mergedMap.has(obj[key])) {
                 mergedMap.set(obj[key], mergeObjects(mergedMap.get(obj[key]), obj));
