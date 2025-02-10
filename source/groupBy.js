@@ -47,7 +47,11 @@
   * 
   * @returns {Object}
   */
-function groupBy(arr, groupKey) {
+const groupBy = (arr, groupKey) => {
+    if (!Array.isArray(arr) || typeof groupKey !== 'string') {
+        throw new TypeError("Передаваемый аргумент arr должен быть массивом, а groupKey строкой.");
+    }
+
     const result = {};
     const keys = groupKey.split('.');
 
@@ -55,11 +59,22 @@ function groupBy(arr, groupKey) {
         let key = keys.reduce((current, curKey) => current?.[curKey], object);
         if (key !== undefined) {
             if (typeof key === 'object') {
-                key = JSON.stringify(key);
-            }
+                try {
+                    key = JSON.stringify(key);
+                } 
+                catch (error) {
+                    if (error instanceof TypeError) {
+                        return;
+                    }
+                    else {
+                        throw error;
+                    }
+                }
+            } 
             result[key] ??= [];
             result[key].push(object); 
         }
     });
+    
     return result;
 }

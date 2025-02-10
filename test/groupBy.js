@@ -214,7 +214,39 @@ QUnit.module('Тестируем функцию groupBy', () => {
             ]
           }, 'Объекты должны быть сгруппированы по соответственным числам');
     });
+
+    QUnit.test('Работает правильно при ошибке сериализации JSON.stringify()', (assert) => {
+        const data = [
+            {name: 'apple', amount: [1234567890123456789012345678901234567890n]},
+            {name: 'banana', amount: 777},
+            {name: 'tomato', amount: 123n},
+            {name: 'carrot', amount: 1234567890123456789012345678901234567890n},
+        ];
+        const result = groupBy(data, 'amount');
+
+        assert.deepEqual(result, {
+            '123': [
+                { name: 'tomato', amount: 123n }
+            ],
+            '777': [
+                { name: 'banana', amount: 777 }
+            ],
+            '1234567890123456789012345678901234567890': [
+                { name: 'carrot', amount: 1234567890123456789012345678901234567890n }
+            ]
+          }, 'Объект, вызывающий ошибку TypeError (name=apple), должен быть пропущен');
+    });
+
+    QUnit.test('Работает правильно при неверно переданном типе первого аргумента', (assert) => {
+        assert.throws(() => {groupBy('array', 'string')}, TypeError, "Должна выбрасываться ошибка TypeError");
+    });
+
+    QUnit.test('Работает правильно при неверно переданном типе второго аргумента', (assert) => {
+        const data = [
+            {name: 'apple'},
+            {name: 'banana'}
+        ];
+
+        assert.throws(() => {groupBy(data, 123)}, TypeError, "Должна выбрасываться ошибка TypeError");
+    });
 });
-
-
-
