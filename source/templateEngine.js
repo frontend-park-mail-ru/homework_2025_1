@@ -15,13 +15,13 @@
  * @returns {String}
  */
 const templateEngine = (template, data) => {
-    let stack           = []
+    const stack           = []
+    const properties      = {}
     // bracketsCounter - число скобок в правильной последовательности
-    let bracketsCounter = 0
-    let isSequenceOpen  = false
-    let properties      = {}
-    let startOfSequence = 0,
-        endOfSequence   = 0;
+    let bracketsCounter   = 0
+    let isSequenceOpen    = false
+    let startOfSequence   = 0,
+          endOfSequence   = 0;
 
     // Итерация по символам строки
     for (let i = 0; i < template.length; i++) {
@@ -31,7 +31,7 @@ const templateEngine = (template, data) => {
             // Если до этого была ситуация, при которой количество открывающих скобок было больше количества закрывающих
             if (stack.length != 0 && !isSequenceOpen) {
                 bracketsCounter = 0
-                stack = []
+                stack.length = 0
             }
             // Запоминаем индекс первой открывающей скобки
             if (!isSequenceOpen) {

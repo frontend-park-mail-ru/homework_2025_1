@@ -48,5 +48,20 @@ QUnit.module("Тестируем функцию templateEngine", function() {
 
         assert.equal(result, "Город: Москва, Улица: 2-я Бауманская");
     });
-});
 
+    QUnit.test("Работает правильно с пустой строкой шаблона", function(assert) {
+        const template = "";
+        const data = { address: { city: "Москва", street: "2-я Бауманская" } };
+        const result = templateEngine(template, data);
+
+        assert.equal(result, "");
+    });
+
+    QUnit.test("Работает правильно с пустым объектом данных", function(assert) {
+        const template = "Город: {{{{{address.city}}}}}, Улица: {{address.street}}";
+        const data = {};
+        const result = templateEngine(template, data);
+
+        assert.equal(result, "Город: , Улица: ");
+    });
+});
