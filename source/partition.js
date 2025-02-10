@@ -12,10 +12,8 @@
  * @returns {Array<Array>} - двумерный массив, где элементы первого подмассива удовлетворяют предикату, а второго нет
  */
 const partition = (items, predicate) => {
-    const result = [[], []];
-    items.reduce((subarrays, item) => {
-        subarrays[predicate(item) ? 0 : 1].push(item);
-        return subarrays;
-    }, result);
-    return result;
+    return items.reduce((result, item) => {
+        result[predicate(item) ? 0 : 1].push(item);
+        return result;
+    }, [[], []]);
 };
