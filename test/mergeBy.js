@@ -90,4 +90,77 @@ QUnit.module("Тестируем функцию mergeBy", function() {
             { id: 1, name: "Alice", age: 30 }
         ]);
     });
+
+    QUnit.test("Правильная обработка null значений", function(assert) {
+        const array1 = [
+            { id: 1, name: "Alice" }
+        ];
+        const array2 = [
+            { id: null, name: "Bob" }
+        ];
+        const result = mergeBy(array1, array2, "id");
+
+        assert.deepEqual(result, [
+            { id: 1, name: "Alice" },
+            { id: null, name: "Bob" }
+        ]);
+    });
+
+    QUnit.test("Правильная обработка undefined значений", function(assert) {
+        const array1 = [
+            { id: 1, name: "Alice" }
+        ];
+        const array2 = [
+            { id: undefined, name: "Bob" }
+        ];
+        const result = mergeBy(array1, array2, "id");
+
+        assert.deepEqual(result, [
+            { id: 1, name: "Alice" },
+            { id: undefined, name: "Bob" }
+        ]);
+    });
+
+    QUnit.test("Правильная обработка схожих значений разных типов данных", function(assert) {
+        const array1 = [
+            { id: 1, name: "Alice" }
+        ];
+        const array2 = [
+            { id: "1", name: "Bob" }
+        ];
+        const result = mergeBy(array1, array2, "id");
+
+        assert.deepEqual(result, [
+            { id: 1, name: "Alice" },
+            { id: "1", name: "Bob" }
+        ]);
+    });
+
+    QUnit.test("Правильное объединение вложенных объектов", function(assert) {
+        const array1 = [
+            { id: 1, name: "Alice", address: { city: "Moscow", zip: "119125" } }
+        ];
+        const array2 = [
+            { id: 1, name: "Alice", address: { country: "Russia" } }
+        ];
+        const result = mergeBy(array1, array2, "id");
+
+        assert.deepEqual(result, [
+            { id: 1, name: "Alice", address: { city: "Moscow", zip: "119125", country: "Russia" } }
+        ]);
+    });
+
+    QUnit.test("Правильное объединение вложенных объектов и массивов", function(assert) {
+        const array1 = [
+            { id: 1, name: "Alice", tags: ["A", "B"], address: { city: "Moscow" } }
+        ];
+        const array2 = [
+            { id: 1, name: "Alice", tags: ["B", "C"], address: { country: "Russia" } }
+        ];
+        const result = mergeBy(array1, array2, "id");
+
+        assert.deepEqual(result, [
+            { id: 1, name: "Alice", tags: ["A", "B", "C"], address: { city: "Moscow", country: "Russia" } }
+        ]);
+    });
 });
