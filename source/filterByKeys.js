@@ -24,6 +24,10 @@ const filterObjectByKeys = (obj, keys) => {
   }
 
   return keys.reduce((acc, key) => {
+    if (typeof key !== "string") {
+      throw new TypeError(`Ключ "${key}" должен быть строкой.`);
+    }
+
     if (key in obj) {
       acc[key] = structuredClone(obj[key]);
     }

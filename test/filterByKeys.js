@@ -147,4 +147,17 @@ QUnit.module("Тестируем функцию filterObjectByKeys", () => {
       "Вызывает ошибку, если передать не массив ключей"
     );
   });
+
+  QUnit.test(
+    "Работает, если keysToFilter массив, но не со строками",
+    (assert) => {
+      const originalObject = { x: 10, y: 20 };
+      const keysToFilter = ["a", 10, "c"];
+      assert.throws(
+        () => filterObjectByKeys(originalObject, keysToFilter),
+        TypeError,
+        "Вызывает ошибку, если передать не массив ключей"
+      );
+    }
+  );
 });
