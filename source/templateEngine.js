@@ -11,7 +11,7 @@
  * @returns {String}
  */
 const templateEngine = (template, data) => {
-    if (typeof template != "string" || typeof data != "object")
+    if (typeof template !== "string" || typeof data !== "object")
         return "Неверный тип вводимых данных!"
     /**
      * Функция для получения объекта, где ключ - выражение для замены из исходного шаблона, а значение - то же выражение без фигурных скобок, и валидации скобок внутри строки.
@@ -34,8 +34,8 @@ const templateEngine = (template, data) => {
             
     
         // Проходимся по строке
-        for (let i = 0; i < chars.length; i++) {
-            if (open === chars[i]) {
+        chars.forEach(function(item, i) {
+            if (open === item) {
                 if (stack.length === 0 && afterClose) {
                     res[str.slice(start, end + 1)] = resWord;
                 } else if (stack.length !== 0 && afterClose) {
@@ -44,7 +44,7 @@ const templateEngine = (template, data) => {
                 // Нашли открывающую скобку
                 stack.push(i);
                 afterClose = false;
-            } else if (close === chars[i]) {
+            } else if (close === item) {
                 // Нашли закрывающую скобку
                 start = stack.pop();
                 end = i;
@@ -53,7 +53,7 @@ const templateEngine = (template, data) => {
                     afterClose = true;
                 }
             }
-        }
+        });
     
         if (stack.length === 0 && afterClose) {
             res[str.slice(start, end + 1)] = resWord;
