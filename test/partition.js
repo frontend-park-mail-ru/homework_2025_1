@@ -79,4 +79,49 @@ QUnit.module("Тестируем функцию partition", function() {
             ["Bob", "Mike"]
         ]);
     });
+
+    QUnit.test("Разделяет правильно объекты в зависимости от наличия свойства", function(assert) {
+        const hasAge = obj => "age" in obj;
+        const result = partition([
+            { name: "Alice", age: 25 },
+            { name: "Bob" },
+            { name: "Charlie", age: 30 },
+            { name: "David", heiht: 120 }
+        ], hasAge);
+
+        assert.deepEqual(result, [
+            [
+                { name: "Alice", age: 25 },
+                { name: "Charlie", age: 30 }
+            ],
+            [
+                { name: "Bob" },
+                { name: "David", heiht: 120 }
+            ]
+        ]);
+    });
+
+    QUnit.test("Разделяет правильно массив со смешанными типами данных", function(assert) {
+        const isString = item => typeof item === "string";
+        const result = partition(["Alice", 42, "Bob", 17, "Charlie", 99], isString);
+
+        assert.deepEqual(result, [
+            ["Alice", "Bob", "Charlie"], 
+            [42, 17, 99]
+        ]);
+    });
+
+    QUnit.test("Правильно работает с предикатом с побочным эффектом в виде счетчика вызовов", function(assert) {
+        let temp = 0;
+        const changablePredicate = _ => {
+            temp++;
+            return temp % 2 == 0; 
+        };  
+        const result = partition([1, 2, 3, 4, 5, 6, 7, 8], changablePredicate);
+
+        assert.deepEqual(result, [
+            [2, 4, 6, 8], 
+            [1, 3, 5, 7]  
+        ]);
+    });
 });
