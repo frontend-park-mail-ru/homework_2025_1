@@ -30,8 +30,6 @@
  * //   age: 30
  * // }
  */
-
-
 function plainify(obj, prefix = '') {
     let res = {};
     for (const key in obj) {
@@ -54,15 +52,3 @@ function plainify(obj, prefix = '') {
     }
     return res;
 }
-
-const originalObject = {
-    num: 1,
-    hello: function() { return 'hello'; },
-    russia: {
-        omsk: function() { return 'omsk'; }
-    }
-};
-  
-  const result = plainify(originalObject);
-  
-  console.log(result);
