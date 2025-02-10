@@ -18,18 +18,15 @@ function isObject(value) {
  * @returns {object} Новый объект, полученный в результате глубокого слияния.
  */
 function deepMerge(obj1, obj2) {
-    const result = { ...obj1 };
+    const result = structuredClone(obj1);
 
     for (const key in obj2) {
         if (isObject(obj2[key]) && isObject(result[key])) {
             result[key] = deepMerge(result[key], obj2[key]);
         } else {
-            result[key] = obj2[key];
+            result[key] = structuredClone(obj2[key]);
         }
     }
 
     return result;
 }
-
-
-
