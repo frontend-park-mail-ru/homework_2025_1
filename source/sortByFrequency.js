@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Сортирует массив чисел по частоте появления элементов.
  * Если два элемента имеют одинаковую частоту, они сортируются по возрастанию.
@@ -10,6 +12,9 @@
  * @returns {Array<Number>} новый массив, отсортированный по частоте и значению
  */
 function sortByFrequency(arr) {
+    if (!Array.isArray(arr)) {
+        return []
+    }
     const frequencyMap = {};
     arr.forEach(num => {
         frequencyMap[num] = (frequencyMap[num] || 0) + 1;
