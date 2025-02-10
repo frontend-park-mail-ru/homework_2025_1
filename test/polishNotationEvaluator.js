@@ -28,4 +28,25 @@ QUnit.module("Тестируем функцию polishNotationEvaluator", functi
 
         assert.equal(isNaN(result), true);
     });
+
+    QUnit.test("Правильно обрабатывает деление на ноль", function(assert) {
+        const input = "/ 1 0";
+        const result = polishNotationEvaluator(input);
+
+        assert.equal(isNaN(result), true);
+    });
+
+    QUnit.test("Правильно обрабатывает строки, где есть лишний оператор", function(assert) {
+        const input = "+ + 1 2";
+        const result = polishNotationEvaluator(input);
+
+        assert.equal(isNaN(result), true);
+    });
+
+    QUnit.test("Правильно обрабатывает строки, где есть лишний операнд", function(assert) {
+        const input = "+ 1 2 3";
+        const result = polishNotationEvaluator(input);
+
+        assert.equal(isNaN(result), true);
+    });
 });
