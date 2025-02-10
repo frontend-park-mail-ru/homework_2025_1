@@ -12,6 +12,11 @@
  * @returns {Array<Array>} Двумерный массив, где первый массив содержит элементы, удовлетворяющие предикату, а второй — нет
  */
 const partition = (array, predicate) => {
+
+    if (!Array.isArray(array) || typeof predicate !== 'function') {
+        return undefined;
+    }
+    
     return array.reduce((acc, item) => {
         acc[predicate(item) ? 0 : 1].push(item);
         return acc;
