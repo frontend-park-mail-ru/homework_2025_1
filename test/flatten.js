@@ -28,9 +28,6 @@ QUnit.module("Тестируем функцию flatten", function() {
     });
 
     QUnit.test("Выбрасывает ошибку, если аргумент не массив", function(assert) {
-        const errorCallback = () => {
-            flatten('[1, 2, 3]');
-        };
-        assert.throws(errorCallback, TypeError);
+        assert.throws(() => { flatten('[1, 2, 3]'); }, TypeError);
     });
 });
