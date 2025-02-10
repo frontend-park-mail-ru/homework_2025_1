@@ -14,13 +14,13 @@
  * transform({a: 1, b: {c: 2}}, String);
  * // Возвращает: {a: '1', b: {c: '2'}}
  *
- * @example
- * // Умножение всех чисел на 2
- * transform([1, [2, 3]], x => typeof x === 'number' ? x * 2 : x);
- * // Возвращает: [2, [4, 6]]
  */
-function transform(obj, transformFn) {
-    if (typeof obj !== 'object' || obj === null) {
+const transform = (obj, transformFn) => {
+    if (typeof transformFn !== 'function' || typeof obj !== 'object') {
+        return {};
+    }
+
+    if (obj === null || obj === undefined) {
         return transformFn(obj);
     }
 
