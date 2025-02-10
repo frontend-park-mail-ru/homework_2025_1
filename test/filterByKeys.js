@@ -24,4 +24,40 @@ QUnit.module('Тестируем функцию filterObjectByKeys', () => {
 
         assert.deepEqual(result, { a: 1 }, 'Отсутствующие ключи должны быть проигнорированы');
     });
+
+
+    // Добавленные тесты
+
+
+    QUnit.test('Работает правильно с пустым массивом ключей', (assert) => {
+        const originalObject = { a: 1, b: 2 };
+        const keysToFilter = [];
+        const result = filterObjectByKeys(originalObject, keysToFilter);
+
+        assert.deepEqual(result, {}, 'Если массив ключей пустой, должен возвращаться пустой объект');
+    });
+
+    QUnit.test('Работает правильно с пустым объектом', (assert) => {
+        const originalObject = {};
+        const keysToFilter = ['a', 'b'];
+        const result = filterObjectByKeys(originalObject, keysToFilter);
+
+        assert.deepEqual(result, {}, 'Если исходный объект пустой, должен возвращаться пустой объект');
+    });
+
+    QUnit.test('Работает с объектами, содержащими null и undefined значения', (assert) => {
+        const originalObject = { a: 1, b: null, c: undefined };
+        const keysToFilter = ['a', 'b', 'c'];
+        const result = filterObjectByKeys(originalObject, keysToFilter);
+
+        assert.deepEqual(result, { a: 1, b: null, c: undefined }, 'Null и undefined значения должны быть сохранены');
+    });
+
+    QUnit.test('Работает с числовыми ключами', (assert) => {
+        const originalObject = { 1: 'a', 2: 'b' };
+        const keysToFilter = [1, 2];
+        const result = filterObjectByKeys(originalObject, keysToFilter);
+
+        assert.deepEqual(result, { 1: 'a', 2: 'b' }, 'Числовые ключи должны корректно обрабатываться');
+    });
 });
