@@ -84,3 +84,4 @@ const templateEngine = (template, data) => {
 
     return template
 }
+
