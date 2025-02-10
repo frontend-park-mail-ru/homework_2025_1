@@ -11,7 +11,7 @@
  * 
  * @returns {object}
  */
-const plainify = function (object, prefix = '') {
+const plainify = (object, prefix = '') => {
     if (Object.getPrototypeOf(object) !== Object.prototype) {
         throw new TypeError("Функция принимает только объект.");
     }
