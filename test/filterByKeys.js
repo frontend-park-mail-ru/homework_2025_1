@@ -60,4 +60,50 @@ QUnit.module('Тестируем функцию filterObjectByKeys', () => {
 
         assert.deepEqual(result, { 1: 'a', 2: 'b' }, 'Числовые ключи должны корректно обрабатываться');
     });
+
+    
+    // Проверка типов
+
+
+    QUnit.test('Работает, если originalObject не объект', (assert) => {
+        const keysToFilter = [1, 2];
+
+        const objectsToTest = {            
+            'number': 1,
+            'bigint': 1n,
+            'string': 'London is the capital of Great Britain',
+            'boolean': false,
+            'null': null,
+            'undefined': undefined
+        };
+
+        for (const [testedType, testedObject] of Object.entries(objectsToTest)) {
+            assert.throws(
+                () => filterObjectByKeys(testedObject, keysToFilter),
+                TypeError,
+                `Должно быть выброшено исключение TypeError, если typeof obj === ${testedType}`
+            );
+        }
+    });
+
+    QUnit.test('Работает, если keysToFilter не массив', (assert) => {
+        const originalObject = { a: 1, b: 2, c: 3 };
+
+        const keysToTest = {            
+            'number': 1,
+            'bigint': 1n,
+            'string': 'London is the capital of Great Britain',
+            'boolean': false,
+            'null': null,
+            'undefined': undefined
+        };
+
+        for (const [testedType, testedKeys] of Object.entries(keysToTest)) {
+            assert.throws(
+                () => filterObjectByKeys(originalObject, testedKeys),
+                TypeError,
+                `Должно быть выброшено исключение TypeError, если typeof keys === ${testedType}`
+            );
+        }
+    });
 });
