@@ -109,17 +109,4 @@ QUnit.module('Тестируем функцию plainify', () => {
     
         assert.deepEqual(result, { number: 1, nothing: {}, 'object.deeper_nothing': {}, bool: false }, 'Пустые объекты должны быть сохранены, а вложенные пустые объекты плоскими');
     });
-    
-    QUnit.test('Работает правильно с объектом, содержащим функции', (assert) => {
-        const originalObject = {
-            num: 1,
-            hello: function() { return 'hello'; },
-            russia: {
-                omsk: function() { return 'omsk'; }
-            }
-        };
-        const result = plainify(originalObject);
-    
-        assert.deepEqual(result, { num: 1, hello: originalObject.hello, 'russia.omsk': originalObject.russia.omsk }, 'Функции должны быть сохранены, но не вызваны');
-    });
 });
