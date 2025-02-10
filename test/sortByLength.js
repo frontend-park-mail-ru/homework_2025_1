@@ -30,4 +30,18 @@ QUnit.module("Тестируем функцию sortByLength", function () {
 
 		assert.deepEqual(result, ["cat", "cat", "cat", "cat"], "Массив с одинаковыми строками должен вернуть тот же массив.");
 	});
+	QUnit.test("Правильно сортирует строки с разным регистром", function (assert) {
+		const result = sortByLength(["Apple", "banana", "kiWi", "fig", "Grape"]);
+		assert.deepEqual(result, ["fig", "kiWi", "Apple", "Grape", "banana"], "Строки с разным регистром должны быть отсортированы по длине и алфавиту.");
+	});
+
+	QUnit.test("Правильно сортирует строки с пробелами", function (assert) {
+		const result = sortByLength([" apple ", " banana ", " kiwi ", " fig ", " grape "]);
+		assert.deepEqual(result, [" fig ", " kiwi ", " apple ", " grape ", " banana "], "Строки с пробелами должны быть отсортированы по длине и алфавиту.");
+	});
+
+	QUnit.test("Правильно сортирует строки с одинаковыми буквами в разном регистре", function (assert) {
+		const result = sortByLength(["a", "A", "b", "B", "aA", "bB"]);
+		assert.deepEqual(result, ["A", "B", "a", "b", "aA", "bB"], "Строки с одинаковыми буквами в разном регистре должны быть отсортированы согласно алфавиту и длине.");
+	});
 });
