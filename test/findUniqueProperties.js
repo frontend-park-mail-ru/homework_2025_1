@@ -52,4 +52,13 @@ QUnit.module("Тестируем функцию findUniqueProperties", function(
 
         assert.deepEqual(result, { a: 1, b: 2 }, "При непустом и пустом объектах должен вернуться непустой объект.");
     });
+    QUnit.test("Работает правильно, если хоть один из аргументов не является объектом", function(assert) {
+        const result = findUniqueProperties(
+            { a: 1, b: 2 },
+            "dsadwqd"
+        );
+
+        assert.deepEqual(result, 'Оба аргумента должны быть объектами', "При неправильном типе аргументов " +
+            "возвращается сообщение о неверном типе.");
+    });
 });

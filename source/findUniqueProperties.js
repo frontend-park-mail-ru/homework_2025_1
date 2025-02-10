@@ -11,17 +11,20 @@
  * 
  * @returns {Object} - объект с уникальными свойствами
  */
-const findUniqueProperties = (obj1, obj2) => {
+const findUniqueProperties = (objA, objB) => {
+    if (typeof objA !== 'object' || objA === null || typeof objB !== 'object' || objB === null) {
+        return 'Оба аргумента должны быть объектами';
+    }
     const result = {};
-    for (const key in obj1) {
-        if (!obj2.hasOwnProperty(key)) {
-            result[key] = obj1[key];
+    for (const key in objA) {
+        if (!objB.hasOwnProperty(key)) {
+            result[key] = objA[key];
         }
     }
 
-    for (const key in obj2) {
-        if (!obj1.hasOwnProperty(key)) {
-            result[key] = obj2[key];
+    for (const key in objB) {
+        if (!objA.hasOwnProperty(key)) {
+            result[key] = objB[key];
         }
     }
     return result;
