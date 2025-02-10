@@ -17,8 +17,8 @@
  */
 const emailAnalyzer = (str) => {
 	let result = {
-		emailCount:        0,
-        uniqueEmails:      [],
+		emailCount: 0,
+        uniqueEmails: [],
         mostFrequentEmail: ""
 	};
 
@@ -33,17 +33,16 @@ const emailAnalyzer = (str) => {
 	let emailCounts = {};
 	lowerCaseEmails.forEach(email => {
 		if (emailCounts[email]) {
-	    	emailCounts[email]++;
-	  	} else {
-	    	emailCounts[email] = 1;
-	  	}
+			emailCounts[email]++;
+		} else {
+			emailCounts[email] = 1;
+		}
 
-	  	if (emailCounts[email] > max_amount) {
-	    	max_amount = emailCounts[email];
-	    	result.mostFrequentEmail = email;
-	  	}
+		if (emailCounts[email] > max_amount) {
+			max_amount = emailCounts[email];
+			result.mostFrequentEmail = email;
+		}
 	});
-	
+
 	return result;
 };
-
