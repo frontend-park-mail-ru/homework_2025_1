@@ -29,8 +29,42 @@ const filterObjectByKeys = (obj, keys) => {
     }
 
     if (key in obj) {
-      acc[key] = structuredClone(obj[key]);
+      acc[key] = deepClone(obj[key]);
     }
     return acc;
   }, {});
+};
+
+/**
+ * Глубокое копирование объекта или массива при помощи рекурсии.
+ *
+ * @param {*} value - Исходное значение (примитив, объект или массив).
+ *
+ * @example
+ * const obj = { a: 1, b: { c: 2 } };
+ * const copy = deepClone(obj);
+ * console.log(copy); // { a: 1, b: { c: 2 } }
+ * console.log(copy === obj); // false (новый объект)
+ * console.log(copy.b === obj.b); // false (новый вложенный объект)
+ *
+ * @returns {*} Глубокая копия переданного значения.
+ */
+const deepClone = (value) => {
+  if (value === null || typeof value !== "object") {
+    return value;
+  }
+
+  if (Array.isArray(value)) {
+    return value.map(deepClone);
+  }
+
+  const copy = {};
+  for (const key in value) {
+    //проверка на то, принадлежит ли свойство объекту (а не его прототипу)
+    if (value.hasOwnProperty(key)) {
+      copy[key] = deepClone(value[key]);
+    }
+  }
+
+  return copy;
 };
