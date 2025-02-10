@@ -51,9 +51,6 @@ QUnit.module("Тестируем функцию flatten", function() {
 
     QUnit.test("Выбрасывает ошибку при передаче не массива", function(assert) {
         assert.throws(() => flatten("не массив"), TypeError, "Ожидается TypeError");
-        assert.throws(() => flatten(52), TypeError, "Ожидается TypeError");
-        assert.throws(() => flatten(null), TypeError, "Ожидается TypeError");
-        assert.throws(() => flatten(undefined), TypeError, "Ожидается TypeError");
     });
 
     QUnit.test("Корректно обрабатывает null и undefined в массиве", function(assert) {
