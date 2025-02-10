@@ -60,10 +60,7 @@ const deepClone = (value) => {
 
   const copy = {};
   for (const key in value) {
-    //проверка на то, принадлежит ли свойство объекту (а не его прототипу)
-    if (value.hasOwnProperty(key)) {
-      copy[key] = deepClone(value[key]);
-    }
+    copy[key] = deepClone(value[key]);
   }
 
   return copy;
