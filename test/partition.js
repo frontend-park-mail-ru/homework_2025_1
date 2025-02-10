@@ -99,5 +99,20 @@ QUnit.module("Тестируем функцию partition", function() {
             ["", null, ""]
         ]);
     });
+
+    QUnit.test("Корректно работает, если на вход передан не массив", function(assert) {
+        const isNonEmptyString = str => str && str.trim() !== "";
+        
+        const result2 = partition(123, isNonEmptyString);
+        assert.strictEqual(result2, undefined, "Возвращает undefined, если на вход передано число");
+    
+        const result3 = partition("not an array", isNonEmptyString);
+        assert.strictEqual(result3, undefined, "Возвращает undefined, если на вход передана строка");
+    
+
+        const result4 = partition(null, isNonEmptyString);
+        assert.strictEqual(result4, undefined, "Возвращает undefined, если на вход передано null");
+    });
+    
 });
 
