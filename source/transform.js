@@ -25,13 +25,17 @@ const transform = (obj, transformFn) => {
     }
 
     if (Array.isArray(obj)) {
-        return obj.map(item => transform(item, transformFn));
+        return obj.map(item => (typeof item === 'object') ? transform(item, transformFn) : transformFn(item));
     }
 
     const result = {};
 
     for (const key in obj) {
-        result[key] = transform(obj[key], transformFn);
+        if (typeof obj[key] === 'object') {
+            result[key] = transform(obj[key], transformFn);
+        } else {
+            result[key] = transformFn(obj[key]);
+        }
     }
 
     return result;

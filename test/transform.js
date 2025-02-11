@@ -107,7 +107,7 @@ QUnit.module('Тестируем функцию transform', () => {
             bool: false,
             obj: { a: 2, b: 'TWO' },
             arr: [2, 'TWO', { c: 6 }],
-            und: {},
+            und: undefined,
             nul: null
         }, 'Разные типы данных должны быть преобразованы согласно их типу');
     });
