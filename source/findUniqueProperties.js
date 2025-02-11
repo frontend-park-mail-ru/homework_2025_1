@@ -19,12 +19,12 @@ const findUniqueProperties = (objA, objB) => {
     }
 
     // Собираем уникальные свойства из objA
-    const result = Object.keys(objA).reduce((acc, key) => {
+    const result = {}
+    Object.keys(objA).forEach(key => {
         if (!Object.prototype.hasOwnProperty.call(objB, key)) {
-            acc[key] = objA[key];
+            result[key] = objA[key];
         }
-        return acc;
-    }, {});
+    });
 
     // Собираем уникальные свойства из objB
     Object.keys(objB).forEach(key => {
