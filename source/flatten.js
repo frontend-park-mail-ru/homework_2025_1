@@ -12,7 +12,7 @@
  * 
  * @throws {TypeError} Выбросит ошибку, если аргумент не массив.
  */
-const flatten = function (array) {
+const flatten = array => {
     // проверка, что аргумент - массив
     if (!Array.isArray(array)) {
         throw new TypeError('Argument must be an array');
