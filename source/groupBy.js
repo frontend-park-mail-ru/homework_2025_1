@@ -12,9 +12,7 @@
  * 
  * @returns {Object} - Объект, где ключами являются уникальные значения указанного ключа, а значениями — массивы объектов, содержащие этот ключ.
  * 
- * @throws {TypeError} If the first argument is not an array.
- * @throws {TypeError} If the key is not a string or a number.
- * @throws {TypeError} If an element in the array is not an object.
+ * @throws {TypeError} If the first argument is not an array, the key is not a string or a number, or an element in the array is not an object.
  */
 const groupBy = (objectsToGroup, key) => {
     if (!Array.isArray(objectsToGroup)) {
