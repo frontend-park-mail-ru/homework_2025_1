@@ -50,8 +50,14 @@ QUnit.module("Тестируем функцию polishNotationEvaluator", functi
         assert.equal(isNaN(result), true);
     });
     
-    QUnit.test("Правильно обрабатывает строки, где есть буквы", function(assert) {
+    QUnit.test("Правильно обрабатывает строки, где есть буквы в операндах", function(assert) {
         const input = "+ a 2";
+        const result = polishNotationEvaluator(input);
+
+        assert.equal(isNaN(result), true);
+    });
+    QUnit.test("Правильно обрабатывает строки, где есть буквы в операторе", function(assert) {
+        const input = "a 1 2 ";
         const result = polishNotationEvaluator(input);
 
         assert.equal(isNaN(result), true);
