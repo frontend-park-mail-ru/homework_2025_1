@@ -92,7 +92,7 @@ QUnit.module('Тестируем функцию groupBy', () => {
     QUnit.test('Обрабатывает неверные типы данных: первый аргумент не массив', (assert) => {
         assert.throws(
             () => groupBy('not an array', 'category'), 
-            /Первый аргумент должен быть массивом/, 
+            /The first argument must be an array/, 
             'Функция должна выбрасывать ошибку, если первый аргумент не массив'
         );
     });
@@ -104,26 +104,66 @@ QUnit.module('Тестируем функцию groupBy', () => {
 
         assert.throws(
             () => groupBy(data, {}), 
-            /Ключ должен быть строкой или числом/,
+            /The key must be a string or a number/,
             'Функция должна выбрасывать ошибку, если ключ — объект'
         );
 
         assert.throws(
             () => groupBy(data, null), 
-            /Ключ должен быть строкой или числом/,
+            /The key must be a string or a number/,
             'Функция должна выбрасывать ошибку, если ключ — null'
         );
 
         assert.throws(
             () => groupBy(data, undefined), 
-            /Ключ должен быть строкой или числом/,
+            /The key must be a string or a number/,
             'Функция должна выбрасывать ошибку, если ключ — undefined'
         );
 
         assert.throws(
             () => groupBy(data, true), 
-            /Ключ должен быть строкой или числом/,
+            /The key must be a string or a number/,
             'Функция должна выбрасывать ошибку, если ключ — булевое значение'
         );
     });
+    
+    QUnit.test('Обрабатывает массив с элементами, не являющимися объектами', (assert) => {
+        assert.throws(
+            () => groupBy([1, 2, 3], 'category'), 
+            /All elements in the array must be objects/,
+            'Функция должна выбрасывать ошибку, если в массиве есть числа'
+        );
+    
+        assert.throws(
+            () => groupBy(['apple', 'banana', 'carrot'], 'category'), 
+            /All elements in the array must be objects/,
+            'Функция должна выбрасывать ошибку, если в массиве есть строки'
+        );
+    
+        assert.throws(
+            () => groupBy([null, { id: 1, category: 'fruit' }], 'category'), 
+            /All elements in the array must be objects/,
+            'Функция должна выбрасывать ошибку, если в массиве есть null'
+        );
+    
+        assert.throws(
+            () => groupBy([undefined, { id: 2, category: 'vegetable' }], 'category'), 
+            /All elements in the array must be objects/,
+            'Функция должна выбрасывать ошибку, если в массиве есть undefined'
+        );
+    
+        assert.throws(
+            () => groupBy([[1, 2], { id: 3, category: 'fruit' }], 'category'), 
+            /All elements in the array must be objects/,
+            'Функция должна выбрасывать ошибку, если в массиве есть вложенные массивы'
+        );
+    });
+    
+    QUnit.test('Обрабатывает new String() в массиве', (assert) => {
+        assert.throws(
+            () => groupBy([new String('123'), { id: 1, category: 'fruit' }], 'category'),
+            /All elements in the array must be objects/,
+            'Функция должна выбрасывать ошибку, если в массиве есть new String()'
+        );
+    });       
 });
