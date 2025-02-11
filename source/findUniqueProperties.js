@@ -48,7 +48,6 @@ const hasOwnProp = (obj, key) =>
  * @returns {Object} - объект с уникальными свойствами
  * @throws {TypeError} - если хотя бы один аргумент не является объектом
  */
-
 const findUniqueProperties = (objA, objB) => {
     if (!isObject(objA) || !isObject(objB)) {
         throw new TypeError('Both arguments should be objects (not arrays)');
