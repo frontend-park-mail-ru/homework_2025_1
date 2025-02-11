@@ -1,6 +1,23 @@
 'use strict';
 
 /**
+ * Проверяет, является ли значение объектом (не `null` и не массивом).
+ * 
+ * @param {any} value - Проверяемое значение
+ * @returns {boolean} - `true`, если значение является объектом, иначе `false`
+ * 
+ * @example
+ * isObject({}); // true
+ * isObject(null); // false
+ * isObject([]); // false
+ * isObject(new String('123')); // true
+ * isObject('123'); // false
+ */
+const isObject = (value) => {
+    return typeof value === 'object' && value !== null && !Array.isArray(value);
+};
+
+/**
  * Группирует массив объектов по указанному ключу.
  * 
  * @param {Array<Object>} objectsToGroup - массив объектов для группировки
@@ -24,9 +41,7 @@ const groupBy = (objectsToGroup, key) => {
     }
 
     return objectsToGroup.reduce((result, element) => {
-        const whiteList = ['object'];
-
-        if (!whiteList.includes(typeof element) || element === null || Array.isArray(element) || element instanceof String) {
+        if (!isObject(element)) {
             throw new TypeError('All elements in the array must be objects');
         }
 

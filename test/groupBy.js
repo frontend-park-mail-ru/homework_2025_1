@@ -159,11 +159,27 @@ QUnit.module('Тестируем функцию groupBy', () => {
         );
     });
     
-    QUnit.test('Обрабатывает new String() в массиве', (assert) => {
-        assert.throws(
-            () => groupBy([new String('123'), { id: 1, category: 'fruit' }], 'category'),
-            /All elements in the array must be objects/,
-            'Функция должна выбрасывать ошибку, если в массиве есть new String()'
+    QUnit.test('Обрабатывает new String() в массиве как строку', (assert) => {
+        const data = [
+            { id: 1, category: new String('fruit'), name: 'apple' },
+            { id: 2, category: 'fruit', name: 'banana' },
+            { id: 3, category: 'vegetable', name: 'carrot' }
+        ];
+    
+        const result = groupBy(data, 'category');
+    
+        assert.deepEqual(
+            result,
+            {
+                fruit: [
+                    { id: 1, category: new String('fruit'), name: 'apple' },
+                    { id: 2, category: 'fruit', name: 'banana' }
+                ],
+                vegetable: [
+                    { id: 3, category: 'vegetable', name: 'carrot' }
+                ]
+            },
+            'Функция должна группировать объекты с new String() так же, как и обычные строки'
         );
-    });       
+    });         
 });
