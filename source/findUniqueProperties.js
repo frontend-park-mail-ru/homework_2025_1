@@ -19,7 +19,7 @@ const isObject = (value) => Object.prototype.toString.call(value) === '[object O
 /**
  * Функция, возвращающая true, если ключ содержится в объекте, иначе - false
  * @param {Object} obj - передаваемый объект для проверки наличия ключа
- * @param {any} key - ключ, наличие которого проверяется в объекте
+ * @param {string} key - ключ, наличие которого проверяется в объекте
  * 
  * @example
  * // returns true
