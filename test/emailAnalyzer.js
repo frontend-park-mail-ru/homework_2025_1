@@ -55,4 +55,15 @@ QUnit.module("Тестируем функцию emailAnalyzer", function() {
             mostFrequentEmail: "us+ru@gmail.com"
         });
     });
+
+    QUnit.test("Проверка на правильность шаблона адреса", function(assert) {
+        const input = "emails: address@@gmail.com, example.com.";
+        const result = emailAnalyzer(input);
+
+        assert.deepEqual(result, {
+            emailCount: 0,
+            uniqueEmails: [],
+            mostFrequentEmail: ""
+        });
+    });
 });

@@ -18,8 +18,8 @@
 const emailAnalyzer = (str) => {
 	const result = {
 		emailCount: 0,
-        uniqueEmails: [],
-        mostFrequentEmail: ""
+        	uniqueEmails: [],
+        	mostFrequentEmail: ""
 	};
 
 	const emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}/g;
