@@ -1,6 +1,18 @@
 'use strict';
 
 /**
+ * Функция, возвращающая true, если аргумент функции является объектом, иначе - false
+ * @param {*} value - аргумент для проверки
+ * 
+ * @example
+ * // returns true
+ * isObject({})
+ * 
+ * @returns  {Boolean} - true, если аргумент функции является объектом, иначе - false
+ */
+const isObject = (value) => Object.prototype.toString.call(value) === '[object Object]';
+
+/**
  * Функция, возвращающая объект с уникальными свойствами из двух объектов.
  * @param {Object} obj1 - первый объект
  * @param {Object} obj2 - второй объект
@@ -11,11 +23,9 @@
  * 
  * @returns {Object} - объект с уникальными свойствами
  */
-const isObject = value => Object.prototype.toString.call(value) === '[object Object]';
-
 const findUniqueProperties = (objA, objB) => {
     if (!isObject(objA) || !isObject(objB)) {
-        throw new Error('Оба аргумента должны быть объектами (не массивами)');
+        throw new TypeError('Оба аргумента должны быть объектами (не массивами)');
     }
 
     // Собираем уникальные свойства из objA
