@@ -11,21 +11,27 @@
  * 
  * @returns {Object} - объект с уникальными свойствами
  */
+const isObject = value => Object.prototype.toString.call(value) === '[object Object]';
+
 const findUniqueProperties = (objA, objB) => {
-    if (typeof objA !== 'object' || objA === null || typeof objB !== 'object' || objB === null) {
-        return 'Оба аргумента должны быть объектами';
-    }
-    const result = {};
-    for (const key in objA) {
-        if (!objB.hasOwnProperty(key)) {
-            result[key] = objA[key];
-        }
+    if (!isObject(objA) || !isObject(objB)) {
+        throw new Error('Оба аргумента должны быть объектами (не массивами)');
     }
 
-    for (const key in objB) {
-        if (!objA.hasOwnProperty(key)) {
+    // Собираем уникальные свойства из objA
+    const result = Object.keys(objA).reduce((acc, key) => {
+        if (!Object.prototype.hasOwnProperty.call(objB, key)) {
+            acc[key] = objA[key];
+        }
+        return acc;
+    }, {});
+
+    // Собираем уникальные свойства из objB
+    Object.keys(objB).forEach(key => {
+        if (!Object.prototype.hasOwnProperty.call(objA, key)) {
             result[key] = objB[key];
         }
-    }
+    });
+
     return result;
 };
