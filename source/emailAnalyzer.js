@@ -14,7 +14,7 @@
 function emailAnalyzer(str) {
     const email_map = new Map();
 
-    var emailCount = 0;
+    let emailCount = 0;
 
     const emailRegex = /\b(?!.*\.\.)[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/g;
 
@@ -37,14 +37,14 @@ function emailAnalyzer(str) {
         }
     }
 
-    let uniqueEmails = [];
+    const uniqueEmails = [];
     let mostFrequentEmail = "";
     let mostFrequentEmail_repeats = 0;
 
     // прогоняемся по мапе, находим самую частую почту и
     // уникальные адреса
     for (const key of email_map.keys()) {
-        let key_value = email_map.get(key);
+        const key_value = email_map.get(key);
 
         // если адрес уникальный (значение ключа - единица), то
         // проверяем, что его еще нет в массиве уникальных адресов
