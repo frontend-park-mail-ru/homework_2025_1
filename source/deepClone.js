@@ -30,21 +30,23 @@ const deepClone = (obj) => {
     if (null === obj || 'object' !== typeof obj)
         return obj;
 
-    if (obj instanceof Date)
+    else if (obj instanceof Date)
         return new Date(obj);
 
     else if (obj instanceof RegExp)
         return new RegExp(obj);
 
     else if (obj instanceof Set)
-        return new Set(Array.from(obj, deepClone)); // new Set([...obj].map(deepClone));
+        return new Set([...obj].map(deepClone));
 
     else if (obj instanceof Map)
         return new Map([...obj].map(([key, val]) => [deepClone(key), deepClone(val)]));
 
-    const copy = Array.isArray(obj) ? [] : {};
-    for (let key of Object.keys(obj))
-        copy[key] = deepClone(obj[key]);
+    else if (Array.isArray(obj))
+        return obj.map(x => deepClone(x));
 
-    return copy;
+    else
+        return Object.fromEntries(
+            Object.entries(obj).map(([key, val]) => [deepClone(key), deepClone(val)])
+        );
 }
