@@ -1,21 +1,12 @@
 'use strict';
 
 /**
- * Проверяет, является ли значение объектом (не `null` и не массивом).
+ * Проверяет, является ли значение обычным объектом (не `null` и не массивом).
  * 
  * @param {any} value - Проверяемое значение
- * @returns {boolean} - `true`, если значение является объектом, иначе `false`
- * 
- * @example
- * isObject({}); // true
- * isObject(null); // false
- * isObject([]); // false
- * isObject(new String('123')); // true
- * isObject('123'); // false
+ * @returns {boolean} - `true`, если значение является обычным объектом, иначе `false`
  */
-const isObject = (value) => {
-    return typeof value === 'object' && value !== null && !Array.isArray(value);
-};
+const isObject = (value) => Object.prototype.toString.call(value) === '[object Object]';
 
 /**
  * Группирует массив объектов по указанному ключу.
@@ -29,13 +20,14 @@ const isObject = (value) => {
  * 
  * @returns {Object} - Объект, где ключами являются уникальные значения указанного ключа, а значениями — массивы объектов, содержащие этот ключ.
  * 
- * @throws {TypeError} If the first argument is not an array, the key is not a string or a number, or an element in the array is not an object.
+ * @throws {TypeError} Если первый аргумент не является массивом, если ключ не является строкой или числом, или если элемент массива (или значение по ключу) не является обычным объектом.
  */
 const groupBy = (objectsToGroup, key) => {
     if (!Array.isArray(objectsToGroup)) {
         throw new TypeError('The first argument must be an array');
     }
 
+    key = key?.valueOf();
     if (typeof key !== 'string' && typeof key !== 'number') {
         throw new TypeError('The key must be a string or a number');
     }
@@ -46,6 +38,10 @@ const groupBy = (objectsToGroup, key) => {
         }
 
         const groupKey = element[key];
+
+        if (groupKey !== null && typeof groupKey === 'object' && !isObject(groupKey)) {
+            throw new TypeError('All elements in the array must be objects');
+        }
 
         if (!result[groupKey]) {
             result[groupKey] = [];
