@@ -11,14 +11,14 @@
  *
  * @returns {Object}
  */
-function filterByKeys(obj, keys) {
+const filterByKeys = (obj, keys) => {
   const NewObj = {};
 
   Object.keys(obj).forEach((i) => {
     if (keys.includes(i)) {
       NewObj[i] = obj[i];
       }
-    })
+    });
   return NewObj;
-}
+};
 
