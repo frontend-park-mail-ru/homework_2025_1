@@ -30,4 +30,28 @@ QUnit.module("Тестируем функцию sortByFrequency", function() {
 
         assert.deepEqual(result, [-5, -5, -2, 0, 2, 10, 45], "Массив должен сортировать по частоте и по возрастанию в случаях с одинаковой частотой.");
     });
+
+    QUnit.test("Работает правильно с переданной строкой", function(assert) {
+        const result = sortByFrequency('строка');
+
+        assert.deepEqual(result, [], "Должен возвращать пустой массив");
+    });
+
+    QUnit.test("Работает правильно с переданным числом", function(assert) {
+        const result = sortByFrequency(25);
+
+        assert.deepEqual(result, [], "Должен возвращать пустой массив");
+    });
+
+    QUnit.test("Работает правильно без аргумента", function(assert) {
+        const result = sortByFrequency();
+
+        assert.deepEqual(result, [], "Должен возвращать пустой массив");
+    });
+
+    QUnit.test("Работает правильно c входным параметром null", function(assert) {
+        const result = sortByFrequency(null);
+
+        assert.deepEqual(result, [], "Должен возвращать пустой массив");
+    });
 });
