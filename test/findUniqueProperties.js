@@ -57,7 +57,7 @@ QUnit.module("Тестируем функцию findUniqueProperties", function(
             function() {
                 findUniqueProperties({ a: 1, b: 2 }, "dsadwqd");
             },
-            /Оба аргумента должны быть объектами/,
+            /TypeError/,
             "При неправильном типе аргументов выбрасывается ошибка."
         );
     });
@@ -66,7 +66,7 @@ QUnit.module("Тестируем функцию findUniqueProperties", function(
             function() {
                 findUniqueProperties({ a: 1, b: 2 }, undefined);
             },
-            /Оба аргумента должны быть объектами/,
+            /TypeError/,
             "При неправильном типе аргументов выбрасывается ошибка."
         );
     });
@@ -75,7 +75,7 @@ QUnit.module("Тестируем функцию findUniqueProperties", function(
             function() {
                 findUniqueProperties({ a: 1, b: 2 }, null);
             },
-            /Оба аргумента должны быть объектами/,
+            /TypeError/,
             "При неправильном типе аргументов выбрасывается ошибка."
         );
     });
