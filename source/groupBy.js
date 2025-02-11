@@ -26,7 +26,9 @@ const groupBy = (objectsToGroup, key) => {
     }
 
     return objectsToGroup.reduce((result, element) => {
-        if (typeof element !== 'object' || element === null || element instanceof String || Array.isArray(element)) {
+        const whiteList = ['object'];
+
+        if (!whiteList.includes(typeof element) || element === null || Array.isArray(element) || element instanceof String) {
             throw new TypeError('All elements in the array must be objects');
         }
 
