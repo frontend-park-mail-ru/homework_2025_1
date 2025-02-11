@@ -13,7 +13,6 @@
  * isObject(1)
  * 
  * @returns {Boolean} - true, если аргумент функции является объектом, иначе - false
- * @throws {TypeError} - если хотя бы один аргумент не является объектом
  */
 const isObject = (value) => Object.prototype.toString.call(value) === '[object Object]';
 
@@ -27,6 +26,7 @@ const isObject = (value) => Object.prototype.toString.call(value) === '[object O
  * findUniqueProperties({x: 10, y: 20}, {y: 20, z: 30})
  * 
  * @returns {Object} - объект с уникальными свойствами
+ * @throws {TypeError} - если хотя бы один аргумент не является объектом
  */
 const findUniqueProperties = (objA, objB) => {
     if (!isObject(objA) || !isObject(objB)) {
