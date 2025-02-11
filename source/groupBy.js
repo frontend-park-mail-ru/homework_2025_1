@@ -6,6 +6,16 @@
  * 
  * @returns {type: {Objects}}
  */
-function groupBy(input) {
-    return Object.groupBy(input, ({category}) => category);
+const groupBy = (input) => {
+    let result = {};
+    for (let i of input) {
+        let category = i["category"];
+
+        if (category in result) {
+            result[category].push(i);
+        } else {
+            result[category] = [i];
+        }
+    }
+     return result;
 }
