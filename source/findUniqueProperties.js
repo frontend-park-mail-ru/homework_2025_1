@@ -2,20 +2,25 @@
 
 /**
  * Функция, возвращающая true, если аргумент функции является объектом, иначе - false
- * @param {*} value - аргумент для проверки
+ * @param {any} value - аргумент для проверки
  * 
  * @example
  * // returns true
  * isObject({})
  * 
- * @returns  {Boolean} - true, если аргумент функции является объектом, иначе - false
+ * @example
+ * // returns false
+ * isObject(1)
+ * 
+ * @returns {Boolean} - true, если аргумент функции является объектом, иначе - false
+ * @throws {TypeError} - если хотя бы один аргумент не является объектом
  */
 const isObject = (value) => Object.prototype.toString.call(value) === '[object Object]';
 
 /**
  * Функция, возвращающая объект с уникальными свойствами из двух объектов.
- * @param {Object} obj1 - первый объект
- * @param {Object} obj2 - второй объект
+ * @param {Object} objA - первый объект
+ * @param {Object} objB - второй объект
  * 
  * @example
  * // returns {x: 10, z: 30}
@@ -29,7 +34,7 @@ const findUniqueProperties = (objA, objB) => {
     }
 
     // Собираем уникальные свойства из objA
-    const result = {}
+    const result = {};
     Object.keys(objA).forEach(key => {
         if (!Object.prototype.hasOwnProperty.call(objB, key)) {
             result[key] = objA[key];
