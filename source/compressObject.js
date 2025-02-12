@@ -30,3 +30,4 @@ const compressObject = (obj) => {
 
     return result;
 };
+
