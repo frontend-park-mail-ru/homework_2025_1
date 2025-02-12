@@ -35,9 +35,6 @@ QUnit.module('Тестируем функцию plainify', () => {
         assert.deepEqual(result, { x: 'hello', y: 42, 'z.a': 1, 'z.b': 2 }, 'Примитивы и вложенные объекты должны быть правильно преобразованы');
     });
 
-
-
-
     QUnit.test('Работает правильно с не вложенным объектом', (assert) => {
         const originalObject = {
             x: 14,
@@ -58,11 +55,8 @@ QUnit.module('Тестируем функцию plainify', () => {
         };
         const result = plainify(originalObject);
 
-        assert.deepEqual(result, { x: [1, 2, 3], 'y.z': [4, 5] }, 'Массивы должны оставаться неизменными');
+        assert.deepEqual(result, { "x.0": 1, "x.1": 2, "x.2": 3, "y.z.0": 4, "y.z.1": 5 }, 'Массивы должны оставаться неизменными');
     });
-
-
-
 
     QUnit.test('Работает правильно с объектом, содержащим null', (assert) => {
         const originalObject = {
@@ -108,5 +102,17 @@ QUnit.module('Тестируем функцию plainify', () => {
         const result = plainify(originalObject);
     
         assert.deepEqual(result, { number: 1, nothing: {}, 'object.deeper_nothing': {}, bool: false }, 'Пустые объекты должны быть сохранены, а вложенные пустые объекты плоскими');
+    });
+
+    QUnit.test('Работает правильно с объектом, содержащим массив объектов', (assert) => {
+        const originalObject = {
+            a: [
+                { b: 1 },
+                { c: 2 }
+            ]
+        };
+        const result = plainify(originalObject);
+    
+        assert.deepEqual(result, { 'a.0.b': 1, 'a.1.c': 2 }, 'Объект не должен содержать массива с объектами');
     });
 });

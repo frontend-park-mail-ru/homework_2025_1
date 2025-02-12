@@ -14,15 +14,19 @@
 const plainify = function (obj, prefix = '') {
     let result = {};
     
-    for (const key in obj) {
+    for (const key of Object.keys(obj)) {
         const newKey = prefix ? `${prefix}.${key}` : key;
         const value = obj[key];
         if (Array.isArray(value)) {
-            result[newKey] = value.map((item, index) =>
-                typeof item === 'object' && item !== null ? plainify(item, `${newKey}.${index}`) : item
-            );
+            value.forEach((item, index) => {
+                if (typeof item === 'object' && item !== null) {
+                    Object.assign(result, plainify(item, `${newKey}.${index}`));
+                } else {
+                    result[`${newKey}.${index}`] = item;
+                }
+            });
         } else if (typeof value === 'object' && value !== null) {
-            if (Object.keys(value).length === 0) {
+            if (!Object.keys(value).length) {
                 result[newKey] = {};
             } else {
                 Object.assign(result, plainify(value, newKey));
@@ -30,7 +34,6 @@ const plainify = function (obj, prefix = '') {
         } else {
             result[newKey] = value;
         }
-
     }
     
     return result;
