@@ -15,11 +15,11 @@
  * @returns {object}
  */
 const mergeObjects = (target, source) => {
-    if (typeof target !== "object" || target === null || Array.isArray(target)) {
+    if (typeof target !== 'object' || target === null || Array.isArray(target)) {
         throw new TypeError("Первый аргумент должен быть объектом.");
     }
-    if (typeof source !== "object" || source === null || Array.isArray(source)) {
-        throw new TypeError("Второй аргумент должен быть объектом.");
+    if (typeof source !== 'object' || source === null || Array.isArray(source)) {
+        throw new TypeError('Второй аргумент должен быть объектом.');
     }
 
     /**
@@ -36,7 +36,7 @@ const mergeObjects = (target, source) => {
      */
     const mergeArraysUnique = (arr1, arr2) => {
         if (!Array.isArray(arr1) || !Array.isArray(arr2)) {
-            throw new TypeError("Оба аргумента должны быть массивами.");
+            throw new TypeError('Оба аргумента должны быть массивами.');
         }
         return [...new Set([...arr1, ...arr2])];
     };
@@ -100,15 +100,36 @@ const mergeObjects = (target, source) => {
  */
 function mergeBy(arr1, arr2, key) {
     if (!Array.isArray(arr1) || !Array.isArray(arr2)) {
-        throw new TypeError("Оба входных аргумента должны быть массивами.");
+        throw new TypeError('Оба входных аргумента должны быть массивами.');
     }
 
-    if (typeof key !== "string") {
-        throw new TypeError("Ключ должен быть строкой.");
+    if (typeof key !== 'string') {
+        throw new TypeError('Ключ должен быть строкой.');
     }
 
     const merged = new Map();
-
+    /**
+     * Обрабатывает массив объектов и объединяет их в Map `merged`.
+     *
+     * Для каждого объекта в массиве:
+     *   - Проверяет наличие ключа `key` в объекте. Если ключа нет, объект пропускается.
+     *   - Если ключ присутствует, проверяет наличие значения этого ключа в Map `merged`.
+     *   - Если значение ключа уже есть в `merged`, объединяет существующий объект с текущим, используя `mergeObjects`, и обновляет запись в `merged`.
+     *   - Если значения ключа нет в `merged`, добавляет текущий объект в `merged`.
+     * @param {Array<object>} arr Массив объектов для обработки.
+     * @throws {TypeError} Если arr не является массивом.
+     * @example
+     * const arr = [{ id: 1, name: 'Alice' }, { id: 2, name: 'Bob' }, { id: 1, age: 30 }];
+     * const merged = new Map(); // Предположим, что merged уже определена вне этой функции
+     * const key = 'id';
+     * processArray(arr);
+     *      merged будет содержать:
+     * // Map {
+     * //   1 => { id: 1, name: 'Alice', age: 30 },
+     * //   2 => { id: 2, name: 'Bob' }
+     * // }
+     * @returns {void}
+     */
     const processArray = (arr) => {
         arr.forEach(obj => {
             if (!Object.prototype.hasOwnProperty.call(obj, key)) {
