@@ -1,7 +1,7 @@
 'use strict';
 
 QUnit.module("Тестируем функцию compressObject", function() {
-    QUnit.test("Сжатие объекта с null, undefined и пустыми строками.", function(assert) {
+    QUnit.test("Сжатие объекта с null, undefined и пустыми строками", function(assert) {
         const result = compressObject({
             name: "Андрей",
             age: null,
@@ -9,32 +9,24 @@ QUnit.module("Тестируем функцию compressObject", function() {
             country: "Россия",
             occupation: undefined
         });
-
-        const expected = {
-            name: "Андрей",
-            country: "Россия"
-        };
-
-        assert.deepEqual(result, expected, "Должны остаться только ключи с ненулевыми значениями.");
+        
+        assert.deepEqual(result, { name: "Андрей", country: "Россия" }, "Должны остаться только ключи с ненулевыми значениями.");
     });
 
-    QUnit.test("Работает с объектом без ненулевых значений.", function(assert) {
+    QUnit.test("Работает с объектом без ненулевых значений", function(assert) {
         const result = compressObject({
             a: null,
             b: undefined,
             c: "",
         });
 
-        const expected = {};
-
-        assert.deepEqual(result, expected, "Объект без ненулевых значений должен вернуть пустой объект.");
+        assert.deepEqual(result, {}, "Объект без ненулевых значений должен вернуть пустой объект.");
     });
 
     QUnit.test("Работает с пустым объектом", function(assert) {
         const result = compressObject({});
-        const expected = {};
 
-        assert.deepEqual(result, expected, "Пустой объект должен вернуть пустой объект.");
+        assert.deepEqual(result, {}, "Пустой объект должен вернуть пустой объект.");
     });
 
     QUnit.test("Работает с пустым вложенным объектом.", function(assert) {
@@ -93,25 +85,34 @@ QUnit.module("Тестируем функцию compressObject", function() {
         assert.deepEqual(result, expected, "Другие false-интерпретируемые значения не удаляются из объекта.")
     });
 
-    QUnit.test("Работает с числом.", function(assert) {
-        const result = compressObject(42);
-        const expected = {};
-
-        assert.deepEqual(result, expected, "Вернёт пустой объект.")
+    QUnit.test("Корректно отвечает на число.", function(assert) {
+        assert.throws(
+            function () { compressObject(42); },
+            function (error) {
+                return error.name === "TypeError";
+            },
+            "Выкидывает исключение."
+        );
     });
 
-    QUnit.test("Работает со строкой.", function(assert) {
-        const result = compressObject("The meaning of life");
-        const expected = {};
-
-        assert.deepEqual(result, expected, "Вернёт пустой объект.")
+    QUnit.test("Корректно отвечает на строку.", function(assert) {
+        assert.throws(
+            function () { compressObject("The meaning of life"); },
+            function (error) {
+                return error.name === "TypeError";
+            },
+            "Выкидывает исключение."
+        );
     });
 
-    QUnit.test("Работает с массивом.", function(assert) {
-        const result = compressObject([1, 3, 5]);
-        const expected = {};
-
-        assert.deepEqual(result, expected, "Вернёт пустой объект.")
+    QUnit.test("Корректно отвечает на массив.", function(assert) {
+        assert.throws(
+            function () { compressObject([1, 3, 5]); },
+            function (error) {
+                return error.name === "TypeError";
+            },
+            "Выкидывает исключение."
+        );
     });
 
 });
