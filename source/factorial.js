@@ -1,14 +1,18 @@
 'use strict';
 
 /**
- * Функция, определяющая факториал числа
- * @param {Number} number - целое число
- * @example
- * // returns 120
- * factorial(5);
+ * Функция для вычисления факториала числа.
+ * @param {Number} number - Число, для которого нужно вычислить факториал.
  * @returns {Number}
+ * @throws {TypeError} Если аргумент не является числом или является отрицательным числом.
  */
 const factorial = (number) => {
-    if (number < 0) throw new Error("/Факториал не определен для отрицательных чисел/");
+    if (typeof number !== 'number') {
+        throw new TypeError("Input must be a number.");
+    }
+    if (number < 0) {
+        throw new RangeError("Factorial is not defined for negative numbers.");
+    }
     return number === 0 || number === 1 ? 1 : number * factorial(number - 1);
 };
+
