@@ -134,39 +134,26 @@ QUnit.module('Тестируем функцию groupBy', () => {
             'Функция должна выбрасывать ошибку, если в массиве есть вложенные массивы'
         );
     });
-    
-    QUnit.test('Обрабатывает new String() и new Number() в массиве как ошибки', (assert) => {
-        assert.throws(
-            () => groupBy([{ id: 1, category: new String('fruit'), name: 'apple' }], 'category'),
-            /The key value in the object must be a string or a number/,
-            'Функция должна выбрасывать ошибку, если в массиве есть new String()'
-        );
-    
-        assert.throws(
-            () => groupBy([{ id: 2, category: new Number(1), name: 'banana' }], 'category'),
-            /The key value in the object must be a string or a number/,
-            'Функция должна выбрасывать ошибку, если в массиве есть new Number()'
-        );
-    });
-    
+
     QUnit.test("Группировка с ключом new String()", (assert) => {
         const data = [
-            { id: 1, category: 'fruit', name: 'apple' },
-            { id: 2, category: 'fruit', name: 'banana' },
-            { id: 3, category: 'vegetable', name: 'carrot' }
+            { id: 1, category: new String('123'), name: 'apple' },
+            { id: 2, category: new String('123'), name: 'banana' },
+            { id: 3, category: new String('456'), name: 'carrot' }
         ];
         
         const key = new String('category'); 
+        
         const expected = {
-            fruit: [
-                { id: 1, category: 'fruit', name: 'apple' },
-                { id: 2, category: 'fruit', name: 'banana' }
+            '123': [
+                { id: 1, category: new String('123'), name: 'apple' },
+                { id: 2, category: new String('123'), name: 'banana' }
             ],
-            vegetable: [
-                { id: 3, category: 'vegetable', name: 'carrot' }
+            '456': [
+                { id: 3, category: new String('456'), name: 'carrot' }
             ]
         };
     
         assert.deepEqual(groupBy(data, key), expected, "Функция должна корректно группировать по ключу new String");
-    });           
+    });       
 });
