@@ -158,44 +158,40 @@ QUnit.module('Тестируем функцию groupBy', () => {
         }, TypeError, 'Ошибка выбрасывается, если первый аргумент функции не массив объектов');
     });
 
-    QUnit.test('Работает правильно если ключ для группировки аргументов не строка', (assert) => {
-        const data1 = [
-            { id: 1, category: 'fruit', name: 'apple' },
-            { id: 2, category: 'fruit', name: 'banana' },
-            { id: 3, category: 'vegetable', name: 'carrot' },
-            { id: 4, category: 'fruit', name: 'orange' },
-            { id: 5, category: 'vegetable', name: 'lettuce' }
+    QUnit.test('Работает правильно с группировкой по ключу с не строковыми типами данных', (assert) => {
+        const data = [
+            { true: 'in_stock', category: 'fruit', name: 'apple', 1: 12},
+            { true: 'in_stock', category: 'fruit', name: 'banana', 1: -21 },
+            { true: 'not_in_stock', category: 'vegetable', name: 'carrot', 1: 12 },
+            { true: 'in_stock', category: 'fruit', name: 'orange', 1: -21 },
+            { true: 'not_in_stock', category: 'vegetable', name: 'lettuce', 1:12 }
         ];
-        const data2 = [
-            { id: 1,  name: 'apple' },
-            { id: 2,  name: 'banana' },
-            { id: 3,  name: 'carrot' },
-            { id: 4,  name: 'orange' },
-            { id: 5,  name: 'lettuce' }
-        ];
-        const result1 = groupBy(data1, 123);
-        const result2 = groupBy(data2, 123);
-    
+
+        const result1 = groupBy(data, true);
+        const result2 = groupBy(data, 1);
+
         assert.deepEqual(result1, {
-            fruit: [
-                { id: 1, category: 'fruit', name: 'apple' },
-                { id: 2, category: 'fruit', name: 'banana' },
-                { id: 4, category: 'fruit', name: 'orange' }
+            in_stock: [
+                { true: 'in_stock', category: 'fruit', name: 'apple', 1: 12},
+                { true: 'in_stock', category: 'fruit', name: 'banana', 1: -21 },
+                { true: 'in_stock', category: 'fruit', name: 'orange', 1: -21 },
             ],
-            vegetable: [
-                { id: 3, category: 'vegetable', name: 'carrot' },
-                { id: 5, category: 'vegetable', name: 'lettuce' }
-            ],
-        }, 'Если у объектов есть категория, то они должны быть сгруппированы по категориям');
+            not_in_stock: [
+            { true: 'not_in_stock', category: 'vegetable', name: 'carrot', 1: 12 },
+            { true: 'not_in_stock', category: 'vegetable', name: 'lettuce', 1:12 }
+        ]
+        }, 'Объекты должны быть сгруппированы по ключу с булевым значением');
+
         assert.deepEqual(result2, {
-            undefined: [
-                { id: 1,  name: 'apple' },
-                { id: 2,  name: 'banana' },
-                { id: 3,  name: 'carrot' },
-                { id: 4,  name: 'orange' },
-                { id: 5,  name: 'lettuce' }
+            '12': [
+                { true: 'in_stock', category: 'fruit', name: 'apple', 1: 12},
+                { true: 'not_in_stock', category: 'vegetable', name: 'carrot', 1: 12 },
+                { true: 'not_in_stock', category: 'vegetable', name: 'lettuce', 1:12 }
             ],
-        }, 'Если у объектов не указана категория, то они должны быть сгруппированы в единый массив');
-        
+            '-21': [
+                { true: 'in_stock', category: 'fruit', name: 'banana', 1: -21 },
+                { true: 'in_stock', category: 'fruit', name: 'orange', 1: -21 }
+            ]
+        }, 'Объекты должны быть сгруппированы по ключу с числовым значением');
     });
 });
