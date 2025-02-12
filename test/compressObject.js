@@ -116,3 +116,4 @@ QUnit.module("Тестируем функцию compressObject", function() {
     });
 
 });
+
