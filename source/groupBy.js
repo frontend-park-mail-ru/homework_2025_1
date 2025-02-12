@@ -39,8 +39,8 @@ const groupBy = (objectsToGroup, key) => {
 
         const groupKey = element[keyValue];
 
-        if (typeof groupKey === 'object' && !isObject(groupKey)) {
-            throw new TypeError('All elements in the array must be objects');
+        if (typeof groupKey !== 'string' && typeof groupKey !== 'number') {
+            throw new TypeError('The key value in the object must be a string or a number');
         }
 
         if (!result[groupKey]) {

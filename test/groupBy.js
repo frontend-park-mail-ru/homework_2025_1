@@ -47,24 +47,6 @@ QUnit.module('Тестируем функцию groupBy', () => {
             ]
         }, 'Все объекты должны быть сгруппированы под одним значением');
     });
-    
-    QUnit.test('Обрабатывает объекты без указанного ключа корректно', (assert) => {
-        const data = [
-            { id: 1, category: 'fruit', name: 'apple' },
-            { id: 2, name: 'banana' }, 
-            { id: 3, category: 'vegetable', name: 'carrot' }
-        ];
-        const result = groupBy(data, 'category');
-    
-        assert.deepEqual(result, {
-            fruit: [
-                { id: 1, category: 'fruit', name: 'apple' }],
-            vegetable: [
-                { id: 3, category: 'vegetable', name: 'carrot' }],
-            undefined: [
-                { id: 2, name: 'banana' }]
-        }, 'Объекты без ключа должны группироваться под "undefined"');
-    });
 
     QUnit.test('Работает правильно с группировкой по числовому ключу', (assert) => {
         const data = [
@@ -156,13 +138,13 @@ QUnit.module('Тестируем функцию groupBy', () => {
     QUnit.test('Обрабатывает new String() и new Number() в массиве как ошибки', (assert) => {
         assert.throws(
             () => groupBy([{ id: 1, category: new String('fruit'), name: 'apple' }], 'category'),
-            /All elements in the array must be objects/,
+            /The key value in the object must be a string or a number/,
             'Функция должна выбрасывать ошибку, если в массиве есть new String()'
         );
     
         assert.throws(
             () => groupBy([{ id: 2, category: new Number(1), name: 'banana' }], 'category'),
-            /All elements in the array must be objects/,
+            /The key value in the object must be a string or a number/,
             'Функция должна выбрасывать ошибку, если в массиве есть new Number()'
         );
     });
