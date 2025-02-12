@@ -27,8 +27,8 @@ const groupBy = (objectsToGroup, key) => {
         throw new TypeError('The first argument must be an array');
     }
 
-    key = key?.valueOf();
-    if (typeof key !== 'string' && typeof key !== 'number') {
+    const keyValue = key?.valueOf();
+    if (typeof keyValue !== 'string' && typeof keyValue !== 'number') {
         throw new TypeError('The key must be a string or a number');
     }
 
@@ -37,9 +37,9 @@ const groupBy = (objectsToGroup, key) => {
             throw new TypeError('All elements in the array must be objects');
         }
 
-        const groupKey = element[key];
+        const groupKey = element[keyValue];
 
-        if (groupKey !== null && typeof groupKey === 'object' && !isObject(groupKey)) {
+        if (typeof groupKey === 'object' && !isObject(groupKey)) {
             throw new TypeError('All elements in the array must be objects');
         }
 
