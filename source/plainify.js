@@ -31,7 +31,7 @@
  * // }
  */
 function plainify(obj, prefix = '') {
-    let res = {};
+    const res = {};
     for (const key in obj) {
 
         const value = obj[key];
