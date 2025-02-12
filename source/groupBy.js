@@ -14,7 +14,13 @@ const isObject = (value) => Object.prototype.toString.call(value) === '[object O
  * @param {any} key - Проверяемый ключ
  * @returns {boolean} - `true`, если ключ является строкой или числом, иначе `false`
  */
-const isValidKey = (key) => typeof key === 'string' || typeof key === 'number';
+const isValidKey = (key) => {
+    if (key === null || key === undefined) {
+        return false;
+    }
+    const keyValue = key.valueOf();
+    return typeof keyValue === 'string' || typeof keyValue === 'number';
+};
 
 /**
  * Группирует массив объектов по указанному ключу.
@@ -35,7 +41,7 @@ const groupBy = (objectsToGroup, key) => {
         throw new TypeError('The first argument must be an array');
     }
 
-    const keyValue = key?.valueOf();  
+    const keyValue = key;  
     if (!isValidKey(keyValue)) {
         throw new TypeError('The key must be a string or a number');
     }
@@ -45,7 +51,7 @@ const groupBy = (objectsToGroup, key) => {
             throw new TypeError('All elements in the array must be objects');
         }
 
-        const groupKey = String(element[keyValue]); 
+        const groupKey = element[keyValue]; 
 
         if (!isValidKey(groupKey)) {
             throw new TypeError('The key value in the object must be a string or a number');
