@@ -25,15 +25,15 @@ const deepMerge = (obj1, obj2) => {
 
   for (const key in obj2) {
     if (Object.prototype.hasOwnProperty.call(obj2, key)) {
-      const value1 = result[key];
-      const value2 = obj2[key];
+      const firstValue = result[key];
+      const secondValue = obj2[key];
       
-      if (Array.isArray(value2)) {
-        result[key] = value2;
-      } else if (typeof value1 === 'object' && value1!== null && typeof value2 === 'object' && value2!== null) {
-        result[key] = deepMerge(value1, value2);
+      if (Array.isArray(secondValue)) {
+        result[key] = secondValue;
+      } else if (typeof firstValue === 'object' && firstValue!== null && typeof secondValue === 'object' && secondValue!== null) {
+        result[key] = deepMerge(firstValue, secondValue);
       } else {
-        result[key] = value2; 
+        result[key] = secondValue; 
       }
     }
   }
