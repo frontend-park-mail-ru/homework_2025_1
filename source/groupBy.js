@@ -41,8 +41,7 @@ const groupBy = (objectsToGroup, key) => {
         throw new TypeError('The first argument must be an array');
     }
 
-    const keyValue = key;  
-    if (!isValidKey(keyValue)) {
+    if (!isValidKey(key)) {
         throw new TypeError('The key must be a string or a number');
     }
 
@@ -51,8 +50,7 @@ const groupBy = (objectsToGroup, key) => {
             throw new TypeError('All elements in the array must be objects');
         }
 
-        const groupKey = element[keyValue]; 
-
+        const groupKey = element[key]; 
         if (!isValidKey(groupKey)) {
             throw new TypeError('The key value in the object must be a string or a number');
         }
@@ -62,7 +60,6 @@ const groupBy = (objectsToGroup, key) => {
         }
 
         result[groupKey].push(element);
-
         return result;
     }, {});
 };
