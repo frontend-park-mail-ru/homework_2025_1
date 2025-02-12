@@ -17,12 +17,16 @@
  * @returns {Object}
  */
 const compressObject = (obj) => {
-    if (Object.prototype.toString.call(obj) != '[object Object]')
-        return {};
+    if (Object.prototype.toString.call(obj) != '[object Object]') {
+        throw new TypeError(`Expected type \'[object Object]\', but received \'${Object.prototype.toString.call(obj)}\'`);
+    }
     
     let result = {};
-    for (const [key, value] of Object.entries(obj))
-        if (value !== undefined && value !== null && value !== "")
+    Object.entries(obj).forEach(([key, value]) => {
+        if (value !== undefined && value !== null && value !== "") {
             result[key] = value;
+        }
+    });
+
     return result;
 };
