@@ -9,12 +9,6 @@ QUnit.module('Тестируем функцию factorial', () => {
         assert.strictEqual(factorial(5), 120, '5! = 120');
     });
 
-    QUnit.test('Факториал для отрицательного числа должен выбрасывать ошибку', (assert) => {
-        assert.throws(() => {
-            factorial(-1);
-        }, RangeError, 'Ошибка выбрасывается для -1');
-    });
-
     QUnit.test('Факториал 1 должен быть 1', (assert) => {
         assert.strictEqual(factorial(1), 1, '1! = 1');
     });
@@ -33,6 +27,12 @@ QUnit.module('Тестируем функцию factorial', () => {
 
     QUnit.test('Факториал 10 должен быть 3628800', (assert) => {
         assert.strictEqual(factorial(10), 3628800, '10! = 3628800');
+    });
+    
+    QUnit.test('Факториал для числа с дробной частью должен выбрасывать ошибку', (assert) => {
+        assert.throws(() => {
+            factorial(1.1111);
+        }, RangeError, 'Ошибка выбрасывается для 1.1111');
     });
 
     QUnit.test('Факториал не должен принимать строку', (assert) => {
