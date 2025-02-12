@@ -9,7 +9,7 @@ QUnit.module("Тестируем функцию compressObject", function() {
             country: "Россия",
             occupation: undefined
         });
-        
+
         assert.deepEqual(result, { name: "Андрей", country: "Россия" }, "Должны остаться только ключи с ненулевыми значениями.");
     });
 
