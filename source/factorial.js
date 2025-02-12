@@ -2,21 +2,20 @@
 
 /**
  * Функция для вычисления факториала числа.
- * @param {Number} number - Число, для которого нужно вычислить факториал.
- * @returns {Number}
+ * @param {number} number - Число, для которого нужно вычислить факториал.
+ * @returns {number}
  * @throws {TypeError} Если аргумент не является числом или является отрицательным числом.
  * @throws {RangeError} Если аргумент - отрицательное число или число с плавающей точкой.
  */
 const factorial = (number) => {
-	if (number instanceof Number) {
-        number = +number;
-    }
-    if (!Number.isInteger(number)) {
+    const value = number instanceof Number ? +number : number;
+
+    if (!Number.isInteger(value)) {
         throw new TypeError("Factorial is not defined for non-integer numbers.");
     }
-    if (number < 0) {
+    if (value < 0) {
         throw new RangeError("Factorial is not defined for negative numbers.");
     }
-    return number === 0 || number === 1 ? 1 : number * factorial(number - 1);
+    return value === 0 || value === 1 ? 1 : value * factorial(value - 1);
 };
 
