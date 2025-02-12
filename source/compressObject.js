@@ -14,19 +14,21 @@
  *       occupation: undefined
  *   });
  * 
+ * @throws {TypeError} Если аргмент не является объектом ([object Object]).
+ * 
  * @returns {Object}
  */
 const compressObject = (obj) => {
     if (Object.prototype.toString.call(obj) != '[object Object]') {
-        throw new TypeError(`Expected type \'[object Object]\', but received \'${Object.prototype.toString.call(obj)}\'`);
+        throw new TypeError(`Expected type '[object Object]', but received '${Object.prototype.toString.call(obj)}'`);
     }
     
-    let result = {};
-    Object.entries(obj).forEach(([key, value]) => {
+    let result = Object.entries(obj).reduce((acc, [key, value]) => {
         if (value !== undefined && value !== null && value !== "") {
-            result[key] = value;
+            acc[key] = value;
         }
-    });
+        return acc;
+    }, {});
 
     return result;
 };
