@@ -48,9 +48,6 @@ QUnit.module('Тестируем функцию factorial', () => {
         }, TypeError, 'Ошибка выбрасывается для отрицательного числа в виде строки');
     });
     QUnit.test('Факториал должен принимать объект Number', (assert) => {
-	    assert.strictEqual(factorial(new Number(5)), 120, '5! = 120 для объекта Number');
-	});
-
+        assert.strictEqual(factorial(new Number(5)), 120, '5! = 120 для объекта Number');
+    });
 });
-
-

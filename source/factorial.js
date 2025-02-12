@@ -18,4 +18,3 @@ const factorial = (number) => {
     }
     return value === 0 || value === 1 ? 1 : value * factorial(value - 1);
 };
-
