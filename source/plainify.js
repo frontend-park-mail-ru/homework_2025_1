@@ -11,8 +11,8 @@
  * 
  * @returns {Object} – плоский объект с составными ключами
  */
-const plainify = function (obj, prefix = '') {
-    let result = {};
+const plainify = (obj, prefix = '') => {
+    const result = {};
     
     for (const key of Object.keys(obj)) {
         const newKey = prefix ? `${prefix}.${key}` : key;
@@ -37,4 +37,4 @@ const plainify = function (obj, prefix = '') {
     }
     
     return result;
-}
+};
