@@ -29,6 +29,17 @@ QUnit.module('Тестируем функцию factorial', () => {
         assert.strictEqual(factorial(10), 3628800, '10! = 3628800');
     });
     
+    QUnit.test('Факториал 5 должен быть 120', (assert) => {
+
+        assert.strictEqual(factorial(5), 120, '5! = 120');
+    });
+    
+    QUnit.test('Факториал для отрицательного числа должен выбрасывать ошибку', (assert) => {
+	    assert.throws(() => {
+	        factorial(-5);
+	    }, RangeError, 'Ошибка выбрасывается для -5');
+	});
+
     QUnit.test('Факториал для числа с дробной частью должен выбрасывать ошибку', (assert) => {
         assert.throws(() => {
             factorial(1.1111);
@@ -58,5 +69,12 @@ QUnit.module('Тестируем функцию factorial', () => {
             factorial("-5");
         }, TypeError, 'Ошибка выбрасывается для отрицательного числа в виде строки');
     });
+    
+    QUnit.test('Факториал не должен принимать объект Number', (assert) => {
+    	assert.throws(() => {
+            factorial(new Number(5));
+        }, TypeError, 'Ошибка выбрасывается для объекта Number');
+    });
+
 });
 
