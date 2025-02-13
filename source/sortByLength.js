@@ -18,11 +18,13 @@ const compareLocale = (a, b) => {
 	const lowerA = a.toLowerCase();
 	const lowerB = b.toLowerCase();
 
-	if (lowerA < lowerB)
+	if (lowerA < lowerB) {
 		return -1;
+	}
 
-	if (lowerA > lowerB)
+	if (lowerA > lowerB) {
 		return 1;
+	}
 
 	return 0;
 }
