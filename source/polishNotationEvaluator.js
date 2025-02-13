@@ -13,8 +13,10 @@
  * 
  * @returns {(number|NaN)}  Возвращает результат вычисления или NaN, если выражение некорректно.
  */
-let polishNotationEvaluator = (input) =>  {
-    if (!input.trim()) return NaN;  // Если строка пустая или из пробелов
+const polishNotationEvaluator = (input) =>  {
+    if (!input.trim()) {  // Если строка пустая или из пробелов
+        return NaN;
+    }
     // Будем идти с конца строки и если встретился оператор, то применяем его к первым двум числам
     // Для хранения будем использовать стек
     const splitted_input = input.split(' ');
@@ -22,10 +24,12 @@ let polishNotationEvaluator = (input) =>  {
 
     while (splitted_input.length > 0) {
         const current = splitted_input.pop();
-        if (!isNaN(Number(current))) {  // Если число
+        if (!isNaN(current)) {  // Если число
             stack.push(Number(current));
         } else if (['+', '-', '*', '/'].includes(current)) {  // Если оператор
-            if (stack.length < 2) return NaN;  // Проверка на строки вида "+ + 1 2"  
+            if (stack.length < 2) {  // Проверка на строки вида "+ + 1 2"
+                return NaN;
+            }
             const left = stack.pop();  // Левый операнд
             const right = stack.pop();  // Правый операнд
             switch (current) {
