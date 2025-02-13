@@ -8,9 +8,11 @@
  * @returns {type: {Objects}}
  */
 const groupBy = (input, key) => {
-    if (!Array.isArray(input)) () => { throw new TypeError('Первый аргумент должен быть массивом объектов'); }
+    if (!Array.isArray(input)) {
+        throw new TypeError('Первый аргумент должен быть массивом объектов');
+    }
     
-    return input.reduce(function(result, object) {
+    return input.reduce((result, object) => {
         const category = object[key]; 
 
         if (!result[category]) {
@@ -18,6 +20,7 @@ const groupBy = (input, key) => {
         } else {
             result[category].push(object);
         }
+        
         return result;
-    }, {})
+    }, {});
 }
