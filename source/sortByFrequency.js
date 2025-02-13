@@ -12,7 +12,7 @@
  * 
  * @returns {Array<Number>} - Отсортированный массив.
  */
-function sortByFrequency(arr) {
+const sortByFrequency = (arr) => {
     const frequencyMap = new Map();
 
     for (const num of arr) {
@@ -24,4 +24,4 @@ function sortByFrequency(arr) {
         const freqB = frequencyMap.get(b);
         return freqA === freqB ? a - b : freqB - freqA;
     });
-}
+};
