@@ -11,7 +11,7 @@
  * 
  * @returns {Array<Number>} новый массив, отсортированный по частоте и значению
  */
-function sortByFrequency(arr) {
+const sortByFrequency = (arr) => {
     if (!Array.isArray(arr)) {
         return []
     }
@@ -26,4 +26,4 @@ function sortByFrequency(arr) {
             return a - b;
         }
     });
-}
+};
