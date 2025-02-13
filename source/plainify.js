@@ -30,10 +30,9 @@
  * //   age: 30
  * // }
  */
-function plainify(obj, prefix = '') {
+const plainify = (obj, prefix = '') => {
     const res = {};
     for (const key in obj) {
-
         const value = obj[key];
 
         if (typeof value === 'function') {
@@ -51,4 +50,4 @@ function plainify(obj, prefix = '') {
         }
     }
     return res;
-}
+};
