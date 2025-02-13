@@ -11,7 +11,7 @@
  * @property {string[]} uniqueEmails - уникальные адреса
  * @property  {string} mostFrequentEmail - самый частый адрес
  */
-function emailAnalyzer(str) {
+const emailAnalyzer = (str) => {
     const email_map = new Map();
 
     let emailCount = 0;
@@ -22,7 +22,7 @@ function emailAnalyzer(str) {
 
     // заполняем хеш-мапу адресами и количеством повторений
     if (emails) {
-        for (const email of emails) {
+        emails.forEach((email) => {
             // так как нашли адрес, увеличиваем счетчик
             emailCount++;
 
@@ -34,7 +34,7 @@ function emailAnalyzer(str) {
                 // если адрес уже был, увеличиваем значение на единичку
                 email_map.set(email, email_map.get(email) + 1);
             }
-        }
+        });
     }
 
     const uniqueEmails = [];
