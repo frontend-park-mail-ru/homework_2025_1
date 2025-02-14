@@ -5,8 +5,8 @@
  *
  * @param {Object} users - Массив с данными о пользователях в виде json.
  */
-function merge(users) {
-    let result = {};
+const merge = (users) => {
+    const result = {};
     users.forEach(user => {
         console.log(`user = ${user}`);
         for (const [key, value] of Object.entries(user)) {
@@ -31,8 +31,8 @@ function merge(users) {
  * @param {Array<string>} urls - массив url адресов для выполнения запросов.
  * @returns {Object} - результирующий объект.
  */
-function fetchAndMergeData(urls) {
-    let promises = [];
+const fetchAndMergeData = (urls) => {
+    const promises = [];
     urls.forEach((url) => {
         promises.push(
             fetch(url)
