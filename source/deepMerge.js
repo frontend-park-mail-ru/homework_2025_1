@@ -4,9 +4,9 @@
  * @param {*} value - Проверяемое значение.
  * @returns {boolean} Возвращает true, если переданное значение — объект, false в противном случае.
  */
-function isObject(value) {
-    return value !== null && typeof value === 'object' && !Array.isArray(value);
-}
+const isObject = value =>
+    value !== null && typeof value === 'object' && !Array.isArray(value);
+
 
 /**
  * Глубоко объединяет два объекта.
@@ -17,17 +17,17 @@ function isObject(value) {
  * @param {object} obj2 - Второй объект.
  * @returns {object} Новый объект, полученный в результате глубокого слияния.
  */
-function deepMerge(obj1, obj2) {
+const deepMerge = (obj1, obj2) => {
     const result = structuredClone(obj1);
 
-    for (const key in obj2) {
-        if (isObject(obj2[key]) && isObject(result[key])) {
-            result[key] = deepMerge(result[key], obj2[key]);
+    for (const [key, value] of Object.entries(obj2)) {
+        if (isObject(value) && isObject(result[key])) {
+            result[key] = deepMerge(result[key], value);
         } else {
-            result[key] = structuredClone(obj2[key]);
+            result[key] = structuredClone(value);
         }
     }
 
     return result;
-}
+};
 
