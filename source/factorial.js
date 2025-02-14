@@ -14,7 +14,7 @@
  * 
  * @returns {Number}
  */
-function factorial(n) {
+const factorial = (n) => {
     if (typeof n !== 'number') {
         throw new Error('Факториал определен только для чисел');
     }
