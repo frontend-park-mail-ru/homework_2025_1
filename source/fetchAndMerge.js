@@ -3,19 +3,18 @@
 /**
  * Создание результирующего json на основе массива с данными о пользователях.
  *
- * @param {Object} users - Массив с данными о пользователях в виде json.
+ * @param {Object} data - Массив с данными, хранящий json.
  */
-const merge = (users) => {
+const merge = (data) => {
     const result = {};
-    users.forEach(user => {
-        console.log(`user = ${user}`);
-        for (const [key, value] of Object.entries(user)) {
+    data.forEach(element => {
+        Object.entries(element).forEach(([key, value]) => {
             if (result[key] === undefined) {
                 result[key] = [value];
             } else {
                 result[key].push(value);
             }
-        }
+        });
     })
     return result;
 }
@@ -40,7 +39,8 @@ const fetchAndMergeData = (urls) => {
                 .catch(error => {
                     console.log(error);
                     return {};
-                }))
+                })
+        )
     });
-    return Promise.all(promises).then(users => merge(users.filter( element => element !== undefined)));
+    return Promise.all(promises).then(users => merge(users.filter(element => element !== undefined)));
 }
