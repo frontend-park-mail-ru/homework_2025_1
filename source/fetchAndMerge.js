@@ -1,42 +1,46 @@
 'use strict';
 
 /**
- * Функция, которая осуществляет слияние двух объектов,
- * добавляя все данные из data в result.
+ * Создание результирующего json на основе массива с данными о пользователях.
  *
- * @param {Object} result - результирующий объект
- * @param {Object} data - объект, который добавляется в result
+ * @param {Object} users - Массив с данными о пользователях в виде json.
  */
-function merge(result, data){
-    for (const [key, value] of Object.entries(data)) {
-        if (result[key] === undefined) {
-            result[key] = [value];
-        } else {
-            result[key].push(value);
+function merge(users) {
+    let result = {};
+    users.forEach(user => {
+        console.log(`user = ${user}`);
+        for (const [key, value] of Object.entries(user)) {
+            if (result[key] === undefined) {
+                result[key] = [value];
+            } else {
+                result[key].push(value);
+            }
         }
-    }
+    })
+    return result;
 }
 
 /**
  * Пробег по всем url адресам из массива urls и склеивание ответов в один единый объект.
  *
- * В случае успеха, вызываем функцию {@link merge}, в случае неудачи - игнорируем url.
+ * После пробега по всем адресам, склеиваем успешные функцией {@link merge}.
+ * Перед вызовом функции {@link merge} массив с ответами фильтруется таким образом,
+ * чтобы из него убрать undefined элементы, дабы в функции {@link merge} не было вызвано
+ * исключение в использование Array.prototype.forEach().
  *
  * @param {Array<string>} urls - массив url адресов для выполнения запросов.
- * @returns {Promise<{}>} - результирующий массив.
+ * @returns {Object} - результирующий объект.
  */
 function fetchAndMergeData(urls) {
-    let result = {};
     let promises = [];
-    for (let url of urls) {
+    urls.forEach((url) => {
         promises.push(
             fetch(url)
-            .then((response) => {
-                response.json().then((data) => {
-                    merge(result, data);
-                });
-            }, (_) => {})
-        );
-    }
-    return Promise.all(promises).then((value) => { return result; });
+                .then(response => response.json())
+                .catch(error => {
+                    console.log(error);
+                    return {};
+                }))
+    });
+    return Promise.all(promises).then(users => merge(users.filter( element => element !== undefined)));
 }
