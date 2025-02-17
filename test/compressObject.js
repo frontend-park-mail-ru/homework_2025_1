@@ -64,4 +64,21 @@ QUnit.module("Тестируем функцию compressObject", function() {
             "Передача строки должна вызвать TypeError."
         );
     });
+
+    QUnit.test("Выбрасывает ошибку при передаче undefined", function(assert) {
+        assert.throws(
+            () => compressObject(undefined),
+            TypeError,
+            "Передача undefined должна вызвать TypeError."
+        );
+    });
+
+    QUnit.test("Выбрасывает ошибку при передаче числа", function(assert) {
+        assert.throws(
+            () => compressObject(42),
+            TypeError,
+            "Передача числа должна вызвать TypeError."
+        );
+    });
+
 });
