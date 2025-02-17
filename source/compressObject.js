@@ -5,6 +5,10 @@
  * @returns {Object} Новый объект без пустых значений.
  */
 function compressObject(obj) {
+    if (typeof obj !== "object" || Array.isArray(obj)) {
+        throw new TypeError("Expected an object as input");
+    }
+
     return Object.fromEntries(
         Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== "")
     );

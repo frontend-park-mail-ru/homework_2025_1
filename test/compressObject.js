@@ -28,4 +28,20 @@ QUnit.module("Тестируем функцию compressObject", function() {
 
         assert.deepEqual(result, {}, "Пустой объект должен вернуть пустой объект.");
     });
+
+    QUnit.test("Выбрасывает ошибку при передаче массива", function(assert) {
+        assert.throws(
+            () => compressObject(["a", "b", "c"]),
+            TypeError,
+            "Передача массива должна вызвать TypeError."
+        );
+    });
+
+    QUnit.test("Выбрасывает ошибку при передаче строки", function(assert) {
+        assert.throws(
+            () => compressObject("hello"),
+            TypeError,
+            "Передача строки должна вызвать TypeError."
+        );
+    });
 });
