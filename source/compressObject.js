@@ -4,7 +4,6 @@
  * @param {Object} obj - Входной объект с ключами и значениями.
  * @returns {Object} Новый объект без пустых значений.
  */
-
 const compressObject = (obj) => {
     if (typeof obj !== "object" || Array.isArray(obj)) {
         throw new TypeError("Expected an object as input");
