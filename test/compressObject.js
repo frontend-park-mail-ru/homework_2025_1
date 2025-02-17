@@ -23,6 +23,26 @@ QUnit.module("Тестируем функцию compressObject", function() {
         assert.deepEqual(result, {}, "Объект без ненулевых значений должен вернуть пустой объект.");
     });
 
+    QUnit.test("Объект без null, undefined и пустых строк не изменяется", function(assert) {
+        const result = compressObject({
+            name: "Иван",
+            age: 25,
+            city: "Москва"
+        });
+
+        assert.deepEqual(result, { name: "Иван", age: 25, city: "Москва" }, "Объект без пустых значений должен остаться неизменным.");
+    });
+
+    QUnit.test("Не удаляет вложенные объекты", function(assert) {
+        const result = compressObject({
+            user: { name: "Андрей", age: 30 },
+            city: "",
+            country: "Россия"
+        });
+
+        assert.deepEqual(result, { user: { name: "Андрей", age: 30 }, country: "Россия" }, "Вложенные объекты не должны удаляться.");
+    });
+
     QUnit.test("Работает с пустым объектом", function(assert) {
         const result = compressObject({});
 
