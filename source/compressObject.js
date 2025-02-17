@@ -5,7 +5,7 @@
  * @returns {Object} Новый объект без пустых значений.
  */
 
-let compressObject = (obj) => {
+const compressObject = (obj) => {
     if (typeof obj !== "object" || Array.isArray(obj)) {
         throw new TypeError("Expected an object as input");
     }
